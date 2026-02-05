@@ -1,5 +1,6 @@
  import { useState } from "react";
  import { Plus } from "lucide-react";
+ import { useNavigate } from "react-router-dom";
  import { Button } from "@/components/ui/button";
  import { Input } from "@/components/ui/input";
  import { Textarea } from "@/components/ui/textarea";
@@ -45,8 +46,8 @@
  
  export default function Promotions() {
    const [activeTab, setActiveTab] = useState<TabType>("delivery-fees");
-   const [showVoucherModal, setShowVoucherModal] = useState(false);
    const [showRuleModal, setShowRuleModal] = useState(false);
+   const navigate = useNavigate();
  
    // Delivery fee state
    const [deliveryDescEN, setDeliveryDescEN] = useState("");
@@ -73,7 +74,7 @@
            {activeTab === "vouchers" && "Vouchers"}
          </h1>
          {activeTab === "vouchers" && (
-           <Button onClick={() => setShowVoucherModal(true)} className="bg-[#aa1e2c] hover:bg-[#8a1824]">
+           <Button onClick={() => navigate("/promotions/vouchers/new")} className="bg-[#aa1e2c] hover:bg-[#8a1824]">
              <Plus className="mr-2 h-4 w-4" />
              Add Voucher
            </Button>
@@ -275,10 +276,10 @@
                    <TableCell>{voucher.endDate}</TableCell>
                    <TableCell className="text-right">
                      <div className="flex items-center justify-end gap-2">
-                       <Button size="sm" variant="secondary" className="bg-gray-900 text-white hover:bg-gray-800">
+                       <Button size="sm" variant="secondary" className="bg-gray-900 text-white hover:bg-gray-800" onClick={() => navigate(`/promotions/vouchers/${voucher.id}`)}>
                          View
                        </Button>
-                       <Button size="sm" variant="outline">
+                       <Button size="sm" variant="outline" onClick={() => navigate(`/promotions/vouchers/${voucher.id}/edit`)}>
                          Edit
                        </Button>
                        <Button size="sm" variant="destructive">
@@ -292,109 +293,6 @@
            </Table>
          </div>
        )}
- 
-       {/* Add Voucher Modal */}
-       <FormModal
-         open={showVoucherModal}
-         onOpenChange={setShowVoucherModal}
-         title="Add Voucher"
-         onSubmit={() => setShowVoucherModal(false)}
-       >
-         <div className="space-y-6">
-           <div className="space-y-4">
-             <h4 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-               <span className="text-lg">📦</span> Basic Information
-             </h4>
-             <div className="space-y-2">
-               <Label>Title *</Label>
-               <Input placeholder="Display name for the voucher" className="bg-white dark:bg-gray-800" />
-             </div>
-             <div className="space-y-2">
-               <Label>Voucher Code *</Label>
-               <Input placeholder="Unique code customers will use to redeem" className="bg-white dark:bg-gray-800" />
-             </div>
-           </div>
- 
-           <div className="space-y-4">
-             <h4 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-               <span className="text-lg">💰</span> Discount Settings
-             </h4>
-             <div className="grid gap-4 md:grid-cols-2">
-               <div className="space-y-2">
-                 <Label>Discount Type *</Label>
-                 <select className="w-full h-10 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3">
-                   <option value="fixed">Fixed</option>
-                   <option value="percentage">Percentage</option>
-                 </select>
-               </div>
-               <div className="space-y-2">
-                 <Label>Discount Value *</Label>
-                 <Input type="number" placeholder="Amount in RM or percentage" className="bg-white dark:bg-gray-800" />
-               </div>
-             </div>
-             <div className="space-y-2">
-               <Label>Minimum Order Value *</Label>
-               <Input type="number" placeholder="Minimum cart value required (RM)" className="bg-white dark:bg-gray-800" />
-             </div>
-           </div>
- 
-           <div className="space-y-4">
-             <h4 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-               <span className="text-lg">📅</span> Validity Period
-             </h4>
-             <div className="grid gap-4 md:grid-cols-2">
-               <div className="space-y-2">
-                 <Label>Start Date *</Label>
-                 <Input type="date" className="bg-white dark:bg-gray-800" />
-               </div>
-               <div className="space-y-2">
-                 <Label>End Date *</Label>
-                 <Input type="date" className="bg-white dark:bg-gray-800" />
-               </div>
-             </div>
-             <div className="space-y-2">
-               <Label>Expiry Period (days after redemption) *</Label>
-               <Input type="number" placeholder="30" className="bg-white dark:bg-gray-800" />
-             </div>
-           </div>
- 
-           <div className="space-y-4">
-             <h4 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-               <span className="text-lg">👥</span> Usage Limits
-             </h4>
-             <div className="grid gap-4 md:grid-cols-2">
-               <div className="space-y-2">
-                 <Label>Total Quantity *</Label>
-                 <Input type="number" placeholder="Total number of vouchers available" className="bg-white dark:bg-gray-800" />
-               </div>
-               <div className="space-y-2">
-                 <Label>Limit Per User *</Label>
-                 <Input type="number" placeholder="Maximum times each user can redeem" className="bg-white dark:bg-gray-800" />
-               </div>
-             </div>
-           </div>
- 
-           <div className="space-y-4">
-             <h4 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-               <span className="text-lg">⭐</span> Points Redemption
-             </h4>
-             <div className="space-y-2">
-               <Label>Points Required</Label>
-               <Input type="number" placeholder="Number of loyalty points needed to redeem" className="bg-white dark:bg-gray-800" />
-             </div>
-           </div>
- 
-           <div className="space-y-4">
-             <h4 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-               <span className="text-lg">🖼️</span> Image & Description
-             </h4>
-             <div className="space-y-2">
-               <Label>Description</Label>
-               <Textarea placeholder="Displayed to customers in the app" className="bg-white dark:bg-gray-800" rows={3} />
-             </div>
-           </div>
-         </div>
-       </FormModal>
  
        {/* Add Rule Modal */}
        <FormModal

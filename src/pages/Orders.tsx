@@ -76,8 +76,8 @@
      <div className="space-y-6">
        {/* Page Header */}
        <div>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Orders</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage and track all customer orders</p>
+          <h1 className="page-title">Orders</h1>
+          <p className="page-subtitle">Manage and track all customer orders</p>
        </div>
  
        {/* Filters */}
@@ -97,23 +97,21 @@
        />
  
        {/* Orders Table */}
-      {/* DaisyUI: card bg-base-100 shadow-sm */}
-      <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+        <div className="rounded-lg border bg-card card-shadow overflow-hidden">
          <div className="overflow-x-auto">
-          {/* DaisyUI: table table-zebra */}
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Order</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Date</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Customer</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Branch</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Amount</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                <tr className="bg-muted/30 border-b">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Order</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Date</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Customer</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Branch</th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Amount</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
                 <th className="px-4 py-3 w-12"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="divide-y divide-border">
                {paginatedOrders.length === 0 ? (
                  <tr>
                    <td colSpan={7} className="p-0">
@@ -121,39 +119,38 @@
                    </td>
                  </tr>
                ) : paginatedOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150">
+                  <tr key={order.id} className="hover:bg-muted/50">
                   <td className="px-4 py-3">
                      <div>
-                      <span className="font-medium text-[#aa1e2c]">#{order.id}</span>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">ID {order.internalId}</p>
+                        <span className="font-medium text-primary">#{order.id}</span>
+                        <p className="text-xs text-muted-foreground">ID {order.internalId}</p>
                      </div>
                   </td>
                   <td className="px-4 py-3">
                      <div>
-                      <span className="text-sm text-gray-900 dark:text-white">{order.date}</span>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{order.time}</p>
+                        <span className="text-sm text-foreground">{order.date}</span>
+                        <p className="text-xs text-muted-foreground">{order.time}</p>
                      </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={order.customer ? "text-[#aa1e2c] font-medium" : "text-gray-400"}>
+                      <span className={order.customer ? "text-primary font-medium" : "text-muted-foreground"}>
                        {order.customer || "Guest"}
                      </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{order.branch}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{order.branch}</td>
                   <td className="px-4 py-3 text-right">
                      <div>
-                      <span className="font-semibold text-gray-900 dark:text-white">{order.amount}</span>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">+ {order.delivery} delivery</p>
+                        <span className="font-semibold text-foreground">{order.amount}</span>
+                        <p className="text-xs text-muted-foreground">+ {order.delivery} delivery</p>
                      </div>
                   </td>
                   <td className="px-4 py-3">
                      <StatusBadge status={order.status} />
                   </td>
                   <td className="px-4 py-3">
-                    {/* DaisyUI: btn btn-ghost btn-square btn-sm */}
                     <Link 
                       to={`/orders/${order.id}`}
-                      className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white transition-all duration-200"
+                        className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-primary hover:text-primary-foreground"
                     >
                       <Eye className="h-4 w-4" />
                     </Link>

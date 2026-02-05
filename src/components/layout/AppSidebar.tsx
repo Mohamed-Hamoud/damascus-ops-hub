@@ -21,6 +21,7 @@
   UtensilsCrossed,
   Sun,
   Moon,
+  User,
  } from "lucide-react";
  import { useTheme } from "next-themes";
  import { NavLink } from "@/components/NavLink";
@@ -166,6 +167,9 @@ export function AppSidebar() {
   const isCollapsed = state === "collapsed";
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
+  
+  // Mock admin email - would come from auth context in real app
+  const adminEmail = "admin@damascus.com";
  
    return (
      <Sidebar
@@ -242,6 +246,37 @@ export function AppSidebar() {
  
        <SidebarFooter className={cn("border-t border-sidebar-border", isCollapsed ? "p-1" : "p-2")}>
          <SidebarMenu className={isCollapsed ? "gap-1" : ""}>
+          {/* Admin User Info */}
+          {!isCollapsed && (
+            <SidebarMenuItem>
+              <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-sidebar-accent/50">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  <User className="h-4 w-4" />
+                </div>
+                <div className="flex-1 overflow-hidden">
+                  <p className="text-xs font-medium text-sidebar-foreground truncate">{adminEmail}</p>
+                  <p className="text-[10px] text-sidebar-muted">Administrator</p>
+                </div>
+              </div>
+            </SidebarMenuItem>
+          )}
+          {isCollapsed && (
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center justify-center rounded-lg p-2">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                      <User className="h-3.5 w-3.5" />
+                    </div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-foreground text-background">
+                  {adminEmail}
+                </TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+          )}
+
            {/* Dark Mode Toggle */}
            <SidebarMenuItem>
              {isCollapsed ? (

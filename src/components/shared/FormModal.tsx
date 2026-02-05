@@ -66,7 +66,7 @@
              variant="outline"
              onClick={() => onOpenChange(false)}
              disabled={isLoading}
-             className="bg-gray-800 text-white hover:bg-gray-700 border-0"
+              className="bg-secondary text-secondary-foreground hover:bg-secondary/80"
            >
              {cancelLabel}
            </Button>
@@ -74,7 +74,7 @@
              <Button
                onClick={onSubmit}
                disabled={isLoading}
-               className="bg-[#aa1e2c] hover:bg-[#8a1824]"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
              >
                {isLoading ? "Saving..." : submitLabel}
              </Button>

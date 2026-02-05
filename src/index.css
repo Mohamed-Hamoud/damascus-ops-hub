@@ -198,6 +198,15 @@
     @apply transition-all duration-200 hover:border-primary/30 hover:card-shadow-md cursor-pointer;
   }
 
+  /* Status colors for badges - semantic alternatives */
+  .text-status-positive {
+    @apply text-green-600 dark:text-green-400;
+  }
+
+  .bg-status-positive {
+    @apply bg-green-500/10;
+  }
+
   /* Icon container styles */
   .icon-container {
     @apply flex items-center justify-center rounded-xl;

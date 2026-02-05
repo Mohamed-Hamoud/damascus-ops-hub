@@ -1,5 +1,4 @@
- import { useState } from "react";
- import { Calendar } from "lucide-react";
+import { useState } from "react";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
  import {
@@ -36,13 +35,13 @@
      <div className="space-y-6">
        {/* Header with filters */}
        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Evaluations List</h1>
+        <h1 className="page-title">Evaluations List</h1>
          
          <div className="flex flex-wrap items-end gap-4">
            <div className="space-y-2">
-             <Label className="text-sm text-gray-500">Branch</Label>
+            <Label className="text-sm text-muted-foreground">Branch</Label>
              <Select value={branch} onValueChange={setBranch}>
-               <SelectTrigger className="w-[180px] bg-white dark:bg-gray-800">
+              <SelectTrigger className="w-[180px] bg-background">
                  <SelectValue placeholder="All" />
                </SelectTrigger>
                <SelectContent>
@@ -56,26 +55,26 @@
            </div>
            
            <div className="space-y-2">
-             <Label className="text-sm text-gray-500">From</Label>
+            <Label className="text-sm text-muted-foreground">From</Label>
              <div className="relative">
                <Input
                  type="date"
                  value={fromDate}
                  onChange={(e) => setFromDate(e.target.value)}
-                 className="w-[150px] bg-white dark:bg-gray-800"
+                className="w-[150px] bg-background"
                  placeholder="dd/mm/yyyy"
                />
              </div>
            </div>
            
            <div className="space-y-2">
-             <Label className="text-sm text-gray-500">To</Label>
+            <Label className="text-sm text-muted-foreground">To</Label>
              <div className="relative">
                <Input
                  type="date"
                  value={toDate}
                  onChange={(e) => setToDate(e.target.value)}
-                 className="w-[150px] bg-white dark:bg-gray-800"
+                className="w-[150px] bg-background"
                  placeholder="dd/mm/yyyy"
                />
              </div>
@@ -84,7 +83,7 @@
        </div>
  
        {/* Evaluations Table */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
          <Table>
            <TableHeader>
              <TableRow>
@@ -102,7 +101,7 @@
            <TableBody>
              {mockEvaluations.length === 0 ? (
                <TableRow>
-                 <TableCell colSpan={9} className="text-center py-12 text-gray-500">
+                <TableCell colSpan={9} className="text-center py-12 text-muted-foreground">
                    Evaluations not found
                  </TableCell>
                </TableRow>

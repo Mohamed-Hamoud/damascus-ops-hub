@@ -11,13 +11,19 @@
  import { SectionCard } from "@/components/dashboard/SectionCard";
  import { StatusBadge } from "@/components/dashboard/StatusBadge";
  import { ProgressBar } from "@/components/dashboard/ProgressBar";
- import {
-   Select,
-   SelectContent,
-   SelectItem,
-   SelectTrigger,
-   SelectValue,
- } from "@/components/ui/select";
+ 
+/**
+ * Dashboard Page
+ * DaisyUI components used: card, badge, progress, select
+ * 
+ * HAML structure:
+ * .space-y-6
+ *   .flex.flex-col.gap-4.sm:flex-row.sm:items-center.sm:justify-between
+ *     %h1.text-2xl.font-bold Dashboard
+ *     %select.select.select-bordered.select-sm
+ *   .grid.gap-4.sm:grid-cols-2.lg:grid-cols-4
+ *     = render partial: 'stat_card', collection: @stats
+ */
  
  // Mock data
  const recentOrders = [
@@ -41,21 +47,18 @@
        {/* Page header */}
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
          <div>
-          <h1 className="page-title">Dashboard</h1>
-          <p className="page-subtitle">Welcome back! Here's your business overview.</p>
+          {/* DaisyUI: text-2xl font-bold */}
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Dashboard</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Welcome back! Here's your business overview.</p>
          </div>
          <div className="flex items-center gap-2">
-           <Select defaultValue="today">
-            <SelectTrigger className="w-32 bg-card shadow-sm">
-               <SelectValue placeholder="Period" />
-             </SelectTrigger>
-             <SelectContent>
-               <SelectItem value="today">Today</SelectItem>
-               <SelectItem value="yesterday">Yesterday</SelectItem>
-               <SelectItem value="7days">7 Days</SelectItem>
-               <SelectItem value="30days">30 Days</SelectItem>
-             </SelectContent>
-           </Select>
+          {/* DaisyUI: select select-bordered select-sm */}
+          <select className="select select-bordered select-sm w-32 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#aa1e2c]/20 focus:border-[#aa1e2c]">
+            <option value="today">Today</option>
+            <option value="yesterday">Yesterday</option>
+            <option value="7days">7 Days</option>
+            <option value="30days">30 Days</option>
+          </select>
          </div>
        </div>
  
@@ -93,13 +96,14 @@
        <div className="grid gap-4 lg:grid-cols-3">
          <SectionCard title="Order Status Overview" className="lg:col-span-2">
            <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-success/5 to-success/10 border border-success/20 p-8 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
-              <span className="text-4xl font-bold text-success">62</span>
-               <span className="text-sm text-muted-foreground">Completed</span>
+            {/* DaisyUI: stats shadow */}
+            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-900/20 dark:to-green-800/20 border border-green-200 dark:border-green-700 p-8 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+              <span className="text-4xl font-bold text-green-600 dark:text-green-400">62</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Completed</span>
              </div>
-            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-destructive/5 to-destructive/10 border border-destructive/20 p-8 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
-              <span className="text-4xl font-bold text-destructive">0</span>
-               <span className="text-sm text-muted-foreground">Failed</span>
+            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-red-50 to-red-100/50 dark:from-red-900/20 dark:to-red-800/20 border border-red-200 dark:border-red-700 p-8 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+              <span className="text-4xl font-bold text-red-600 dark:text-red-400">0</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Failed</span>
              </div>
            </div>
            <div className="mt-4 space-y-3">
@@ -125,18 +129,18 @@
              {recentOrders.map((order) => (
                <div
                  key={order.id}
-                className="flex items-center justify-between rounded-xl border bg-gradient-to-r from-background to-muted/20 p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-sm cursor-pointer"
+                className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-gray-700 bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 p-4 transition-all duration-200 hover:border-[#aa1e2c]/20 hover:shadow-sm cursor-pointer"
                >
                  <div className="min-w-0 flex-1">
                    <div className="flex items-center gap-2">
-                     <span className="text-sm font-medium">{order.id}</span>
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">{order.id}</span>
                      <StatusBadge status={order.status} />
                    </div>
-                   <p className="truncate text-xs text-muted-foreground">{order.customer}</p>
+                  <p className="truncate text-xs text-gray-500 dark:text-gray-400">{order.customer}</p>
                  </div>
                  <div className="text-right">
-                   <p className="text-sm font-semibold">{order.amount}</p>
-                   <p className="text-xs text-muted-foreground">{order.time}</p>
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">{order.amount}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{order.time}</p>
                  </div>
                </div>
              ))}
@@ -151,16 +155,17 @@
              {topProducts.map((product, index) => (
                <div
                  key={product.name}
-                className="flex items-center gap-3 rounded-xl border bg-gradient-to-r from-background to-muted/20 p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-sm cursor-pointer"
+                className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 p-4 transition-all duration-200 hover:border-[#aa1e2c]/20 hover:shadow-sm cursor-pointer"
                >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-sm font-bold text-primary shadow-sm">
+                {/* DaisyUI: avatar placeholder */}
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#aa1e2c]/10 text-sm font-bold text-[#aa1e2c] shadow-sm">
                    {index + 1}
                  </div>
                  <div className="min-w-0 flex-1">
-                   <p className="text-sm font-medium">{product.name}</p>
-                   <p className="text-xs text-muted-foreground">{product.orders} orders</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">{product.name}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{product.orders} orders</p>
                  </div>
-                 <p className="text-sm font-semibold">{product.revenue}</p>
+                <p className="text-sm font-semibold text-gray-900 dark:text-white">{product.revenue}</p>
                </div>
              ))}
            </div>
@@ -174,26 +179,26 @@
            action={{ label: "View all", href: "/evaluations" }}
          >
            <div className="space-y-4">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-background to-muted/20 border transition-all duration-200 hover:shadow-sm">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:shadow-sm">
                <div className="flex items-center gap-2">
-                 <Utensils className="h-4 w-4 text-warning" />
-                 <span className="text-sm">Food Quality</span>
+                <Utensils className="h-4 w-4 text-yellow-500" />
+                <span className="text-sm text-gray-900 dark:text-white">Food Quality</span>
                </div>
                <div className="flex items-center gap-1">
-                 <Star className="h-4 w-4 fill-warning text-warning" />
-                 <span className="text-sm font-semibold">4.5</span>
-                 <span className="text-xs text-muted-foreground">(128 reviews)</span>
+                <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+                <span className="text-sm font-semibold text-gray-900 dark:text-white">4.5</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">(128 reviews)</span>
                </div>
              </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-background to-muted/20 border transition-all duration-200 hover:shadow-sm">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:shadow-sm">
                <div className="flex items-center gap-2">
-                 <Truck className="h-4 w-4 text-info" />
-                 <span className="text-sm">Delivery Service</span>
+                <Truck className="h-4 w-4 text-blue-500" />
+                <span className="text-sm text-gray-900 dark:text-white">Delivery Service</span>
                </div>
                <div className="flex items-center gap-1">
-                 <Star className="h-4 w-4 fill-warning text-warning" />
-                 <span className="text-sm font-semibold">4.2</span>
-                 <span className="text-xs text-muted-foreground">(98 reviews)</span>
+                <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+                <span className="text-sm font-semibold text-gray-900 dark:text-white">4.2</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">(98 reviews)</span>
                </div>
              </div>
            </div>

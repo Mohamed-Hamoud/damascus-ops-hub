@@ -1,6 +1,6 @@
  import { useState } from "react";
  import { useNavigate, useParams, useLocation } from "react-router-dom";
- import { ArrowLeft, Plus, Eye, Trash2, Pencil } from "lucide-react";
+import { ArrowLeft, Plus, Eye, Trash2, Pencil, GripVertical } from "lucide-react";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
  import { Checkbox } from "@/components/ui/checkbox";
@@ -257,6 +257,16 @@
                    <td className="px-4 py-3">
                       <TooltipProvider>
                         <div className="flex items-center gap-1">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                className="p-2 rounded-md text-muted-foreground hover:bg-muted cursor-grab active:cursor-grabbing"
+                              >
+                                <GripVertical className="h-4 w-4" />
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>Drag to reorder</TooltipContent>
+                          </Tooltip>
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <button

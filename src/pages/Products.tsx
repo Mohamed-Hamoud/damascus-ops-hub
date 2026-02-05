@@ -1,6 +1,6 @@
  import { useState } from "react";
  import { useNavigate, useParams, useLocation } from "react-router-dom";
- import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Plus, GripVertical } from "lucide-react";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
  import { Textarea } from "@/components/ui/textarea";
@@ -329,6 +329,12 @@
                      </td>
                      <td className="px-4 py-3">
                          <div className="action-group">
+                        <button
+                          className="p-2 rounded-lg text-muted-foreground hover:bg-muted cursor-grab active:cursor-grabbing transition-colors"
+                          title="Drag to reorder"
+                        >
+                          <GripVertical className="h-4 w-4" />
+                        </button>
                          <button
                            onClick={() => navigate(`/products/${product.id}`)}
                             className="btn-primary btn-sm"

@@ -94,23 +94,11 @@
         />
  
        {/* Tabs */}
-        <div className="border-b">
-         <nav className="-mb-px flex gap-6">
-           {tabs.map((tab) => (
-             <button
-               key={tab.id}
-               onClick={() => setActiveTab(tab.id)}
-               className={`whitespace-nowrap border-b-2 py-3 px-1 text-sm font-medium transition-colors ${
-                 activeTab === tab.id
-                    ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
-               }`}
-             >
-               {tab.label}
-             </button>
-           ))}
-         </nav>
-       </div>
+         <TabNavigation
+           tabs={tabs}
+           activeTab={activeTab}
+           onTabChange={(id) => setActiveTab(id as TabType)}
+         />
  
        {/* Tab Content */}
        {activeTab === "delivery-fees" && (

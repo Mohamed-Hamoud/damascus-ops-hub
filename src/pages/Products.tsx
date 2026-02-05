@@ -278,23 +278,11 @@
        </div>
  
        {/* Tabs */}
-        <div className="border-b border-border">
-         <div className="flex gap-6">
-           {["products", "divisions", "categories", "bestsellers"].map((tab) => (
-             <button
-               key={tab}
-               onClick={() => setActiveTab(tab)}
-               className={`pb-3 text-sm font-medium capitalize border-b-2 ${
-                 activeTab === tab
-                    ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
-               }`}
-             >
-               {tab}
-             </button>
-           ))}
-         </div>
-       </div>
+         <TabNavigation
+           tabs={productTabs}
+           activeTab={activeTab}
+           onTabChange={setActiveTab}
+         />
  
        {activeTab === "products" && (
           <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">

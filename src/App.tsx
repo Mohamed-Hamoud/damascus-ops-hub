@@ -25,6 +25,8 @@
  import RestaurantApp from "./pages/RestaurantApp";
  import Points from "./pages/Points";
  import NotFound from "./pages/NotFound";
+ import Promotions from "./pages/Promotions";
+ import Evaluations from "./pages/Evaluations";
 
 const queryClient = new QueryClient();
 
@@ -45,10 +47,10 @@ const App = () => (
               <Route path="/analytics" element={<Analytics />} />
               {/* Placeholder routes for other sections */}
              <Route path="/banners" element={<Banners />} />
-              <Route path="/promotions" element={<ComingSoon title="Promotions" />} />
+              <Route path="/promotions" element={<Promotions />} />
              <Route path="/customers" element={<Customers />} />
              <Route path="/customers/:id" element={<CustomerDetail />} />
-              <Route path="/evaluations" element={<ComingSoon title="Evaluations" />} />
+              <Route path="/evaluations" element={<Evaluations />} />
              <Route path="/support" element={<Support />} />
               <Route path="/support/tickets" element={<SupportTickets />} />
               <Route path="/support/settings" element={<SupportSettings />} />

@@ -74,7 +74,8 @@
             activeTab === "custom-discounts" ? "Custom Discounts" : "Vouchers"
           }
           subtitle="Manage delivery fees, discounts, and vouchers"
-        >
+          actions={
+            <>
          {activeTab === "vouchers" && (
             <Button onClick={() => navigate("/promotions/vouchers/new")} className="bg-primary hover:bg-primary/90">
              <Plus className="mr-2 h-4 w-4" />
@@ -87,7 +88,9 @@
              Add Rule
            </Button>
          )}
-        </PageHeader>
+            </>
+          }
+        />
  
        {/* Tabs */}
         <div className="border-b">

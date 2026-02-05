@@ -27,6 +27,13 @@ import { Edit, Trash2, GripVertical } from "lucide-react";
  * ```
  * 
  * DaisyUI: card, btn btn-ghost btn-sm
+ * 
+ * RAILS IMPLEMENTATION NOTE:
+ * The drag handle (GripVertical icon) is a visual placeholder.
+ * Implement actual drag-and-drop in Rails using:
+ * - Stimulus controller with Sortable.js
+ * - See DAISYUI_MIGRATION_GUIDE.md section "Drag-and-Drop Reordering Implementation"
+ * - The .drag-handle class triggers Sortable.js handle behavior
  */
 
  interface DivisionCardProps {

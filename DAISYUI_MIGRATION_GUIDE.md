@@ -1498,3 +1498,253 @@ app/views/
     ├── _tickets_table.html.haml
     └── _settings_panels.html.haml
 ```
+
+---
+
+## Drag-and-Drop Reordering Implementation
+
+The React mockup includes visual drag handles (⋮⋮ icons) for items with position fields. These are **visual placeholders** - actual drag-and-drop functionality should be implemented in Rails using Stimulus + Sortable.js.
+
+### Affected Components
+
+| Component | File | Items to Reorder |
+|-----------|------|------------------|
+| Products Table | `Products.tsx` | Products by position |
+| Banners Table | `Banners.tsx` | Banners by position |
+| CategoryCard | `CategoryCard.tsx` | Categories |
+| DivisionCard | `DivisionCard.tsx` | Divisions |
+
+### Rails Implementation with Stimulus + Sortable.js
+
+#### 1. Install Sortable.js
+```bash
+yarn add sortablejs
+```
+
+#### 2. Create Stimulus Controller
+```javascript
+// app/javascript/controllers/sortable_controller.js
+import { Controller } from "@hotwired/stimulus"
+import Sortable from "sortablejs"
+
+export default class extends Controller {
+  static values = {
+    url: String,        // Endpoint to update position
+    handle: String      // Selector for drag handle (default: ".drag-handle")
+  }
+
+  connect() {
+    this.sortable = Sortable.create(this.element, {
+      handle: this.handleValue || ".drag-handle",
+      animation: 150,
+      ghostClass: "opacity-50",
+      chosenClass: "bg-muted",
+      dragClass: "shadow-lg",
+      onEnd: this.onEnd.bind(this)
+    })
+  }
+
+  disconnect() {
+    this.sortable.destroy()
+  }
+
+  async onEnd(event) {
+    const { oldIndex, newIndex, item } = event
+    if (oldIndex === newIndex) return
+
+    const id = item.dataset.id
+    const token = document.querySelector('meta[name="csrf-token"]').content
+
+    try {
+      const response = await fetch(this.urlValue, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': token
+        },
+        body: JSON.stringify({
+          id: id,
+          position: newIndex + 1
+        })
+      })
+
+      if (!response.ok) {
+        // Revert on error
+        this.sortable.sort(this.sortable.toArray())
+      }
+    } catch (error) {
+      console.error('Failed to update position:', error)
+    }
+  }
+}
+```
+
+#### 3. HAML Template for Sortable Table
+```haml
+/ Products table with sortable rows
+.rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+  .overflow-x-auto
+    %table.w-full
+      %thead
+        %tr.bg-muted\/30.border-b.border-border
+          %th.table-header Photo
+          %th.table-header Product
+          %th.table-header Category
+          %th.table-header Price
+          %th.table-header Actions
+      %tbody.divide-y.divide-border{ data: { controller: "sortable", sortable_url_value: update_positions_products_path } }
+        - @products.each do |product|
+          %tr.table-row-hover{ data: { id: product.id } }
+            %td.table-cell
+              = image_tag product.photo, class: "h-12 w-12 rounded-lg object-cover"
+            %td.table-cell.font-semibold.text-primary= product.name
+            %td.table-cell.text-muted-foreground= product.category.name
+            %td.table-cell.font-bold RM #{product.price}
+            %td.table-cell
+              .action-group
+                / Drag handle - MUST have .drag-handle class
+                %button.drag-handle{ title: "Drag to reorder" }
+                  = lucide_icon "grip-vertical", class: "h-4 w-4"
+                = link_to edit_product_path(product), class: "btn-primary btn-sm" do
+                  Edit
+                = link_to product_path(product), class: "btn-outline btn-sm" do
+                  View
+```
+
+#### 4. HAML Template for Sortable Cards (Categories/Divisions)
+```haml
+/ Categories grid with sortable cards
+.grid.gap-4.sm:grid-cols-2.lg:grid-cols-3{ data: { controller: "sortable", sortable_url_value: update_positions_categories_path } }
+  - @categories.each do |category|
+    .rounded-xl.border.border-border.bg-card.p-5{ data: { id: category.id } }
+      .flex.items-center.justify-between
+        %div
+          %h3.font-semibold.text-lg.text-foreground= category.name
+          %p.text-sm.text-muted-foreground= "#{category.products.count} products"
+        .flex.gap-1
+          = link_to edit_category_path(category), class: "icon-btn" do
+            = lucide_icon "edit", class: "h-4 w-4"
+          = button_to category_path(category), method: :delete, class: "icon-btn hover:bg-destructive hover:text-destructive-foreground" do
+            = lucide_icon "trash-2", class: "h-4 w-4"
+          / Drag handle
+          %button.drag-handle{ title: "Drag to reorder" }
+            = lucide_icon "grip-vertical", class: "h-4 w-4"
+```
+
+#### 5. Rails Controller for Position Updates
+```ruby
+# app/controllers/products_controller.rb
+class ProductsController < ApplicationController
+  # PATCH /products/update_positions
+  def update_positions
+    product = Product.find(params[:id])
+    new_position = params[:position].to_i
+
+    Product.transaction do
+      if new_position > product.position
+        # Moving down
+        Product.where("position > ? AND position <= ?", product.position, new_position)
+               .update_all("position = position - 1")
+      else
+        # Moving up
+        Product.where("position >= ? AND position < ?", new_position, product.position)
+               .update_all("position = position + 1")
+      end
+
+      product.update!(position: new_position)
+    end
+
+    head :ok
+  rescue => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+end
+```
+
+#### 6. Routes
+```ruby
+# config/routes.rb
+resources :products do
+  collection do
+    patch :update_positions
+  end
+end
+
+resources :categories do
+  collection do
+    patch :update_positions
+  end
+end
+
+resources :banners do
+  collection do
+    patch :update_positions
+  end
+end
+```
+
+#### 7. CSS for Drag States
+Add to your Rails application.css:
+```css
+/* Drag handle styling */
+.drag-handle {
+  @apply h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground;
+  @apply hover:bg-muted cursor-grab active:cursor-grabbing transition-colors;
+}
+
+.drag-handle-sm {
+  @apply h-6 w-6 flex items-center justify-center rounded text-muted-foreground;
+  @apply hover:bg-muted cursor-grab active:cursor-grabbing transition-colors;
+}
+
+/* Sortable.js states */
+.sortable-ghost {
+  @apply opacity-50 bg-muted;
+}
+
+.sortable-chosen {
+  @apply shadow-lg ring-2 ring-primary/20;
+}
+
+.sortable-drag {
+  @apply shadow-xl;
+}
+```
+
+### Model Setup
+
+Add position column to models:
+```ruby
+# db/migrate/xxx_add_position_to_products.rb
+class AddPositionToProducts < ActiveRecord::Migration[7.0]
+  def change
+    add_column :products, :position, :integer, default: 0
+    add_index :products, :position
+  end
+end
+```
+
+Add acts_as_list gem for easier position management:
+```ruby
+# Gemfile
+gem 'acts_as_list'
+
+# app/models/product.rb
+class Product < ApplicationRecord
+  acts_as_list scope: :category
+  default_scope { order(position: :asc) }
+end
+```
+
+### Alternative: Turbo Stream Updates
+
+For real-time position sync across users:
+```ruby
+# After position update, broadcast:
+Turbo::StreamsChannel.broadcast_replace_to(
+  "products",
+  target: "products_list",
+  partial: "products/list",
+  locals: { products: Product.ordered }
+)
+```

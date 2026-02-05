@@ -74,7 +74,7 @@ import { Shield } from "lucide-react";
             className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                allEnabled
                 ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                 : "bg-green-600 text-white hover:bg-green-700"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90"
              }`}
            >
              {allEnabled ? "Switch Off All" : "Switch On All"}

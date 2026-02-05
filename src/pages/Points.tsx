@@ -103,7 +103,7 @@
                     <td className="px-4 py-3 text-foreground">{entry.user}</td>
                     <td className="px-4 py-3 font-medium text-foreground">{entry.points}</td>
                      <td className="px-4 py-3">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary">
                          {entry.transactionType}
                        </span>
                      </td>

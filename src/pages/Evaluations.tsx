@@ -1,4 +1,5 @@
 import { useState } from "react";
+ import { PageHeader } from "@/components/shared/PageHeader";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
  import {
@@ -35,7 +36,10 @@ import { useState } from "react";
      <div className="space-y-6">
        {/* Header with filters */}
        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <h1 className="page-title">Evaluations List</h1>
+          <div>
+            <h1 className="page-title">Evaluations List</h1>
+            <p className="page-subtitle">Customer feedback and ratings</p>
+          </div>
          
          <div className="flex flex-wrap items-end gap-4">
            <div className="space-y-2">
@@ -119,7 +123,7 @@ import { useState } from "react";
                        {Array.from({ length: 5 }).map((_, i) => (
                          <span
                            key={i}
-                           className={i < evaluation.foodRating ? "text-yellow-400" : "text-gray-300"}
+                            className={i < evaluation.foodRating ? "text-amber-400" : "text-muted-foreground/30"}
                          >
                            ★
                          </span>
@@ -131,7 +135,7 @@ import { useState } from "react";
                        {Array.from({ length: 5 }).map((_, i) => (
                          <span
                            key={i}
-                           className={i < evaluation.driverRating ? "text-yellow-400" : "text-gray-300"}
+                            className={i < evaluation.driverRating ? "text-amber-400" : "text-muted-foreground/30"}
                          >
                            ★
                          </span>

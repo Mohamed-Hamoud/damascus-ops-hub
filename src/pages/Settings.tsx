@@ -140,7 +140,10 @@
    return (
      <div className="space-y-6">
        <div className="flex items-center justify-between">
-          <h1 className="page-title">Admin Users</h1>
+          <div>
+            <h1 className="page-title">Admin Users</h1>
+            <p className="page-subtitle">Manage admin accounts and roles</p>
+          </div>
          <button
            onClick={() => navigate("/settings/users/new")}
             className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"

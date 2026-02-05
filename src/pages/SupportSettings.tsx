@@ -2,6 +2,7 @@
  import { Switch } from "@/components/ui/switch";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/shared/PageHeader";
  
  /**
   * Support Settings Page
@@ -48,7 +49,7 @@
  
    const ToggleRow = ({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) => (
      <div className="flex items-center justify-between py-3">
-       <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
+      <span className="text-sm text-foreground">{label}</span>
        <Switch checked={checked} onCheckedChange={onChange} />
      </div>
    );
@@ -56,22 +57,22 @@
    return (
      <div className="space-y-6">
        {/* Header */}
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Support Settings</h1>
-         <p className="text-sm text-gray-500 dark:text-gray-400">Configure notification preferences and support system settings</p>
-       </div>
+      <PageHeader
+        title="Support Settings"
+        subtitle="Configure notification preferences and support system settings"
+      />
  
        <div className="grid gap-6 lg:grid-cols-2">
          {/* Customer Email Notifications */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Customer Email Notifications</h3>
+        <div className="rounded-xl border border-border bg-card p-6">
+          <h3 className="section-title mb-4">Customer Email Notifications</h3>
            <div className="space-y-1">
              <ToggleRow
                label="Enable customer email notifications"
                checked={settings.customerEmailEnabled}
                onChange={(v) => setSettings({ ...settings, customerEmailEnabled: v })}
              />
-             <div className="pl-4 space-y-1 border-l-2 border-gray-100 dark:border-gray-700 ml-2">
+            <div className="pl-4 space-y-1 border-l-2 border-border ml-2">
                <ToggleRow
                  label="Ticket created confirmation"
                  checked={settings.ticketCreated}
@@ -97,15 +98,15 @@
          </div>
  
          {/* Agent Email Notifications */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Agent Email Notifications</h3>
+        <div className="rounded-xl border border-border bg-card p-6">
+          <h3 className="section-title mb-4">Agent Email Notifications</h3>
            <div className="space-y-1">
              <ToggleRow
                label="Enable agent email notifications"
                checked={settings.agentEmailEnabled}
                onChange={(v) => setSettings({ ...settings, agentEmailEnabled: v })}
              />
-             <div className="pl-4 space-y-1 border-l-2 border-gray-100 dark:border-gray-700 ml-2">
+            <div className="pl-4 space-y-1 border-l-2 border-border ml-2">
                <ToggleRow
                  label="New ticket notification"
                  checked={settings.newTicket}
@@ -131,8 +132,8 @@
          </div>
  
          {/* Customer Satisfaction Surveys */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Customer Satisfaction Surveys</h3>
+        <div className="rounded-xl border border-border bg-card p-6">
+          <h3 className="section-title mb-4">Customer Satisfaction Surveys</h3>
            <div className="space-y-4">
              <ToggleRow
                label="Enable satisfaction surveys"
@@ -150,7 +151,7 @@
                  type="number"
                  value={settings.delayHours}
                  onChange={(e) => setSettings({ ...settings, delayHours: parseInt(e.target.value) || 0 })}
-                 className="w-32 bg-white dark:bg-gray-800"
+                className="w-32"
                />
              </div>
              <ToggleRow
@@ -165,7 +166,6 @@
                    type="number"
                    value={settings.reminderDays}
                    onChange={(e) => setSettings({ ...settings, reminderDays: parseInt(e.target.value) || 0 })}
-                   className="bg-white dark:bg-gray-800"
                  />
                </div>
                <div className="space-y-2">
@@ -174,7 +174,6 @@
                    type="number"
                    value={settings.expiryDays}
                    onChange={(e) => setSettings({ ...settings, expiryDays: parseInt(e.target.value) || 0 })}
-                   className="bg-white dark:bg-gray-800"
                  />
                </div>
              </div>
@@ -182,30 +181,30 @@
          </div>
  
            {/* Real-time Notifications */}
-           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Real-time Notifications</h3>
+          <div className="rounded-xl border border-border bg-card p-6">
+            <h3 className="section-title mb-4">Real-time Notifications</h3>
              <div className="space-y-4">
                <ToggleRow
                  label="Enable real-time notifications (WebSocket)"
                  checked={settings.realtimeEnabled}
                  onChange={(v) => setSettings({ ...settings, realtimeEnabled: v })}
                />
-               <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-muted-foreground">
                  Enables instant notifications for new tickets and replies without page refresh.
                </p>
              </div>
            </div>
  
            {/* Scheduled Reports */}
-           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Scheduled Reports</h3>
+          <div className="rounded-xl border border-border bg-card p-6">
+            <h3 className="section-title mb-4">Scheduled Reports</h3>
              <div className="space-y-4">
                <ToggleRow
                  label="Enable scheduled reports"
                  checked={settings.scheduledReportsEnabled}
                  onChange={(v) => setSettings({ ...settings, scheduledReportsEnabled: v })}
                />
-               <div className="pl-4 space-y-4 border-l-2 border-gray-100 dark:border-gray-700 ml-2">
+              <div className="pl-4 space-y-4 border-l-2 border-border ml-2">
                  <div className="flex items-center justify-between">
                    <ToggleRow
                      label="Daily report"
@@ -214,12 +213,12 @@
                    />
                  </div>
                  <div className="flex items-center gap-4 ml-4">
-                   <Label className="text-sm text-gray-600 dark:text-gray-400">Send at</Label>
+                  <Label className="text-sm text-muted-foreground">Send at</Label>
                    <Input
                      type="time"
                      value={settings.dailyReportTime}
                      onChange={(e) => setSettings({ ...settings, dailyReportTime: e.target.value })}
-                     className="w-32 bg-white dark:bg-gray-800"
+                    className="w-32"
                    />
                  </div>
                  <ToggleRow
@@ -228,11 +227,11 @@
                    onChange={(v) => setSettings({ ...settings, weeklyReport: v })}
                  />
                  <div className="flex items-center gap-4 ml-4">
-                   <Label className="text-sm text-gray-600 dark:text-gray-400">Send on</Label>
+                  <Label className="text-sm text-muted-foreground">Send on</Label>
                    <select
                      value={settings.weeklyReportDay}
                      onChange={(e) => setSettings({ ...settings, weeklyReportDay: e.target.value })}
-                     className="h-10 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 text-sm"
+                    className="h-10 rounded-md border border-input bg-background text-foreground px-3 text-sm"
                    >
                      <option value="Monday">Monday</option>
                      <option value="Tuesday">Tuesday</option>
@@ -253,15 +252,15 @@
            </div>
  
            {/* AI Assistant Settings */}
-           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">AI Assistant Settings</h3>
+          <div className="rounded-xl border border-border bg-card p-6">
+            <h3 className="section-title mb-4">AI Assistant Settings</h3>
              <div className="space-y-1">
                <ToggleRow
                  label="Enable AI assistant features"
                  checked={settings.aiEnabled}
                  onChange={(v) => setSettings({ ...settings, aiEnabled: v })}
                />
-               <div className="pl-4 space-y-1 border-l-2 border-gray-100 dark:border-gray-700 ml-2">
+              <div className="pl-4 space-y-1 border-l-2 border-border ml-2">
                  <ToggleRow
                    label="Auto-suggest responses to agents"
                    checked={settings.autoSuggest}
@@ -279,15 +278,15 @@
  
          {/* Save Settings Button */}
          <div className="flex justify-center">
-           <button className="px-6 py-2.5 bg-[#aa1e2c] hover:bg-[#8a1824] text-white font-medium rounded-lg transition-colors">
+          <button className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-lg">
              Save Settings
            </button>
          </div>
  
          {/* Test Email Notifications */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Test Email Notifications</h3>
-           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        <div className="rounded-xl border border-border bg-card p-6">
+          <h3 className="section-title mb-4">Test Email Notifications</h3>
+          <p className="text-sm text-muted-foreground mb-4">
              Send a test email to verify your notification settings are working correctly.
            </p>
            <div className="flex items-center gap-4">
@@ -296,9 +295,9 @@
                value={settings.testEmail}
                onChange={(e) => setSettings({ ...settings, testEmail: e.target.value })}
                placeholder="admin@example.com"
-               className="w-64 bg-white dark:bg-gray-800"
+              className="w-64"
              />
-             <button className="px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg transition-colors">
+            <button className="px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-medium rounded-lg">
                Send Test Email
              </button>
            </div>

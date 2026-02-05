@@ -1,5 +1,4 @@
  import { Link, useParams, useNavigate } from "react-router-dom";
- import { ArrowLeft } from "lucide-react";
  import { Button } from "@/components/ui/button";
  import {
    Table,
@@ -9,6 +8,7 @@
    TableHeader,
    TableRow,
  } from "@/components/ui/table";
+import { PageHeader } from "@/components/shared/PageHeader";
  
  // Mock voucher data
  const mockVoucher = {
@@ -37,43 +37,40 @@
    const navigate = useNavigate();
  
    const DetailRow = ({ label, value }: { label: string; value: React.ReactNode }) => (
-     <div className="py-4 border-b border-gray-100 dark:border-gray-700 last:border-0">
-       <p className="text-xs font-semibold uppercase tracking-wider text-[#aa1e2c] mb-1">{label}</p>
-       <p className="text-gray-900 dark:text-white">{value}</p>
+    <div className="py-4 border-b border-border last:border-0">
+      <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{label}</p>
+      <p className="text-foreground">{value}</p>
      </div>
    );
  
    return (
      <div className="space-y-6">
-       {/* Back Link & Actions */}
-       <div className="flex items-center justify-between">
-         <Link
-           to="/promotions"
-           className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-         >
-           <ArrowLeft className="h-4 w-4" />
-           Vouchers
-         </Link>
-         <Button
-           onClick={() => navigate(`/promotions/vouchers/${id}/edit`)}
-           className="bg-gray-900 hover:bg-gray-800 text-white"
-         >
-           Edit
-         </Button>
-       </div>
+      <PageHeader
+        title={mockVoucher.title}
+        backLink="/promotions"
+        backLabel="Vouchers"
+        actions={
+          <Button
+            onClick={() => navigate(`/promotions/vouchers/${id}/edit`)}
+            className="bg-secondary hover:bg-secondary/80 text-secondary-foreground"
+          >
+            Edit
+          </Button>
+        }
+      />
  
        {/* Voucher Details Card */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-         <div className="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Voucher Details</h2>
+      <div className="rounded-xl border border-border bg-card">
+        <div className="border-b border-border px-6 py-4">
+          <h2 className="section-title">Voucher Details</h2>
          </div>
  
          <div className="px-6 py-4">
            <DetailRow label="TITLE" value={mockVoucher.title} />
            
-           <div className="py-4 border-b border-gray-100 dark:border-gray-700">
-             <p className="text-xs font-semibold uppercase tracking-wider text-[#aa1e2c] mb-2">VOUCHER IMAGE</p>
-             <div className="inline-flex items-center justify-center h-12 px-4 rounded-lg bg-[#aa1e2c] text-white font-bold text-sm">
+          <div className="py-4 border-b border-border">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">VOUCHER IMAGE</p>
+            <div className="inline-flex items-center justify-center h-12 px-4 rounded-lg bg-primary text-primary-foreground font-bold text-sm">
                RM50
              </div>
            </div>
@@ -94,9 +91,9 @@
        </div>
  
        {/* User Voucher List */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-         <div className="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="rounded-xl border border-border bg-card">
+        <div className="border-b border-border px-6 py-4">
+          <h2 className="section-title">
              User Voucher List ({userVouchers.length})
            </h2>
          </div>
@@ -114,7 +111,7 @@
            <TableBody>
              {userVouchers.length === 0 ? (
                <TableRow>
-                 <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                    No user vouchers found
                  </TableCell>
                </TableRow>

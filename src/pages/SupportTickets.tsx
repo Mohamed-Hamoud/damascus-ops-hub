@@ -1,6 +1,7 @@
  import { useState } from "react";
  import { Label } from "@/components/ui/label";
  import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/shared/PageHeader";
  
  /**
   * Support Tickets Page
@@ -24,13 +25,13 @@
    return (
      <div className="space-y-6">
        {/* Header */}
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Support Tickets</h1>
-         <p className="text-sm text-gray-500 dark:text-gray-400">Manage customer support tickets</p>
-       </div>
+      <PageHeader
+        title="Support Tickets"
+        subtitle="Manage customer support tickets"
+      />
  
        {/* Filters Card */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+      <div className="rounded-xl border border-border bg-card p-6">
          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
            {/* Status */}
            <div className="space-y-2">
@@ -38,7 +39,7 @@
              <select
                value={filters.status}
                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-               className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground"
              >
                <option value="all">All Statuses</option>
                <option value="open">Open</option>
@@ -54,7 +55,7 @@
              <select
                value={filters.priority}
                onChange={(e) => setFilters({ ...filters, priority: e.target.value })}
-               className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground"
              >
                <option value="all">All Priorities</option>
                <option value="low">Low</option>
@@ -70,7 +71,7 @@
              <select
                value={filters.category}
                onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-               className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground"
              >
                <option value="all">All Categories</option>
                <option value="order">Order Issues</option>
@@ -86,7 +87,7 @@
              <select
                value={filters.agent}
                onChange={(e) => setFilters({ ...filters, agent: e.target.value })}
-               className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground"
              >
                <option value="all">All Agents</option>
              </select>
@@ -99,7 +100,6 @@
                type="date"
                value={filters.fromDate}
                onChange={(e) => setFilters({ ...filters, fromDate: e.target.value })}
-               className="bg-white dark:bg-gray-800"
              />
            </div>
  
@@ -110,7 +110,6 @@
                type="date"
                value={filters.toDate}
                onChange={(e) => setFilters({ ...filters, toDate: e.target.value })}
-               className="bg-white dark:bg-gray-800"
              />
            </div>
          </div>
@@ -122,38 +121,37 @@
                placeholder="Search by ticket #, subject, phone..."
                value={filters.search}
                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-               className="bg-white dark:bg-gray-800"
              />
            </div>
            <div className="flex items-center gap-4">
-             <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <label className="flex items-center gap-2 text-sm text-muted-foreground">
                <input
                  type="checkbox"
                  checked={filters.unassigned}
                  onChange={(e) => setFilters({ ...filters, unassigned: e.target.checked })}
-                 className="rounded border-gray-300"
+              className="rounded border-border"
                />
                Unassigned
              </label>
-             <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <label className="flex items-center gap-2 text-sm text-muted-foreground">
                <input
                  type="checkbox"
                  checked={filters.escalated}
                  onChange={(e) => setFilters({ ...filters, escalated: e.target.checked })}
-                 className="rounded border-gray-300"
+              className="rounded border-border"
                />
                Escalated
              </label>
-             <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <label className="flex items-center gap-2 text-sm text-muted-foreground">
                <input
                  type="checkbox"
                  checked={filters.slaBreached}
                  onChange={(e) => setFilters({ ...filters, slaBreached: e.target.checked })}
-                 className="rounded border-red-300"
+              className="rounded border-destructive"
                />
                SLA Breached
              </label>
-             <button className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200">
+          <button className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90">
                Filter
              </button>
            </div>
@@ -161,27 +159,27 @@
        </div>
  
        {/* Tickets Table */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+    <div className="rounded-xl border border-border bg-card card-shadow overflow-hidden">
          <div className="overflow-x-auto">
            <table className="w-full">
              <thead>
-               <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Ticket</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Subject</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Customer</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Order</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Category</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Status</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Priority</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Agent</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Created</th>
+            <tr className="bg-muted/30 border-b border-border">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ticket</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Subject</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Customer</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Order</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Category</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Priority</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Agent</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Created</th>
                </tr>
              </thead>
              <tbody>
                <tr>
                  <td colSpan={9} className="px-4 py-12 text-center">
-                   <p className="text-gray-900 dark:text-white font-medium">No tickets found</p>
-                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Try adjusting your filters or search criteria</p>
+                <p className="text-foreground font-medium">No tickets found</p>
+                <p className="text-sm text-muted-foreground mt-1">Try adjusting your filters or search criteria</p>
                  </td>
                </tr>
              </tbody>

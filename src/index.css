@@ -286,6 +286,21 @@
   }
 
   /* ========================================
+     DRAG HANDLE UTILITIES
+     HAML: %button.drag-handle
+     DaisyUI: btn btn-ghost cursor-grab
+     ======================================== */
+  .drag-handle {
+    @apply h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground;
+    @apply hover:bg-muted cursor-grab active:cursor-grabbing transition-colors;
+  }
+
+  .drag-handle-sm {
+    @apply h-6 w-6 flex items-center justify-center rounded text-muted-foreground;
+    @apply hover:bg-muted cursor-grab active:cursor-grabbing transition-colors;
+  }
+
+  /* ========================================
      CARD UTILITIES
      HAML: .card-header, .card-body-compact
      ======================================== */

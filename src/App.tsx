@@ -19,6 +19,11 @@
  import Banners from "./pages/Banners";
  import Support from "./pages/Support";
  import ProductDetail from "./pages/ProductDetail";
+ import SupportTickets from "./pages/SupportTickets";
+ import SupportSettings from "./pages/SupportSettings";
+ import Branches from "./pages/Branches";
+ import RestaurantApp from "./pages/RestaurantApp";
+ import Points from "./pages/Points";
  import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,10 +50,12 @@ const App = () => (
              <Route path="/customers/:id" element={<CustomerDetail />} />
               <Route path="/evaluations" element={<ComingSoon title="Evaluations" />} />
              <Route path="/support" element={<Support />} />
-              <Route path="/branches" element={<ComingSoon title="Branches" />} />
-              <Route path="/restaurant-app" element={<ComingSoon title="Restaurant App" />} />
+              <Route path="/support/tickets" element={<SupportTickets />} />
+              <Route path="/support/settings" element={<SupportSettings />} />
+              <Route path="/branches" element={<Branches />} />
+              <Route path="/restaurant-app" element={<RestaurantApp />} />
              <Route path="/reports" element={<Reports />} />
-               <Route path="/points" element={<ComingSoon title="Points" />} />
+               <Route path="/points" element={<Points />} />
                <Route path="/feedbacks" element={<Feedbacks />} />
                <Route path="/security" element={<Security />} />
                <Route path="/settings" element={<Settings />} />

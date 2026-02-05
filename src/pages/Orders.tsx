@@ -1,24 +1,21 @@
  import { useState } from "react";
  import { Link } from "react-router-dom";
  import { Search, Eye, Calendar } from "lucide-react";
- import { Input } from "@/components/ui/input";
- import { Button } from "@/components/ui/button";
- import {
-   Select,
-   SelectContent,
-   SelectItem,
-   SelectTrigger,
-   SelectValue,
- } from "@/components/ui/select";
- import {
-   Table,
-   TableBody,
-   TableCell,
-   TableHead,
-   TableHeader,
-   TableRow,
- } from "@/components/ui/table";
  import { StatusBadge } from "@/components/dashboard/StatusBadge";
+ 
+/**
+ * Orders Page
+ * DaisyUI components: input, select, table, btn, badge
+ * 
+ * HAML structure:
+ * .space-y-6
+ *   %h1.text-2xl.font-bold Orders
+ *   .card.bg-base-100.shadow-sm
+ *     %input.input.input-bordered{ placeholder: 'Search...' }
+ *     %select.select.select-bordered
+ *   .card.bg-base-100.shadow-sm
+ *     %table.table
+ */
  
  const ordersData = [
    { id: "DF-268-FF3A-040226", internalId: "68", date: "Feb 04, 2026", time: "11:24 AM", customer: "Aisyah Binti Rahman", branch: "Damascus Delivery", amount: "RM 503.20", delivery: "5.00", status: "accepted" },
@@ -48,114 +45,123 @@
      <div className="space-y-6">
        {/* Page Header */}
        <div>
-        <h1 className="page-title">Orders</h1>
-        <p className="page-subtitle">Manage and track all customer orders</p>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Orders</h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage and track all customer orders</p>
        </div>
  
        {/* Filters */}
-      <div className="rounded-xl border bg-card p-5 card-shadow">
+      {/* DaisyUI: card bg-base-100 shadow-sm */}
+      <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
            <div className="flex-1">
              <div className="relative">
-               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-               <Input
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              {/* DaisyUI: input input-bordered */}
+              <input
+                type="text"
                  placeholder="Search by Order ID or Customer..."
-                className="pl-9 bg-background/50"
+                className="w-full pl-9 pr-4 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#aa1e2c]/20 focus:border-[#aa1e2c]"
                  value={searchQuery}
                  onChange={(e) => setSearchQuery(e.target.value)}
                />
              </div>
            </div>
            <div className="flex flex-wrap items-center gap-2">
-             <Select value={statusFilter} onValueChange={setStatusFilter}>
-               <SelectTrigger className="w-36">
-                 <SelectValue placeholder="Status" />
-               </SelectTrigger>
-               <SelectContent>
-                 <SelectItem value="all">All Status</SelectItem>
-                 <SelectItem value="new">New</SelectItem>
-                 <SelectItem value="accepted">Kitchen Accepted</SelectItem>
-                 <SelectItem value="delivering">Ready To Deliver</SelectItem>
-                 <SelectItem value="completed">Completed</SelectItem>
-                 <SelectItem value="cancelled">Cancelled</SelectItem>
-               </SelectContent>
-             </Select>
-            <Button variant="outline" size="icon" className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">
-               <Calendar className="h-4 w-4" />
-             </Button>
+            {/* DaisyUI: select select-bordered */}
+            <select 
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="select select-bordered w-36 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#aa1e2c]/20 focus:border-[#aa1e2c]"
+            >
+              <option value="all">All Status</option>
+              <option value="new">New</option>
+              <option value="accepted">Kitchen Accepted</option>
+              <option value="delivering">Ready To Deliver</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            {/* DaisyUI: btn btn-square btn-outline */}
+            <button className="h-10 w-10 flex items-center justify-center border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white hover:border-[#aa1e2c] transition-all duration-200">
+              <Calendar className="h-4 w-4" />
+            </button>
            </div>
          </div>
        </div>
  
        {/* Orders Table */}
-      <div className="rounded-xl border bg-card card-shadow overflow-hidden">
+      {/* DaisyUI: card bg-base-100 shadow-sm */}
+      <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
          <div className="overflow-x-auto">
-           <Table>
-             <TableHeader>
-               <TableRow className="bg-muted/50">
-                 <TableHead className="font-semibold">Order</TableHead>
-                 <TableHead className="font-semibold">Date</TableHead>
-                 <TableHead className="font-semibold">Customer</TableHead>
-                 <TableHead className="font-semibold">Branch</TableHead>
-                 <TableHead className="font-semibold text-right">Amount</TableHead>
-                 <TableHead className="font-semibold">Status</TableHead>
-                 <TableHead className="font-semibold w-12"></TableHead>
-               </TableRow>
-             </TableHeader>
-             <TableBody>
+          {/* DaisyUI: table table-zebra */}
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Order</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Date</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Customer</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Branch</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Amount</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                <th className="px-4 py-3 w-12"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                {filteredOrders.map((order) => (
-                <TableRow key={order.id} className="hover:bg-muted/30 transition-colors duration-150">
-                   <TableCell>
+                <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150">
+                  <td className="px-4 py-3">
                      <div>
-                       <span className="font-medium text-primary">#{order.id}</span>
-                       <p className="text-xs text-muted-foreground">ID {order.internalId}</p>
+                      <span className="font-medium text-[#aa1e2c]">#{order.id}</span>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">ID {order.internalId}</p>
                      </div>
-                   </TableCell>
-                   <TableCell>
+                  </td>
+                  <td className="px-4 py-3">
                      <div>
-                       <span className="text-sm">{order.date}</span>
-                       <p className="text-xs text-muted-foreground">{order.time}</p>
+                      <span className="text-sm text-gray-900 dark:text-white">{order.date}</span>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{order.time}</p>
                      </div>
-                   </TableCell>
-                   <TableCell>
-                     <span className={order.customer ? "text-primary font-medium" : "text-muted-foreground"}>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className={order.customer ? "text-[#aa1e2c] font-medium" : "text-gray-400"}>
                        {order.customer || "Guest"}
                      </span>
-                   </TableCell>
-                   <TableCell className="text-muted-foreground">{order.branch}</TableCell>
-                   <TableCell className="text-right">
+                  </td>
+                  <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{order.branch}</td>
+                  <td className="px-4 py-3 text-right">
                      <div>
-                       <span className="font-semibold">{order.amount}</span>
-                       <p className="text-xs text-muted-foreground">+ {order.delivery} delivery</p>
+                      <span className="font-semibold text-gray-900 dark:text-white">{order.amount}</span>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">+ {order.delivery} delivery</p>
                      </div>
-                   </TableCell>
-                   <TableCell>
+                  </td>
+                  <td className="px-4 py-3">
                      <StatusBadge status={order.status} />
-                   </TableCell>
-                   <TableCell>
-                    <Button variant="ghost" size="icon" asChild className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">
-                       <Link to={`/orders/${order.id}`}>
-                         <Eye className="h-4 w-4" />
-                       </Link>
-                     </Button>
-                   </TableCell>
-                 </TableRow>
+                  </td>
+                  <td className="px-4 py-3">
+                    {/* DaisyUI: btn btn-ghost btn-square btn-sm */}
+                    <Link 
+                      to={`/orders/${order.id}`}
+                      className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white transition-all duration-200"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Link>
+                  </td>
+                </tr>
                ))}
-             </TableBody>
-           </Table>
+            </tbody>
+          </table>
          </div>
  
          {/* Pagination */}
-         <div className="flex items-center justify-between border-t px-4 py-3">
-           <p className="text-sm text-muted-foreground">
+        <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 px-4 py-3">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
              Showing 1-10 of 66 orders
            </p>
+          {/* DaisyUI: btn-group */}
            <div className="flex items-center gap-1">
-            <Button variant="outline" size="sm" disabled className="transition-all duration-200">Previous</Button>
-            <Button variant="default" size="sm" className="w-8 transition-all duration-200">1</Button>
-            <Button variant="outline" size="sm" className="w-8 transition-all duration-200 hover:bg-primary hover:text-primary-foreground">2</Button>
-            <Button variant="outline" size="sm" className="w-8 transition-all duration-200 hover:bg-primary hover:text-primary-foreground">3</Button>
-            <Button variant="outline" size="sm" className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">Next</Button>
+            <button disabled className="px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-400 cursor-not-allowed">Previous</button>
+            <button className="w-8 h-8 text-sm rounded-lg bg-[#aa1e2c] text-white font-medium">1</button>
+            <button className="w-8 h-8 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white hover:border-[#aa1e2c] transition-all duration-200">2</button>
+            <button className="w-8 h-8 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white hover:border-[#aa1e2c] transition-all duration-200">3</button>
+            <button className="px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white hover:border-[#aa1e2c] transition-all duration-200">Next</button>
            </div>
          </div>
        </div>

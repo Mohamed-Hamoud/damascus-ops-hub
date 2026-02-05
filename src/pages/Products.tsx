@@ -1,22 +1,24 @@
  import { useState } from "react";
  import { Edit, Eye, Trash2, Plus } from "lucide-react";
- import { Button } from "@/components/ui/button";
- import {
-   Select,
-   SelectContent,
-   SelectItem,
-   SelectTrigger,
-   SelectValue,
- } from "@/components/ui/select";
- import {
-   Table,
-   TableBody,
-   TableCell,
-   TableHead,
-   TableHeader,
-   TableRow,
- } from "@/components/ui/table";
- import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+/**
+ * Products Page
+ * DaisyUI components: tabs, table, card, btn, select, badge
+ * 
+ * HAML structure:
+ * .space-y-6
+ *   .flex.justify-between
+ *     %h1.text-2xl.font-bold Products
+ *     .flex.gap-2
+ *       %select.select.select-bordered
+ *       %button.btn.btn-outline + Division
+ *       %button.btn.btn-primary + Product
+ *   .tabs.tabs-boxed
+ *     %a.tab Products
+ *     %a.tab Divisions
+ *   .card.bg-base-100
+ *     %table.table
+ */
  
  const productsData = [
    { id: 1, name: "Ice Lemon Tea", description: "Refreshing iced lemon tea", division: "Bar", category: "Beverages", oldPrice: null, price: "5.00", bestseller: false },
@@ -44,180 +46,195 @@
  
  export default function Products() {
    const [categoryFilter, setCategoryFilter] = useState("all");
+  const [activeTab, setActiveTab] = useState("products");
  
    return (
      <div className="space-y-6">
        {/* Page Header */}
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
          <div>
-          <h1 className="page-title">Products</h1>
-          <p className="page-subtitle">Manage your food menu and inventory</p>
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Products</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your food menu and inventory</p>
          </div>
          <div className="flex flex-wrap items-center gap-2">
-           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-             <SelectTrigger className="w-32">
-               <SelectValue placeholder="Category" />
-             </SelectTrigger>
-             <SelectContent>
-               <SelectItem value="all">All</SelectItem>
-               {categoriesData.map((cat) => (
-                 <SelectItem key={cat.id} value={cat.name.toLowerCase()}>
-                   {cat.name}
-                 </SelectItem>
-               ))}
-             </SelectContent>
-           </Select>
-          <Button variant="outline" className="transition-all duration-200 hover:bg-secondary">+ Division</Button>
-          <Button variant="outline" className="transition-all duration-200 hover:bg-secondary">+ Category</Button>
-          <Button className="transition-all duration-200 hover:shadow-md">
+          {/* DaisyUI: select select-bordered select-sm */}
+          <select 
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="select select-bordered w-32 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#aa1e2c]/20 focus:border-[#aa1e2c]"
+          >
+            <option value="all">All</option>
+            {categoriesData.map((cat) => (
+              <option key={cat.id} value={cat.name.toLowerCase()}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          {/* DaisyUI: btn btn-outline */}
+          <button className="px-4 py-2 text-sm font-medium border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200">+ Division</button>
+          <button className="px-4 py-2 text-sm font-medium border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200">+ Category</button>
+          {/* DaisyUI: btn btn-primary */}
+          <button className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-2">
              <Plus className="mr-2 h-4 w-4" />
              Product
-           </Button>
+          </button>
          </div>
        </div>
  
        {/* Tabs */}
-       <Tabs defaultValue="products" className="space-y-4">
-        <TabsList className="bg-card border shadow-sm p-1">
-           <TabsTrigger value="products">Products</TabsTrigger>
-           <TabsTrigger value="divisions">Divisions</TabsTrigger>
-           <TabsTrigger value="categories">Categories</TabsTrigger>
-           <TabsTrigger value="bestsellers">Bestsellers</TabsTrigger>
-         </TabsList>
+      {/* DaisyUI: tabs tabs-boxed */}
+      <div className="space-y-4">
+        <div className="flex gap-1 p-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm w-fit">
+          {["products", "divisions", "categories", "bestsellers"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 capitalize ${
+                activeTab === tab
+                  ? "bg-[#aa1e2c] text-white shadow-sm"
+                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
  
-         <TabsContent value="products">
-          <div className="rounded-xl border bg-card card-shadow overflow-hidden">
+        {activeTab === "products" && (
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
              <div className="overflow-x-auto">
-               <Table>
-                 <TableHeader>
-                   <TableRow className="bg-muted/50">
-                     <TableHead className="font-semibold w-16">Photo</TableHead>
-                     <TableHead className="font-semibold">Product</TableHead>
-                     <TableHead className="font-semibold">Division</TableHead>
-                     <TableHead className="font-semibold">Category</TableHead>
-                     <TableHead className="font-semibold text-right">Old Price</TableHead>
-                     <TableHead className="font-semibold text-right">Price</TableHead>
-                     <TableHead className="font-semibold text-center">Bestseller</TableHead>
-                     <TableHead className="font-semibold"></TableHead>
-                   </TableRow>
-                 </TableHeader>
-                 <TableBody>
+              {/* DaisyUI: table */}
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider w-16">Photo</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Product</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Division</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Category</th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Old Price</th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Price</th>
+                    <th className="px-4 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Bestseller</th>
+                    <th className="px-4 py-3"></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                    {productsData.map((product) => (
-                    <TableRow key={product.id} className="hover:bg-muted/30 transition-colors duration-150">
-                       <TableCell>
-                        <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center text-xl shadow-sm">
+                    <tr key={product.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150">
+                      <td className="px-4 py-3">
+                        <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-xl shadow-sm">
                            🍽️
                          </div>
-                       </TableCell>
-                       <TableCell>
+                      </td>
+                      <td className="px-4 py-3">
                          <div>
-                           <span className="font-medium text-primary">{product.name}</span>
-                           <p className="text-xs text-muted-foreground line-clamp-1">{product.description}</p>
+                          <span className="font-medium text-[#aa1e2c]">{product.name}</span>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">{product.description}</p>
                          </div>
-                       </TableCell>
-                       <TableCell className="text-muted-foreground">{product.division}</TableCell>
-                       <TableCell className="text-muted-foreground">{product.category}</TableCell>
-                       <TableCell className="text-right text-muted-foreground">
+                      </td>
+                      <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{product.division}</td>
+                      <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{product.category}</td>
+                      <td className="px-4 py-3 text-right text-gray-400 line-through">
                          {product.oldPrice ? `RM ${product.oldPrice}` : "—"}
-                       </TableCell>
-                       <TableCell className="text-right font-semibold">
+                      </td>
+                      <td className="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">
                          RM {product.price}
-                       </TableCell>
-                       <TableCell className="text-center">
-                         <span className={`text-xs font-semibold ${product.bestseller ? "text-success" : "text-muted-foreground"}`}>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <span className={`text-xs font-semibold ${product.bestseller ? "text-green-600 dark:text-green-400" : "text-gray-400"}`}>
                            {product.bestseller ? "YES" : "NO"}
                          </span>
-                       </TableCell>
-                       <TableCell>
+                      </td>
+                      <td className="px-4 py-3">
                          <div className="flex items-center gap-1">
-                          <Button size="sm" className="transition-all duration-200">Edit</Button>
-                          <Button variant="outline" size="sm" className="transition-all duration-200 hover:bg-secondary">View</Button>
-                          <Button variant="outline" size="sm" className="transition-all duration-200 hover:bg-destructive hover:text-destructive-foreground hover:border-destructive">Delete</Button>
+                          {/* DaisyUI: btn btn-primary btn-sm */}
+                          <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200">Edit</button>
+                          <button className="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200">View</button>
+                          <button className="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-200">Delete</button>
                          </div>
-                       </TableCell>
-                     </TableRow>
+                      </td>
+                    </tr>
                    ))}
-                 </TableBody>
-               </Table>
+                </tbody>
+              </table>
              </div>
            </div>
-         </TabsContent>
+        )}
  
-         <TabsContent value="divisions">
-          <div className="rounded-xl border bg-card card-shadow p-6">
+        {activeTab === "divisions" && (
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-6">
              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                {divisionsData.map((division) => (
-                <div key={division.id} className="rounded-xl border bg-gradient-to-br from-background to-muted/20 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20">
+                <div key={division.id} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gradient-to-br from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-[#aa1e2c]/20">
                    <div className="flex items-center justify-between">
                      <div>
-                      <h3 className="font-semibold text-lg">{division.name}</h3>
-                       <p className="text-sm text-muted-foreground">{division.productCount} products</p>
+                      <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{division.name}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{division.productCount} products</p>
                      </div>
                      <div className="flex gap-1">
-                      <Button variant="ghost" size="icon" className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">
+                      <button className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-[#aa1e2c] hover:text-white transition-all duration-200">
                          <Edit className="h-4 w-4" />
-                       </Button>
-                      <Button variant="ghost" size="icon" className="transition-all duration-200 hover:bg-destructive hover:text-destructive-foreground">
+                      </button>
+                      <button className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-red-500 hover:text-white transition-all duration-200">
                          <Trash2 className="h-4 w-4" />
-                       </Button>
+                      </button>
                      </div>
                    </div>
                  </div>
                ))}
              </div>
            </div>
-         </TabsContent>
+        )}
  
-         <TabsContent value="categories">
-          <div className="rounded-xl border bg-card card-shadow p-6">
+        {activeTab === "categories" && (
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-6">
              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                {categoriesData.map((category) => (
-                <div key={category.id} className="rounded-xl border bg-gradient-to-br from-background to-muted/20 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20">
+                <div key={category.id} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gradient-to-br from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-[#aa1e2c]/20">
                    <div className="flex items-center justify-between">
                      <div>
-                      <h3 className="font-semibold text-lg">{category.name}</h3>
-                       <p className="text-sm text-muted-foreground">{category.productCount} products</p>
+                      <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{category.name}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{category.productCount} products</p>
                      </div>
                      <div className="flex gap-1">
-                      <Button variant="ghost" size="icon" className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">
+                      <button className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-[#aa1e2c] hover:text-white transition-all duration-200">
                          <Edit className="h-4 w-4" />
-                       </Button>
-                      <Button variant="ghost" size="icon" className="transition-all duration-200 hover:bg-destructive hover:text-destructive-foreground">
+                      </button>
+                      <button className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-red-500 hover:text-white transition-all duration-200">
                          <Trash2 className="h-4 w-4" />
-                       </Button>
+                      </button>
                      </div>
                    </div>
                  </div>
                ))}
              </div>
            </div>
-         </TabsContent>
+        )}
  
-         <TabsContent value="bestsellers">
-          <div className="rounded-xl border bg-card card-shadow p-6">
+        {activeTab === "bestsellers" && (
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-6">
              <div className="space-y-4">
                {productsData.filter(p => p.bestseller).map((product, index) => (
-                <div key={product.id} className="flex items-center gap-4 rounded-xl border bg-gradient-to-r from-background to-muted/20 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-lg font-bold text-primary shadow-sm">
+                <div key={product.id} className="flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-[#aa1e2c]/20">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#aa1e2c]/10 text-lg font-bold text-[#aa1e2c] shadow-sm">
                      {index + 1}
                    </div>
-                  <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center text-2xl shadow-sm">
+                  <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-2xl shadow-sm">
                      🍛
                    </div>
                    <div className="flex-1">
-                    <h3 className="font-semibold text-lg">{product.name}</h3>
-                     <p className="text-sm text-muted-foreground">{product.category}</p>
+                    <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{product.name}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{product.category}</p>
                    </div>
-                   <span className="text-lg font-semibold">RM {product.price}</span>
+                  <span className="text-lg font-semibold text-gray-900 dark:text-white">RM {product.price}</span>
                  </div>
                ))}
                {productsData.filter(p => p.bestseller).length === 0 && (
-                 <p className="text-center text-muted-foreground py-8">No bestsellers marked yet.</p>
+                <p className="text-center text-gray-500 dark:text-gray-400 py-8">No bestsellers marked yet.</p>
                )}
              </div>
            </div>
-         </TabsContent>
-       </Tabs>
+        )}
+      </div>
      </div>
    );
  }

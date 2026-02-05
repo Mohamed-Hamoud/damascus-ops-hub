@@ -61,7 +61,14 @@
    const isFormView = isNewView || isEditView;
  
    const [categoryFilter, setCategoryFilter] = useState("all");
-   const [activeTab, setActiveTab] = useState("products");
+     const [activeTab, setActiveTab] = useState<string>("products");
+   
+     const productTabs = [
+       { id: "products", label: "Products" },
+       { id: "divisions", label: "Divisions" },
+       { id: "categories", label: "Categories" },
+       { id: "bestsellers", label: "Bestsellers" },
+     ];
  
    const product = id ? productsData.find((p) => p.id === parseInt(id)) : null;
  

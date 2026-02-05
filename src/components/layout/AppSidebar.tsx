@@ -38,7 +38,6 @@
    CollapsibleTrigger,
  } from "@/components/ui/collapsible";
  import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
  
  const mainNavItems = [
    { title: "Dashboard", url: "/", icon: LayoutDashboard },
@@ -144,15 +143,14 @@ import { Button } from "@/components/ui/button";
    );
  }
  
- export function AppSidebar() {
-  const { state, toggleSidebar } = useSidebar();
-   const isCollapsed = state === "collapsed";
-  const location = useLocation();
+export function AppSidebar() {
+  const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
  
    return (
      <Sidebar
        className={cn(
-        "border-r-0 transition-all duration-300 ease-in-out",
+        "border-r-0 transition-all duration-300 ease-in-out group/sidebar",
          isCollapsed ? "w-14" : "w-60"
        )}
        collapsible="icon"
@@ -203,24 +201,6 @@ import { Button } from "@/components/ui/button";
          <NavSection label="Business" items={businessItems} />
          <NavSection label="System" items={systemItems} />
        </SidebarContent>
-
-      <SidebarFooter className="border-t border-sidebar-border p-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={toggleSidebar}
-          className="w-full justify-center text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent"
-        >
-          {isCollapsed ? (
-            <ChevronRight className="h-4 w-4" />
-          ) : (
-            <>
-              <ChevronLeft className="h-4 w-4 mr-2" />
-              <span className="text-xs">Collapse</span>
-            </>
-          )}
-        </Button>
-      </SidebarFooter>
      </Sidebar>
    );
  }

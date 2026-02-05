@@ -1,6 +1,6 @@
  import { useState } from "react";
  import { useLocation, Link } from "react-router-dom";
- import { Search, Bell, ChevronRight, User, Settings, LogOut } from "lucide-react";
+import { Search, Bell, ChevronRight, User, Settings, LogOut, Sun, Moon } from "lucide-react";
  import { Input } from "@/components/ui/input";
  import { Button } from "@/components/ui/button";
  import {
@@ -13,6 +13,7 @@
  } from "@/components/ui/dropdown-menu";
  import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
  import { Badge } from "@/components/ui/badge";
+import { useTheme } from "next-themes";
  
  const routeNames: Record<string, string> = {
    "/": "Dashboard",
@@ -33,13 +34,14 @@
  export function TopHeader() {
    const location = useLocation();
    const [searchQuery, setSearchQuery] = useState("");
-   
+  const { theme, setTheme } = useTheme();
+
    const currentRoute = location.pathname;
    const routeName = routeNames[currentRoute] || "Page";
    const isDetailPage = currentRoute.includes("/orders/");
  
    return (
-     <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b bg-card/80 backdrop-blur-sm px-6">
+    <header className="sticky top-0 z-40 flex h-16 flex-1 items-center gap-4 border-b bg-card/80 backdrop-blur-sm px-6">
        {/* Breadcrumbs */}
        <nav className="flex items-center gap-1.5 text-sm">
          <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -73,6 +75,21 @@
          />
        </div>
  
+        {/* Dark Mode Toggle */}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="text-muted-foreground hover:text-foreground"
+        >
+          {theme === "dark" ? (
+            <Sun className="h-5 w-5" />
+          ) : (
+            <Moon className="h-5 w-5" />
+          )}
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+
        {/* Notifications */}
        <DropdownMenu>
          <DropdownMenuTrigger asChild>

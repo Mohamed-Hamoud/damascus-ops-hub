@@ -70,7 +70,7 @@
  
    const handlePageChange = (page: number) => {
      setCurrentPage(page);
-   });
+   };
  
    return (
      <div className="space-y-6">

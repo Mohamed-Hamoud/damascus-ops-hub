@@ -75,8 +75,8 @@
              <div className="grid grid-cols-2 gap-4">
                {statsData.map((stat, index) => (
                  <div key={index} className="text-center p-3 rounded-lg bg-muted/50">
-                   <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                   <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+                     <p className="stat-value">{stat.value}</p>
+                     <p className="stat-label mt-1">{stat.label}</p>
                  </div>
                ))}
              </div>
@@ -103,7 +103,7 @@
            {/* Customer Satisfaction */}
            <div className="rounded-xl border border-border bg-card p-5 text-center">
              <h3 className="section-title mb-4">Customer Satisfaction</h3>
-             <p className="text-5xl font-bold text-foreground mb-3">0</p>
+               <p className="stat-value-lg text-5xl mb-3">0</p>
              <div className="flex items-center justify-center gap-1 mb-2">
                {[1, 2, 3, 4, 5].map((star) => (
                  <Star key={star} className="h-5 w-5 text-muted" />

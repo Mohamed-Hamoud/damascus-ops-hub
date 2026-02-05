@@ -20,6 +20,7 @@
    TooltipProvider,
    TooltipTrigger,
  } from "@/components/ui/tooltip";
+ import { TabNavigation } from "@/components/shared/TabNavigation";
  
  /**
   * Products Page

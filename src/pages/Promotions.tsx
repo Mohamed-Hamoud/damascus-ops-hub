@@ -15,6 +15,7 @@
  } from "@/components/ui/table";
  import { FormModal } from "@/components/shared/FormModal";
  import { PageHeader } from "@/components/shared/PageHeader";
+ import { TabNavigation } from "@/components/shared/TabNavigation";
  
  type TabType = "delivery-fees" | "discounts" | "custom-discounts" | "vouchers";
  

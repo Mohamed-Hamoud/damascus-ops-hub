@@ -296,10 +296,10 @@
  
          <TabsContent value="orders" className="space-y-6">
            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-             <StatCard title="Total Orders" value="84" icon={ShoppingBag} />
-             <StatCard title="Avg Order Value" value="RM 218.50" icon={DollarSign} />
-             <StatCard title="New Customers" value="23" icon={Users} />
-             <StatCard title="Repeat Rate" value="45%" icon={Percent} />
+             <StatCard title="Total Orders" value="84" icon={<ShoppingBag className="h-5 w-5" />} />
+             <StatCard title="Avg Order Value" value="RM 218.50" icon={<DollarSign className="h-5 w-5" />} />
+             <StatCard title="New Customers" value="23" icon={<Users className="h-5 w-5" />} />
+             <StatCard title="Repeat Rate" value="45%" icon={<Percent className="h-5 w-5" />} />
            </div>
            <div className="rounded-xl border bg-card card-shadow overflow-hidden">
              <div className="border-b bg-muted/30 px-6 py-4">

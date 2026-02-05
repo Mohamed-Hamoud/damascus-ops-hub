@@ -67,20 +67,20 @@
      <div className="space-y-6">
        {/* Header */}
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h1 className="page-title">
            {activeTab === "delivery-fees" && "Delivery Fee Rules"}
            {activeTab === "discounts" && "Discounts"}
            {activeTab === "custom-discounts" && "Custom Discounts"}
            {activeTab === "vouchers" && "Vouchers"}
          </h1>
          {activeTab === "vouchers" && (
-           <Button onClick={() => navigate("/promotions/vouchers/new")} className="bg-[#aa1e2c] hover:bg-[#8a1824]">
+            <Button onClick={() => navigate("/promotions/vouchers/new")} className="bg-primary hover:bg-primary/90">
              <Plus className="mr-2 h-4 w-4" />
              Add Voucher
            </Button>
          )}
          {activeTab === "delivery-fees" && (
-           <Button onClick={() => setShowRuleModal(true)} className="bg-[#aa1e2c] hover:bg-[#8a1824]">
+            <Button onClick={() => setShowRuleModal(true)} className="bg-primary hover:bg-primary/90">
              <Plus className="mr-2 h-4 w-4" />
              Add Rule
            </Button>
@@ -88,7 +88,7 @@
        </div>
  
        {/* Tabs */}
-       <div className="border-b border-gray-200 dark:border-gray-700">
+        <div className="border-b">
          <nav className="-mb-px flex gap-6">
            {tabs.map((tab) => (
              <button
@@ -96,8 +96,8 @@
                onClick={() => setActiveTab(tab.id)}
                className={`whitespace-nowrap border-b-2 py-3 px-1 text-sm font-medium transition-colors ${
                  activeTab === tab.id
-                   ? "border-[#aa1e2c] text-[#aa1e2c]"
-                   : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400"
+                    ? "border-primary text-primary"
+                    : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
                }`}
              >
                {tab.label}
@@ -110,8 +110,8 @@
        {activeTab === "delivery-fees" && (
          <div className="space-y-6">
            {/* Delivery Fee Descriptions */}
-           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Delivery Fee Descriptions</h3>
+            <div className="rounded-lg border bg-card p-4">
+              <h3 className="section-title mb-4">Delivery Fee Descriptions</h3>
              <div className="space-y-4">
                <div className="space-y-2">
                  <Label>Description (English)</Label>
@@ -119,7 +119,6 @@
                    value={deliveryDescEN}
                    onChange={(e) => setDeliveryDescEN(e.target.value)}
                    placeholder="Delivery Fee Description EN"
-                   className="bg-white dark:bg-gray-800"
                    rows={3}
                  />
                </div>
@@ -129,17 +128,16 @@
                    value={deliveryDescMS}
                    onChange={(e) => setDeliveryDescMS(e.target.value)}
                    placeholder="Delivery Fee Description MS"
-                   className="bg-white dark:bg-gray-800"
                    rows={3}
                  />
                </div>
-               <Button className="bg-[#aa1e2c] hover:bg-[#8a1824]">Update Descriptions</Button>
+                <Button className="bg-primary hover:bg-primary/90">Update Descriptions</Button>
              </div>
            </div>
  
            {/* Basic Delivery Fee */}
-           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Basic Delivery Fee</h3>
+            <div className="rounded-lg border bg-card p-4">
+              <h3 className="section-title mb-4">Basic Delivery Fee</h3>
              <div className="space-y-4">
                <div className="space-y-2">
                  <Label>Basic Delivery Fee (RM)</Label>
@@ -147,18 +145,18 @@
                    type="number"
                    value={basicDeliveryFee}
                    onChange={(e) => setBasicDeliveryFee(e.target.value)}
-                   className="w-48 bg-white dark:bg-gray-800"
+                    className="w-48"
                  />
                </div>
-               <Button className="bg-[#aa1e2c] hover:bg-[#8a1824]">Update</Button>
+                <Button className="bg-primary hover:bg-primary/90">Update</Button>
              </div>
            </div>
  
            {/* Rules Playground */}
-           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+            <div className="rounded-lg border bg-card p-4">
              <div className="flex items-center justify-between mb-4">
-               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Rules Playground</h3>
-               <span className="text-sm font-medium text-[#aa1e2c]">TEST YOUR RULES</span>
+                <h3 className="section-title">Rules Playground</h3>
+                <span className="text-sm font-medium text-primary">TEST YOUR RULES</span>
              </div>
              <div className="space-y-4">
                <div className="grid gap-4 md:grid-cols-2">
@@ -169,7 +167,6 @@
                      value={testDistance}
                      onChange={(e) => setTestDistance(e.target.value)}
                      placeholder="Enter distance"
-                     className="bg-white dark:bg-gray-800"
                    />
                  </div>
                  <div className="space-y-2">
@@ -179,19 +176,18 @@
                      value={testOrderPrice}
                      onChange={(e) => setTestOrderPrice(e.target.value)}
                      placeholder="Enter price"
-                     className="bg-white dark:bg-gray-800"
                    />
                  </div>
                </div>
-               <Button variant="secondary" className="bg-gray-900 text-white hover:bg-gray-800">Check</Button>
+                <Button variant="secondary">Check</Button>
              </div>
            </div>
  
            {/* Delivery Fee Rules Table */}
-           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+            <div className="rounded-lg border bg-card p-4">
              <div className="flex items-center justify-between mb-4">
-               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Delivery Fee Rules</h3>
-               <span className="text-sm text-gray-500">{mockDeliveryRules.length} rules</span>
+                <h3 className="section-title">Delivery Fee Rules</h3>
+                <span className="text-sm text-muted-foreground">{mockDeliveryRules.length} rules</span>
              </div>
              <Table>
                <TableHeader>
@@ -230,23 +226,23 @@
        )}
  
        {activeTab === "discounts" && (
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <p className="text-gray-500 dark:text-gray-400 text-center py-8">
+          <div className="rounded-lg border bg-card p-4">
+            <p className="text-muted-foreground text-center py-8">
              Discounts management coming soon
            </p>
          </div>
        )}
  
        {activeTab === "custom-discounts" && (
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <p className="text-gray-500 dark:text-gray-400 text-center py-8">
+          <div className="rounded-lg border bg-card p-4">
+            <p className="text-muted-foreground text-center py-8">
              Custom discounts management coming soon
            </p>
          </div>
        )}
  
        {activeTab === "vouchers" && (
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
+          <div className="rounded-lg border bg-card overflow-hidden">
            <Table>
              <TableHeader>
                <TableRow>
@@ -267,7 +263,7 @@
                    <TableCell className="font-medium">{voucher.title}</TableCell>
                    <TableCell>{voucher.code}</TableCell>
                    <TableCell>
-                     <span className="text-[#aa1e2c] font-medium">{voucher.remaining.toLocaleString()}</span>
+                      <span className="text-primary font-medium">{voucher.remaining.toLocaleString()}</span>
                    </TableCell>
                    <TableCell>{voucher.limit.toLocaleString()}</TableCell>
                    <TableCell className="font-medium">{voucher.points.toLocaleString()}</TableCell>
@@ -276,7 +272,7 @@
                    <TableCell>{voucher.endDate}</TableCell>
                    <TableCell className="text-right">
                      <div className="flex items-center justify-end gap-2">
-                       <Button size="sm" variant="secondary" className="bg-gray-900 text-white hover:bg-gray-800" onClick={() => navigate(`/promotions/vouchers/${voucher.id}`)}>
+                        <Button size="sm" variant="secondary" onClick={() => navigate(`/promotions/vouchers/${voucher.id}`)}>
                          View
                        </Button>
                        <Button size="sm" variant="outline" onClick={() => navigate(`/promotions/vouchers/${voucher.id}/edit`)}>
@@ -305,30 +301,30 @@
            <div className="grid gap-4 md:grid-cols-2">
              <div className="space-y-2">
                <Label>Min Distance (KM)</Label>
-               <Input type="number" placeholder="0" className="bg-white dark:bg-gray-800" />
+                <Input type="number" placeholder="0" />
              </div>
              <div className="space-y-2">
                <Label>Max Distance (KM)</Label>
-               <Input type="number" placeholder="10" className="bg-white dark:bg-gray-800" />
+                <Input type="number" placeholder="10" />
              </div>
            </div>
            <div className="space-y-2">
              <Label>Multiplier</Label>
-             <Input type="number" step="0.1" placeholder="1.0" className="bg-white dark:bg-gray-800" />
+              <Input type="number" step="0.1" placeholder="1.0" />
            </div>
            <div className="grid gap-4 md:grid-cols-2">
              <div className="space-y-2">
                <Label>Min Order (RM)</Label>
-               <Input type="number" placeholder="0" className="bg-white dark:bg-gray-800" />
+                <Input type="number" placeholder="0" />
              </div>
              <div className="space-y-2">
                <Label>Max Order (RM)</Label>
-               <Input type="number" placeholder="100" className="bg-white dark:bg-gray-800" />
+                <Input type="number" placeholder="100" />
              </div>
            </div>
            <div className="space-y-2">
              <Label>Discount (%)</Label>
-             <Input type="number" placeholder="0" className="bg-white dark:bg-gray-800" />
+              <Input type="number" placeholder="0" />
            </div>
          </div>
        </FormModal>

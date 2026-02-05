@@ -1,4 +1,5 @@
  import { useState } from "react";
+ import { useNavigate } from "react-router-dom";
  import { Edit, Eye, Trash2, Plus } from "lucide-react";
 
 /**
@@ -45,6 +46,7 @@
  ];
  
  export default function Products() {
+   const navigate = useNavigate();
    const [categoryFilter, setCategoryFilter] = useState("all");
   const [activeTab, setActiveTab] = useState("products");
  
@@ -147,8 +149,14 @@
                       <td className="px-4 py-3">
                          <div className="flex items-center gap-1">
                           {/* DaisyUI: btn btn-primary btn-sm */}
-                          <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200">Edit</button>
-                          <button className="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200">View</button>
+                          <button 
+                            onClick={() => navigate(`/products/${product.id}`)}
+                            className="px-3 py-1.5 text-xs font-medium rounded-md bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200"
+                          >Edit</button>
+                          <button 
+                            onClick={() => navigate(`/products/${product.id}`)}
+                            className="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+                          >View</button>
                           <button className="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-200">Delete</button>
                          </div>
                       </td>

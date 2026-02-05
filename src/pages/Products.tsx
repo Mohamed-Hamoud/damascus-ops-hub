@@ -50,8 +50,8 @@
        {/* Page Header */}
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
          <div>
-           <h1 className="text-2xl font-semibold tracking-tight">Products</h1>
-           <p className="text-sm text-muted-foreground">Manage your food menu and inventory</p>
+          <h1 className="page-title">Products</h1>
+          <p className="page-subtitle">Manage your food menu and inventory</p>
          </div>
          <div className="flex flex-wrap items-center gap-2">
            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
@@ -67,9 +67,9 @@
                ))}
              </SelectContent>
            </Select>
-           <Button variant="outline">+ Division</Button>
-           <Button variant="outline">+ Category</Button>
-           <Button>
+          <Button variant="outline" className="transition-all duration-200 hover:bg-secondary">+ Division</Button>
+          <Button variant="outline" className="transition-all duration-200 hover:bg-secondary">+ Category</Button>
+          <Button className="transition-all duration-200 hover:shadow-md">
              <Plus className="mr-2 h-4 w-4" />
              Product
            </Button>
@@ -78,7 +78,7 @@
  
        {/* Tabs */}
        <Tabs defaultValue="products" className="space-y-4">
-         <TabsList>
+        <TabsList className="bg-card border shadow-sm p-1">
            <TabsTrigger value="products">Products</TabsTrigger>
            <TabsTrigger value="divisions">Divisions</TabsTrigger>
            <TabsTrigger value="categories">Categories</TabsTrigger>
@@ -86,7 +86,7 @@
          </TabsList>
  
          <TabsContent value="products">
-           <div className="rounded-lg border bg-card card-shadow overflow-hidden">
+          <div className="rounded-xl border bg-card card-shadow overflow-hidden">
              <div className="overflow-x-auto">
                <Table>
                  <TableHeader>
@@ -103,9 +103,9 @@
                  </TableHeader>
                  <TableBody>
                    {productsData.map((product) => (
-                     <TableRow key={product.id} className="hover:bg-muted/30">
+                    <TableRow key={product.id} className="hover:bg-muted/30 transition-colors duration-150">
                        <TableCell>
-                         <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center text-lg">
+                        <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center text-xl shadow-sm">
                            🍽️
                          </div>
                        </TableCell>
@@ -130,9 +130,9 @@
                        </TableCell>
                        <TableCell>
                          <div className="flex items-center gap-1">
-                           <Button size="sm">Edit</Button>
-                           <Button variant="outline" size="sm">View</Button>
-                           <Button variant="outline" size="sm">Delete</Button>
+                          <Button size="sm" className="transition-all duration-200">Edit</Button>
+                          <Button variant="outline" size="sm" className="transition-all duration-200 hover:bg-secondary">View</Button>
+                          <Button variant="outline" size="sm" className="transition-all duration-200 hover:bg-destructive hover:text-destructive-foreground hover:border-destructive">Delete</Button>
                          </div>
                        </TableCell>
                      </TableRow>
@@ -144,20 +144,20 @@
          </TabsContent>
  
          <TabsContent value="divisions">
-           <div className="rounded-lg border bg-card card-shadow p-6">
+          <div className="rounded-xl border bg-card card-shadow p-6">
              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                {divisionsData.map((division) => (
-                 <div key={division.id} className="rounded-lg border bg-background/50 p-4">
+                <div key={division.id} className="rounded-xl border bg-gradient-to-br from-background to-muted/20 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20">
                    <div className="flex items-center justify-between">
                      <div>
-                       <h3 className="font-semibold">{division.name}</h3>
+                      <h3 className="font-semibold text-lg">{division.name}</h3>
                        <p className="text-sm text-muted-foreground">{division.productCount} products</p>
                      </div>
                      <div className="flex gap-1">
-                       <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">
                          <Edit className="h-4 w-4" />
                        </Button>
-                       <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" className="transition-all duration-200 hover:bg-destructive hover:text-destructive-foreground">
                          <Trash2 className="h-4 w-4" />
                        </Button>
                      </div>
@@ -169,20 +169,20 @@
          </TabsContent>
  
          <TabsContent value="categories">
-           <div className="rounded-lg border bg-card card-shadow p-6">
+          <div className="rounded-xl border bg-card card-shadow p-6">
              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                {categoriesData.map((category) => (
-                 <div key={category.id} className="rounded-lg border bg-background/50 p-4">
+                <div key={category.id} className="rounded-xl border bg-gradient-to-br from-background to-muted/20 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20">
                    <div className="flex items-center justify-between">
                      <div>
-                       <h3 className="font-semibold">{category.name}</h3>
+                      <h3 className="font-semibold text-lg">{category.name}</h3>
                        <p className="text-sm text-muted-foreground">{category.productCount} products</p>
                      </div>
                      <div className="flex gap-1">
-                       <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">
                          <Edit className="h-4 w-4" />
                        </Button>
-                       <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" className="transition-all duration-200 hover:bg-destructive hover:text-destructive-foreground">
                          <Trash2 className="h-4 w-4" />
                        </Button>
                      </div>
@@ -194,18 +194,18 @@
          </TabsContent>
  
          <TabsContent value="bestsellers">
-           <div className="rounded-lg border bg-card card-shadow p-6">
+          <div className="rounded-xl border bg-card card-shadow p-6">
              <div className="space-y-4">
                {productsData.filter(p => p.bestseller).map((product, index) => (
-                 <div key={product.id} className="flex items-center gap-4 rounded-lg border bg-background/50 p-4">
-                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-lg font-bold text-primary">
+                <div key={product.id} className="flex items-center gap-4 rounded-xl border bg-gradient-to-r from-background to-muted/20 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-lg font-bold text-primary shadow-sm">
                      {index + 1}
                    </div>
-                   <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center text-xl">
+                  <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center text-2xl shadow-sm">
                      🍛
                    </div>
                    <div className="flex-1">
-                     <h3 className="font-semibold">{product.name}</h3>
+                    <h3 className="font-semibold text-lg">{product.name}</h3>
                      <p className="text-sm text-muted-foreground">{product.category}</p>
                    </div>
                    <span className="text-lg font-semibold">RM {product.price}</span>

@@ -48,19 +48,19 @@
      <div className="space-y-6">
        {/* Page Header */}
        <div>
-         <h1 className="text-2xl font-semibold tracking-tight">Orders</h1>
-         <p className="text-sm text-muted-foreground">Manage and track all customer orders</p>
+        <h1 className="page-title">Orders</h1>
+        <p className="page-subtitle">Manage and track all customer orders</p>
        </div>
  
        {/* Filters */}
-       <div className="rounded-lg border bg-card p-4 card-shadow">
+      <div className="rounded-xl border bg-card p-5 card-shadow">
          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
            <div className="flex-1">
              <div className="relative">
                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                <Input
                  placeholder="Search by Order ID or Customer..."
-                 className="pl-9"
+                className="pl-9 bg-background/50"
                  value={searchQuery}
                  onChange={(e) => setSearchQuery(e.target.value)}
                />
@@ -80,7 +80,7 @@
                  <SelectItem value="cancelled">Cancelled</SelectItem>
                </SelectContent>
              </Select>
-             <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">
                <Calendar className="h-4 w-4" />
              </Button>
            </div>
@@ -88,7 +88,7 @@
        </div>
  
        {/* Orders Table */}
-       <div className="rounded-lg border bg-card card-shadow overflow-hidden">
+      <div className="rounded-xl border bg-card card-shadow overflow-hidden">
          <div className="overflow-x-auto">
            <Table>
              <TableHeader>
@@ -104,7 +104,7 @@
              </TableHeader>
              <TableBody>
                {filteredOrders.map((order) => (
-                 <TableRow key={order.id} className="hover:bg-muted/30">
+                <TableRow key={order.id} className="hover:bg-muted/30 transition-colors duration-150">
                    <TableCell>
                      <div>
                        <span className="font-medium text-primary">#{order.id}</span>
@@ -133,7 +133,7 @@
                      <StatusBadge status={order.status} />
                    </TableCell>
                    <TableCell>
-                     <Button variant="ghost" size="icon" asChild>
+                    <Button variant="ghost" size="icon" asChild className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">
                        <Link to={`/orders/${order.id}`}>
                          <Eye className="h-4 w-4" />
                        </Link>
@@ -151,11 +151,11 @@
              Showing 1-10 of 66 orders
            </p>
            <div className="flex items-center gap-1">
-             <Button variant="outline" size="sm" disabled>Previous</Button>
-             <Button variant="default" size="sm" className="w-8">1</Button>
-             <Button variant="outline" size="sm" className="w-8">2</Button>
-             <Button variant="outline" size="sm" className="w-8">3</Button>
-             <Button variant="outline" size="sm">Next</Button>
+            <Button variant="outline" size="sm" disabled className="transition-all duration-200">Previous</Button>
+            <Button variant="default" size="sm" className="w-8 transition-all duration-200">1</Button>
+            <Button variant="outline" size="sm" className="w-8 transition-all duration-200 hover:bg-primary hover:text-primary-foreground">2</Button>
+            <Button variant="outline" size="sm" className="w-8 transition-all duration-200 hover:bg-primary hover:text-primary-foreground">3</Button>
+            <Button variant="outline" size="sm" className="transition-all duration-200 hover:bg-primary hover:text-primary-foreground">Next</Button>
            </div>
          </div>
        </div>

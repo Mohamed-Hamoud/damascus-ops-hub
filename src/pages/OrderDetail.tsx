@@ -1,5 +1,5 @@
- import { Link, useParams } from "react-router-dom";
- import { ArrowLeft, User } from "lucide-react";
+ import { useParams } from "react-router-dom";
+ import { User } from "lucide-react";
  import { OrderInfoCard } from "@/components/orders/OrderInfoCard";
  import { OrderItemCard } from "@/components/orders/OrderItemCard";
  import { OrderTotals } from "@/components/orders/OrderTotals";
@@ -7,6 +7,7 @@
  import { OrderLocations } from "@/components/orders/OrderLocations";
  import { OrderCustomer } from "@/components/orders/OrderCustomer";
  import { OrderStatusBanner } from "@/components/orders/OrderStatusBanner";
+ import { PageHeader } from "@/components/shared/PageHeader";
  
  // Mock order data
  const orderData = {
@@ -53,16 +54,11 @@
  
    return (
      <div className="space-y-6">
-       {/* Back Navigation */}
-       <div className="flex items-center gap-4">
-         <Link 
-           to="/orders"
-           className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-muted-foreground rounded-lg hover:bg-muted"
-         >
-           <ArrowLeft className="h-4 w-4" />
-           Orders List
-         </Link>
-       </div>
+       <PageHeader
+         title={`Order ${orderData.id}`}
+         backLink="/orders"
+         backLabel="Orders"
+       />
  
        {/* Main Grid */}
        <div className="grid gap-6 lg:grid-cols-3">

@@ -31,15 +31,15 @@
  
  const variantStyles = {
    /* DaisyUI: card bg-base-100 */
-   default: "bg-white dark:bg-gray-800 hover:border-[#aa1e2c]/20",
+   default: "bg-white dark:bg-gray-800",
    /* DaisyUI: card bg-success/5 */
-   success: "bg-gradient-to-br from-green-50 to-green-100/50 border-green-200 hover:border-green-400 dark:from-green-900/20 dark:to-green-800/20 dark:border-green-700",
+   success: "bg-gradient-to-br from-green-50 to-green-100/50 border-green-200 dark:from-green-900/20 dark:to-green-800/20 dark:border-green-700",
    /* DaisyUI: card bg-warning/5 */
-   warning: "bg-gradient-to-br from-yellow-50 to-yellow-100/50 border-yellow-200 hover:border-yellow-400 dark:from-yellow-900/20 dark:to-yellow-800/20 dark:border-yellow-700",
+   warning: "bg-gradient-to-br from-yellow-50 to-yellow-100/50 border-yellow-200 dark:from-yellow-900/20 dark:to-yellow-800/20 dark:border-yellow-700",
    /* DaisyUI: card bg-error/5 */
-   destructive: "bg-gradient-to-br from-red-50 to-red-100/50 border-red-200 hover:border-red-400 dark:from-red-900/20 dark:to-red-800/20 dark:border-red-700",
+   destructive: "bg-gradient-to-br from-red-50 to-red-100/50 border-red-200 dark:from-red-900/20 dark:to-red-800/20 dark:border-red-700",
    /* DaisyUI: card bg-info/5 */
-   info: "bg-gradient-to-br from-blue-50 to-blue-100/50 border-blue-200 hover:border-blue-400 dark:from-blue-900/20 dark:to-blue-800/20 dark:border-blue-700",
+   info: "bg-gradient-to-br from-blue-50 to-blue-100/50 border-blue-200 dark:from-blue-900/20 dark:to-blue-800/20 dark:border-blue-700",
  };
  
  const iconStyles = {

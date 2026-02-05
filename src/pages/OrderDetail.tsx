@@ -68,10 +68,9 @@
      <div className="space-y-6">
        {/* Back Navigation */}
        <div className="flex items-center gap-4">
-        {/* DaisyUI: btn btn-ghost btn-sm */}
         <Link 
           to="/orders"
-          className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
+          className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-muted-foreground rounded-lg hover:bg-muted"
         >
           <ArrowLeft className="h-4 w-4" />
           Orders List
@@ -83,44 +82,43 @@
          {/* Left Column - Order Info & Items */}
          <div className="space-y-6 lg:col-span-2">
            {/* Order Info */}
-          {/* DaisyUI: card bg-base-100 shadow-sm */}
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Order Info</h2>
+          <div className="rounded-lg border bg-card p-4 card-shadow">
+            <h2 className="mb-4 section-title">Order Info</h2>
              <div className="grid gap-4 sm:grid-cols-2">
                <div className="space-y-3">
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Order ID</span>
-                  <p className="font-bold text-[#aa1e2c] text-lg">#{orderData.id}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Order ID</span>
+                  <p className="font-bold text-primary text-lg">#{orderData.id}</p>
                  </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Created</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.created}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Created</span>
+                  <p className="font-medium text-foreground">{orderData.created}</p>
                  </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Gateway Fee</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.gatewayFee}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Gateway Fee</span>
+                  <p className="font-medium text-foreground">{orderData.gatewayFee}</p>
                  </div>
                </div>
                <div className="space-y-3">
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Internal ID</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.internalId}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Internal ID</span>
+                  <p className="font-medium text-foreground">{orderData.internalId}</p>
                  </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Ext. Delivery Fee</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.extDeliveryFee}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Ext. Delivery Fee</span>
+                  <p className="font-medium text-foreground">{orderData.extDeliveryFee}</p>
                  </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Est. Earn Points</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.earnPoints}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Est. Earn Points</span>
+                  <p className="font-medium text-foreground">{orderData.earnPoints}</p>
                  </div>
                </div>
              </div>
            </div>
  
            {/* Items */}
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Items</h2>
+          <div className="rounded-lg border bg-card p-4 card-shadow">
+            <h2 className="mb-4 section-title">Items</h2>
              <div className="space-y-4">
                {orderData.items.map((item, index) => (
               <div key={index} className="rounded-lg border bg-card p-4">
@@ -134,9 +132,9 @@
                       <p className="text-sm text-muted-foreground">{item.price}</p>
                          {item.addons.length > 0 && (
                            <div className="mt-2">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Addons</span>
+                            <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Addons</span>
                              {item.addons.map((addon, i) => (
-                              <p key={i} className="text-sm text-[#aa1e2c]">
+                              <p key={i} className="text-sm text-primary">
                                  {addon.qty}x {addon.name} — {addon.price}
                                </p>
                              ))}
@@ -144,37 +142,37 @@
                          )}
                          {item.modifiers.length > 0 && (
                            <div className="mt-2">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Modifiers</span>
+                            <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Modifiers</span>
                              {item.modifiers.map((mod, i) => (
-                              <p key={i} className="text-sm text-gray-700 dark:text-gray-300">{mod.name} — {mod.price}</p>
+                              <p key={i} className="text-sm text-foreground">{mod.name} — {mod.price}</p>
                              ))}
                            </div>
                          )}
                        </div>
                      </div>
                      <div className="text-right">
-                      <span className="text-xl font-bold text-gray-900 dark:text-white">{item.qty}x</span>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-white">{item.total}</p>
+                      <span className="text-xl font-bold text-foreground">{item.qty}x</span>
+                      <p className="text-sm font-semibold text-foreground">{item.total}</p>
                      </div>
                    </div>
                  </div>
                ))}
  
                {/* Totals */}
-              <div className="space-y-2 border-t border-gray-200 dark:border-gray-700 pt-4">
+              <div className="space-y-2 border-t pt-4">
                  <div className="flex justify-between text-sm">
-                  <span className="text-gray-500 dark:text-gray-400">Subtotal</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{orderData.subtotal}</span>
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="font-medium text-foreground">{orderData.subtotal}</span>
                  </div>
                  <div className="flex justify-between text-sm">
-                  <span className="text-gray-500 dark:text-gray-400">Incl. Tax</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{orderData.tax}</span>
+                  <span className="text-muted-foreground">Incl. Tax</span>
+                  <span className="font-medium text-foreground">{orderData.tax}</span>
                  </div>
                  <div className="flex justify-between text-sm">
-                  <span className="text-gray-500 dark:text-gray-400">Delivery Fee</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{orderData.deliveryFee}</span>
+                  <span className="text-muted-foreground">Delivery Fee</span>
+                  <span className="font-medium text-foreground">{orderData.deliveryFee}</span>
                  </div>
-                <div className="flex justify-between border-t border-gray-200 dark:border-gray-700 pt-3 text-xl font-bold text-gray-900 dark:text-white">
+                <div className="flex justify-between border-t pt-3 text-xl font-bold text-foreground">
                   <span>Total</span>
                   <span>RM {orderData.total}</span>
                  </div>
@@ -183,17 +181,17 @@
            </div>
  
            {/* Refund History */}
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <h2 className="text-base font-semibold text-gray-900 dark:text-white">Refund History</h2>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">No refunds for this order.</p>
+          <div className="rounded-lg border bg-card p-4 card-shadow">
+            <h2 className="section-title">Refund History</h2>
+            <p className="mt-2 text-sm text-muted-foreground">No refunds for this order.</p>
            </div>
          </div>
  
          {/* Right Column */}
          <div className="space-y-6">
            {/* Locations */}
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Locations</h2>
+          <div className="rounded-lg border bg-card p-4 card-shadow">
+            <h2 className="mb-4 section-title">Locations</h2>
              <div className="space-y-4">
               <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
                 <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -217,8 +215,8 @@
            </div>
  
            {/* Customer Details */}
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Customer Details</h2>
+          <div className="rounded-lg border bg-card p-4 card-shadow">
+            <h2 className="mb-4 section-title">Customer Details</h2>
              <div className="space-y-4">
               <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
                 <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -251,27 +249,25 @@
            </div>
  
            {/* Status Badge */}
-          {/* DaisyUI: alert alert-info */}
-          <div className="rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-center text-white shadow-lg">
-            <h3 className="text-xl font-bold">Kitchen Accepted</h3>
+          <div className="rounded-lg bg-info p-4 text-center text-info-foreground">
+            <h3 className="text-lg font-bold">Kitchen Accepted</h3>
            </div>
  
            {/* History */}
-          {/* DaisyUI: timeline */}
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">History</h2>
+          <div className="rounded-lg border bg-card p-4 card-shadow">
+            <h2 className="mb-4 section-title">History</h2>
              <div className="relative space-y-4 pl-6">
-              <div className="absolute left-2 top-2 h-[calc(100%-1rem)] w-0.5 bg-gray-200 dark:bg-gray-700" />
+              <div className="absolute left-2 top-2 h-[calc(100%-1rem)] w-0.5 bg-border" />
                {orderData.history.map((event, index) => (
                  <div key={index} className="relative">
                    <div
-                    className={`absolute -left-4 top-1 h-3 w-3 rounded-full transition-all duration-300 ${
-                      event.isActive ? "bg-blue-500 shadow-md shadow-blue-500/50" : "bg-gray-300 dark:bg-gray-600"
+                    className={`absolute -left-4 top-1 h-3 w-3 rounded-full ${
+                      event.isActive ? "bg-info" : "bg-muted-foreground/30"
                     }`}
                    />
                    <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">{event.status}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{event.date}</p>
+                    <p className="font-semibold text-foreground">{event.status}</p>
+                    <p className="text-xs text-muted-foreground">{event.date}</p>
                    </div>
                  </div>
                ))}
@@ -279,18 +275,18 @@
            </div>
  
            {/* Courier Details */}
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Courier Details</h2>
-            <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+          <div className="rounded-lg border bg-card p-4 card-shadow">
+            <h2 className="mb-4 section-title">Courier Details</h2>
+            <div className="flex items-center gap-3 text-muted-foreground">
                <User className="h-4 w-4" />
                <span className="text-sm italic">Courier details not available</span>
              </div>
            </div>
  
            {/* Evaluation Details */}
-          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Evaluation Details</h2>
-            <p className="text-sm italic text-gray-500 dark:text-gray-400">Evaluation is missing</p>
+          <div className="rounded-lg border bg-card p-4 card-shadow">
+            <h2 className="mb-4 section-title">Evaluation Details</h2>
+            <p className="text-sm italic text-muted-foreground">Evaluation is missing</p>
            </div>
          </div>
        </div>

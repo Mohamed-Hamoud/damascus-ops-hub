@@ -39,7 +39,7 @@
        <h3 className="text-lg font-semibold mb-2">{title}</h3>
        <p className="text-muted-foreground max-w-sm mx-auto mb-6">{description}</p>
        {actionLabel && onAction && (
-         <Button onClick={onAction} className="bg-[#aa1e2c] hover:bg-[#8a1824]">
+        <Button onClick={onAction} className="bg-primary hover:bg-primary/90">
            {actionLabel}
          </Button>
        )}

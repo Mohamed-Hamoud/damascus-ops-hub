@@ -30,25 +30,19 @@
  }
  
  const variantStyles = {
-   /* DaisyUI: card bg-base-100 */
-   default: "bg-white dark:bg-gray-800",
-   /* DaisyUI: card bg-success/5 */
-   success: "bg-gradient-to-br from-green-50 to-green-100/50 border-green-200 dark:from-green-900/20 dark:to-green-800/20 dark:border-green-700",
-   /* DaisyUI: card bg-warning/5 */
-   warning: "bg-gradient-to-br from-yellow-50 to-yellow-100/50 border-yellow-200 dark:from-yellow-900/20 dark:to-yellow-800/20 dark:border-yellow-700",
-   /* DaisyUI: card bg-error/5 */
-   destructive: "bg-gradient-to-br from-red-50 to-red-100/50 border-red-200 dark:from-red-900/20 dark:to-red-800/20 dark:border-red-700",
-   /* DaisyUI: card bg-info/5 */
-   info: "bg-gradient-to-br from-blue-50 to-blue-100/50 border-blue-200 dark:from-blue-900/20 dark:to-blue-800/20 dark:border-blue-700",
+  default: "bg-card",
+  success: "bg-success/5 border-success/20",
+  warning: "bg-warning/5 border-warning/20",
+  destructive: "bg-destructive/5 border-destructive/20",
+  info: "bg-info/5 border-info/20",
  };
  
  const iconStyles = {
-   /* Damascus red primary */
-   default: "bg-[#aa1e2c]/10 text-[#aa1e2c] shadow-sm",
-   success: "bg-green-100 text-green-600 shadow-sm dark:bg-green-900/30 dark:text-green-400",
-   warning: "bg-yellow-100 text-yellow-600 shadow-sm dark:bg-yellow-900/30 dark:text-yellow-400",
-   destructive: "bg-red-100 text-red-600 shadow-sm dark:bg-red-900/30 dark:text-red-400",
-   info: "bg-blue-100 text-blue-600 shadow-sm dark:bg-blue-900/30 dark:text-blue-400",
+  default: "bg-primary/10 text-primary",
+  success: "bg-success/10 text-success",
+  warning: "bg-warning/10 text-warning",
+  destructive: "bg-destructive/10 text-destructive",
+  info: "bg-info/10 text-info",
  };
  
  export function StatCard({
@@ -62,24 +56,22 @@
    return (
      <div
        className={cn(
-         /* DaisyUI: card card-compact shadow-sm hover:shadow-md */
-         "rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm",
+        "rounded-lg border p-4 card-shadow",
          variantStyles[variant],
          className
        )}
      >
        <div className="flex items-start justify-between">
          <div className="space-y-1">
-           {/* DaisyUI: text-base-content/60 */}
-           <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
              {title}
            </p>
-           <p className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{value}</p>
+          <p className="text-2xl font-bold tracking-tight text-foreground">{value}</p>
            {trend && (
              <p
                className={cn(
                  "text-xs font-semibold flex items-center gap-1",
-                 trend.isPositive ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
+                trend.isPositive ? "text-success" : "text-destructive"
                )}
              >
                <span className={cn("inline-block", trend.isPositive ? "rotate-0" : "rotate-180")}>↑</span>
@@ -90,7 +82,7 @@
          {icon && (
            <div
              className={cn(
-               "flex h-12 w-12 items-center justify-center rounded-xl",
+              "flex h-10 w-10 items-center justify-center rounded-lg",
                iconStyles[variant]
              )}
            >

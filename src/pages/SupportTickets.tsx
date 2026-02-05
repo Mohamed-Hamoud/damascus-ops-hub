@@ -31,12 +31,8 @@ import { PageHeader } from "@/components/shared/PageHeader";
       <PageHeader
         title="Support Tickets"
         subtitle="Manage customer support tickets"
-         actions={
-           <button className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2">
-             <TicketCheck className="h-4 w-4" />
-             New Ticket
-           </button>
-         }
+         backLink="/support"
+         backLabel="Support"
       />
  
        {/* Filters Card */}

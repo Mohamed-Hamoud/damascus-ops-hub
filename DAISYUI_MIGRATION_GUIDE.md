@@ -1,6 +1,171 @@
  # DaisyUI Migration Guide for Damascus Dashboard
  
- This guide helps your Ruby on Rails team translate the React components to DaisyUI + HAML.
+This comprehensive guide helps your Ruby on Rails team translate React components to DaisyUI + HAML.
+
+## Table of Contents
+1. [Design Tokens (CSS Variables)](#design-tokens)
+2. [Custom Utility Classes](#custom-utility-classes)
+3. [Component Mappings](#component-mappings)
+4. [DaisyUI Theme Configuration](#daisyui-theme-configuration)
+5. [File Structure Reference](#file-structure-reference)
+6. [Dark Mode](#dark-mode)
+
+---
+
+## Design Tokens
+
+All colors use HSL format for easy theming. Copy these to your Rails `application.css`:
+
+```css
+:root {
+  /* Core backgrounds */
+  --background: 220 20% 97%;
+  --foreground: 222 47% 11%;
+  
+  /* Cards */
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  
+  /* Damascus Red - Primary Brand */
+  --primary: 348 72% 38%;          /* #a8293a */
+  --primary-foreground: 0 0% 100%;
+  
+  /* Secondary */
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 222 47% 11%;
+  
+  /* Muted */
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  
+  /* Status Colors */
+  --destructive: 0 72% 51%;        /* Red */
+  --success: 142 71% 45%;          /* Green */
+  --warning: 38 92% 50%;           /* Amber */
+  --info: 217 91% 60%;             /* Blue */
+  
+  /* Borders */
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 348 72% 38%;
+  
+  /* Radius */
+  --radius: 0.5rem;
+  
+  /* Sidebar (Damascus Red) */
+  --sidebar-background: 348 72% 38%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-accent: 348 72% 32%;
+  --sidebar-border: 348 60% 45%;
+  --sidebar-muted: 348 40% 70%;
+  
+  /* Charts */
+  --chart-1: 142 71% 45%;  /* Green */
+  --chart-2: 348 72% 38%;  /* Damascus Red */
+  --chart-3: 217 91% 60%;  /* Blue */
+  --chart-4: 38 92% 50%;   /* Amber */
+  --chart-5: 270 50% 60%;  /* Purple */
+}
+
+.dark {
+  --background: 222 47% 8%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 11%;
+  --primary: 348 72% 50%;
+  --secondary: 222 30% 18%;
+  --muted: 222 30% 18%;
+  --muted-foreground: 215 20% 65%;
+  --border: 222 30% 22%;
+  --sidebar-background: 222 47% 11%;
+}
+```
+
+---
+
+## Custom Utility Classes
+
+These utilities are defined in `index.css`. Use them directly in HAML:
+
+### Button Classes
+| Class | Usage | HAML Example |
+|-------|-------|--------------|
+| `.btn-primary` | Primary action | `%button.btn-primary Save` |
+| `.btn-secondary` | Secondary action | `%button.btn-secondary Cancel` |
+| `.btn-outline` | Bordered button | `%button.btn-outline View` |
+| `.btn-ghost` | Minimal button | `%button.btn-ghost Edit` |
+| `.btn-destructive` | Danger action | `%button.btn-destructive Delete` |
+| `.btn-sm` | Small size modifier | `%button.btn-primary.btn-sm Save` |
+
+### Badge Classes
+| Class | Status | HAML Example |
+|-------|--------|--------------|
+| `.badge-success` | Completed/Active | `%span.badge-success Active` |
+| `.badge-warning` | Pending/Warning | `%span.badge-warning Pending` |
+| `.badge-destructive` | Error/Failed | `%span.badge-destructive Failed` |
+| `.badge-info` | Info/Processing | `%span.badge-info Processing` |
+| `.badge-muted` | Inactive/Draft | `%span.badge-muted Draft` |
+
+### Card Classes
+| Class | Usage | HAML Example |
+|-------|-------|--------------|
+| `.card-shadow` | Subtle shadow | `.card.card-shadow` |
+| `.card-shadow-md` | Medium shadow | `.card.card-shadow-md` |
+| `.card-header` | Card header section | `.card-header` |
+| `.card-header-lg` | Larger header padding | `.card-header-lg` |
+| `.card-body` | Card content section | `.card-body` |
+| `.card-hover` | Hover lift effect | `.card.card-hover` |
+| `.card-interactive` | Clickable card | `.card.card-interactive` |
+
+### Table Classes
+| Class | Usage | HAML Example |
+|-------|-------|--------------|
+| `.table-header` | Header cell styling | `%th.table-header Column` |
+| `.table-cell` | Body cell styling | `%td.table-cell Value` |
+| `.table-row-hover` | Hover row highlight | `%tr.table-row-hover` |
+
+### Form Classes
+| Class | Usage | HAML Example |
+|-------|-------|--------------|
+| `.input-base` | Styled input field | `%input.input-base{ type: 'text' }` |
+| `.input-focus` | Focus ring only | `%input.input-focus` |
+| `.form-group` | Field wrapper | `.form-group` |
+| `.form-label` | Label styling | `%label.form-label Email` |
+| `.form-hint` | Helper text | `%p.form-hint Optional` |
+
+### Link Classes
+| Class | Usage | HAML Example |
+|-------|-------|--------------|
+| `.link-primary` | Primary colored link | `%a.link-primary{ href: '#' } View details` |
+| `.link-muted` | Subtle link | `%a.link-muted{ href: '#' } See more` |
+| `.link-nav` | Navigation link | `%a.link-nav{ href: '#' } Dashboard` |
+
+### Typography Classes
+| Class | Usage | HAML Example |
+|-------|-------|--------------|
+| `.page-title` | Main page heading | `%h1.page-title Orders` |
+| `.page-subtitle` | Page description | `%p.page-subtitle Manage orders` |
+| `.section-title` | Section heading | `%h2.section-title Details` |
+
+### Layout Classes
+| Class | Usage | HAML Example |
+|-------|-------|--------------|
+| `.mobile-stack` | Stack on mobile, row on desktop | `.mobile-stack` |
+| `.mobile-full` | Full width on mobile | `.mobile-full` |
+| `.mobile-hidden` | Hidden on mobile | `.mobile-hidden` |
+| `.mobile-only` | Visible only on mobile | `.mobile-only` |
+| `.touch-target` | 44px min touch area | `.touch-target` |
+| `.scrollbar-thin` | Thin scrollbar styling | `.scrollbar-thin` |
+| `.scrollbar-none` | Hide scrollbar | `.scrollbar-none` |
+
+### Empty State Classes
+| Class | Usage | HAML Example |
+|-------|-------|--------------|
+| `.empty-state` | Container | `.empty-state` |
+| `.empty-state-icon` | Icon styling | `.empty-state-icon` |
+| `.empty-state-title` | Title | `%h3.empty-state-title No data` |
+| `.empty-state-description` | Description | `%p.empty-state-description Try again` |
+
+---
  
  ## Brand Colors
  
@@ -384,11 +549,138 @@
  
  ---
  
- ## Questions?
+## Shared Component Reference
+
+### PageHeader Component
+**File:** `src/components/shared/PageHeader.tsx`
+
+**Props:**
+- `title` (string) - Page title
+- `subtitle` (string, optional) - Description
+- `backLink` (string, optional) - URL for back navigation
+- `backLabel` (string, optional) - Back button text
+- `actions` (ReactNode, optional) - Action buttons
+- `badge` (ReactNode, optional) - Status badge
+
+**HAML Equivalent:**
+```haml
+.space-y-4
+  - if back_link
+    %a.link-nav{ href: back_link }
+      %i.icon-arrow-left.h-4.w-4
+      = back_label || "Back"
+  .flex.flex-col.gap-4.sm:flex-row.sm:items-center.sm:justify-between
+    .flex.items-center.gap-3
+      %h1.page-title= title
+      = badge
+    .flex.flex-wrap.items-center.gap-2
+      = actions
+  - if subtitle
+    %p.page-subtitle.-mt-2= subtitle
+```
+
+### DataTable Component
+**File:** `src/components/shared/DataTable.tsx`
+
+**HAML Equivalent:**
+```haml
+.rounded-xl.border.border-border.bg-card.shadow-sm.overflow-hidden
+  .overflow-x-auto
+    %table.w-full
+      %thead
+        %tr.bg-muted\/30.border-b.border-border
+          - columns.each do |col|
+            %th.table-header= col[:header]
+      %tbody.divide-y.divide-border
+        - data.each do |item|
+          %tr.table-row-hover
+            - columns.each do |col|
+              %td.table-cell= item[col[:key]]
+```
+
+### StatCard Component
+**File:** `src/components/dashboard/StatCard.tsx`
+
+**HAML Equivalent:**
+```haml
+.rounded-lg.border.p-4.card-shadow{ class: variant_class }
+  .flex.items-start.justify-between
+    .space-y-1
+      %p.text-xs.font-medium.uppercase.tracking-wider.text-muted-foreground= title
+      %p.text-2xl.font-bold.tracking-tight.text-foreground= value
+      - if trend
+        %p.text-xs.font-semibold{ class: trend[:positive] ? 'text-success' : 'text-destructive' }
+          = trend[:value]
+    - if icon
+      .icon-container.icon-container-sm{ class: icon_variant_class }
+        = icon
+```
+
+### FormModal Component
+**File:** `src/components/shared/FormModal.tsx`
+
+Uses Radix Dialog under the hood. For Rails, use DaisyUI modal:
+```haml
+.modal#my-modal
+  .modal-box
+    %h3.font-bold.text-lg= title
+    = yield
+    .modal-action
+      %button.btn-secondary{ onclick: "document.getElementById('my-modal').close()" } Cancel
+      %button.btn-primary= submit_label
+```
+
+---
+
+## Icon Reference
+
+Uses Lucide icons. In Rails, use the same icon set via `lucide-rails` gem or similar:
+
+| Icon Name | Usage |
+|-----------|-------|
+| `LayoutDashboard` | Dashboard |
+| `BarChart3` | Analytics |
+| `ShoppingCart` | Orders |
+| `Users` | Customers |
+| `Package` | Products |
+| `Tag` | Promotions |
+| `Image` | Banners |
+| `Building` | Branches |
+| `HelpCircle` | Support |
+| `Shield` | Security |
+| `Settings` | Settings |
+| `Plus` | Add action |
+| `Edit` | Edit action |
+| `Trash2` | Delete action |
+| `ArrowLeft` | Back navigation |
+| `Search` | Search |
+| `Filter` | Filters |
+| `Download` | Export |
+| `Eye` | View |
+| `Check` | Success/Confirm |
+| `X` | Close/Cancel |
+
+---
+
+## Migration Checklist
+
+- [ ] Copy CSS variables to Rails `application.css`
+- [ ] Install DaisyUI and configure theme
+- [ ] Install Lucide icons gem
+- [ ] Set up dark mode toggle with `data-theme`
+- [ ] Convert components using this mapping guide
+- [ ] Test responsive breakpoints (`sm:`, `lg:`)
+- [ ] Verify form validations work
+- [ ] Test all status badge variants
  
- This mockup was built with:
- - React + TypeScript
- - Tailwind CSS (vanilla classes, no custom CSS)
- - Lucide icons
- 
- All styling uses standard Tailwind utilities that map 1:1 to DaisyUI components.
+---
+
+## Questions?
+
+This mockup was built with:
+- **React 18** + TypeScript
+- **Tailwind CSS** with semantic design tokens
+- **Lucide React** icons
+- **shadcn/ui** components (Radix-based)
+
+All styling uses semantic CSS variables and utility classes that map directly to DaisyUI.

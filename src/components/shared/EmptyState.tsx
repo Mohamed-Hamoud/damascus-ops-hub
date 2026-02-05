@@ -3,7 +3,21 @@
  
  /**
   * EmptyState Component
-  * Unified empty state with icons for all list views
+ * Unified empty state with icons for all list views.
+ *
+ * HAML Equivalent:
+ * ```haml
+ * .empty-state{ class: variant == 'compact' ? 'py-8 px-4' : 'py-12 px-6' }
+ *   .rounded-full.bg-muted.flex.items-center.justify-center{ class: compact ? 'h-12 w-12 mb-3' : 'h-16 w-16 mb-4' }
+ *     %i.text-muted-foreground{ data: { lucide: icon_name }, class: compact ? 'h-6 w-6' : 'h-8 w-8' }
+ *   %h3.font-semibold.text-foreground{ class: compact ? 'text-sm' : 'text-base' }= title
+ *   - if description.present?
+ *     %p.text-muted-foreground.mt-1.max-w-sm{ class: compact ? 'text-xs' : 'text-sm' }= description
+ *   - if action_label.present? && on_action.present?
+ *     %button.btn-primary.mt-4{ onclick: on_action }= action_label
+ * ```
+ *
+ * Variants: default, compact (smaller), card (with border wrapper)
   */
  
  // Preset icons for common modules

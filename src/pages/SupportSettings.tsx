@@ -77,6 +77,8 @@ import { PageHeader } from "@/components/shared/PageHeader";
       <PageHeader
         title="Support Settings"
         subtitle="Configure notification preferences and support system settings"
+         backLink="/support"
+         backLabel="Support"
       />
  
       {/* Email Notifications Row */}

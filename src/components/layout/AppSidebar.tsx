@@ -19,7 +19,10 @@
    Settings,
    LogOut,
   UtensilsCrossed,
+  Sun,
+  Moon,
  } from "lucide-react";
+ import { useTheme } from "next-themes";
  import { NavLink } from "@/components/NavLink";
  import {
    Sidebar,
@@ -96,11 +99,11 @@
                      to={item.url}
                      end
                      className={cn(
-                      "flex items-center justify-center rounded-lg p-2.5 text-sidebar-foreground/70 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                         "flex items-center justify-center rounded-lg p-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                      )}
-                    activeClassName="bg-sidebar-primary text-sidebar-primary-foreground shadow-md"
+                       activeClassName="bg-sidebar-primary text-sidebar-primary-foreground"
                    >
-                    <item.icon className="h-5 w-5 shrink-0" />
+                       <item.icon className="h-5 w-5" />
                    </NavLink>
                  </SidebarMenuButton>
                </SidebarMenuItem>
@@ -115,9 +118,9 @@
      <Collapsible defaultOpen={defaultOpen || isActive} className="group/collapsible">
        <SidebarGroup>
          <CollapsibleTrigger asChild>
-          <SidebarGroupLabel className="flex cursor-pointer items-center justify-between text-[10px] font-bold uppercase tracking-widest text-sidebar-muted hover:text-sidebar-foreground transition-colors px-3 py-2">
+           <SidebarGroupLabel className="flex cursor-pointer items-center justify-between text-[10px] font-bold uppercase tracking-widest text-sidebar-muted hover:text-sidebar-foreground px-3 py-2">
              {label}
-            <ChevronDown className="h-3 w-3 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
+             <ChevronDown className="h-3 w-3 group-data-[state=open]/collapsible:rotate-180" />
            </SidebarGroupLabel>
          </CollapsibleTrigger>
          <CollapsibleContent>
@@ -130,9 +133,9 @@
                        to={item.url}
                        end
                        className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:translate-x-0.5"
+                         "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                        )}
-                      activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-md !translate-x-0"
+                       activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-semibold"
                      >
                        <item.icon className="h-4 w-4 shrink-0" />
                        <span>{item.title}</span>
@@ -151,11 +154,12 @@
 export function AppSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const { theme, setTheme } = useTheme();
  
    return (
      <Sidebar
        className={cn(
-        "border-r-0 transition-all duration-300 ease-in-out group/sidebar",
+         "border-r-0 group/sidebar",
          isCollapsed ? "w-14" : "w-60"
        )}
        collapsible="icon"
@@ -186,12 +190,12 @@ export function AppSidebar() {
                        to={item.url}
                        end={item.url === "/"}
                        className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                         "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                         isCollapsed && "justify-center p-2.5"
                        )}
-                      activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-md"
+                       activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-semibold"
                      >
-                      <item.icon className={cn("shrink-0", isCollapsed ? "h-5 w-5" : "h-4 w-4")} />
+                       <item.icon className={isCollapsed ? "h-5 w-5" : "h-4 w-4"} />
                        {!isCollapsed && <span>{item.title}</span>}
                      </NavLink>
                    </SidebarMenuButton>
@@ -209,15 +213,34 @@ export function AppSidebar() {
  
        <SidebarFooter className="border-t border-sidebar-border p-2">
          <SidebarMenu>
+           {/* Dark Mode Toggle */}
+           <SidebarMenuItem>
+             <SidebarMenuButton asChild tooltip="Dark Mode">
+               <button
+                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                 className={cn(
+                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full",
+                   isCollapsed && "justify-center p-2.5"
+                 )}
+               >
+                 {theme === "dark" ? (
+                   <Sun className={isCollapsed ? "h-5 w-5" : "h-4 w-4"} />
+                 ) : (
+                   <Moon className={isCollapsed ? "h-5 w-5" : "h-4 w-4"} />
+                 )}
+                 {!isCollapsed && <span>Dark Mode</span>}
+               </button>
+             </SidebarMenuButton>
+           </SidebarMenuItem>
            <SidebarMenuItem>
              <SidebarMenuButton asChild tooltip="Logout">
                <button
                  className={cn(
-                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full",
+                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full",
                    isCollapsed && "justify-center p-2.5"
                  )}
                >
-                 <LogOut className={cn("shrink-0", isCollapsed ? "h-5 w-5" : "h-4 w-4")} />
+                 <LogOut className={isCollapsed ? "h-5 w-5" : "h-4 w-4"} />
                  {!isCollapsed && <span>Logout</span>}
                </button>
              </SidebarMenuButton>

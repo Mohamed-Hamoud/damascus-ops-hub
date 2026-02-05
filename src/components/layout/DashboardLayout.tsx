@@ -1,8 +1,7 @@
  import { Outlet } from "react-router-dom";
  import { AppSidebar } from "./AppSidebar";
-import { TopHeader } from "./TopHeader";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { Menu, PanelLeftClose, PanelLeft } from "lucide-react";
+ import { Menu } from "lucide-react";
  import { Button } from "@/components/ui/button";
  import { useSidebar } from "@/components/ui/sidebar";
  
@@ -22,39 +21,14 @@ function MobileMenuButton() {
    );
  }
  
-function DesktopSidebarToggle() {
-  const { state, toggleSidebar } = useSidebar();
-  const isCollapsed = state === "collapsed";
-
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggleSidebar}
-      className="hidden lg:flex h-9 w-9 ml-2 text-muted-foreground hover:text-foreground hover:bg-accent"
-    >
-      {isCollapsed ? (
-        <PanelLeft className="h-5 w-5" />
-      ) : (
-        <PanelLeftClose className="h-5 w-5" />
-      )}
-      <span className="sr-only">Toggle sidebar</span>
-    </Button>
-  );
-}
-
  export function DashboardLayout() {
    return (
      <SidebarProvider>
        <div className="flex min-h-screen w-full">
          <AppSidebar />
          <div className="flex-1 flex flex-col min-w-0">
-          <div className="hidden lg:flex items-center">
-            <DesktopSidebarToggle />
-            <TopHeader />
-          </div>
           <MobileMenuButton />
-          <main className="flex-1 p-4 pt-16 lg:p-6 lg:pt-6 overflow-auto bg-background">
+           <main className="flex-1 p-4 pt-16 lg:p-6 overflow-auto bg-background">
              <Outlet />
            </main>
          </div>

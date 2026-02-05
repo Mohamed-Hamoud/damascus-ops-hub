@@ -1,21 +1,15 @@
- import { useState } from "react";
+ import { useState, useMemo } from "react";
  import { Link } from "react-router-dom";
- import { Search, Eye, Calendar } from "lucide-react";
+ import { Eye } from "lucide-react";
  import { StatusBadge } from "@/components/dashboard/StatusBadge";
+ import { TableFilters } from "@/components/shared/TableFilters";
+ import { TablePagination } from "@/components/shared/TablePagination";
+ import { NoOrdersFound } from "@/components/shared/EmptyState";
  
-/**
- * Orders Page
- * DaisyUI components: input, select, table, btn, badge
- * 
- * HAML structure:
- * .space-y-6
- *   %h1.text-2xl.font-bold Orders
- *   .card.bg-base-100.shadow-sm
- *     %input.input.input-bordered{ placeholder: 'Search...' }
- *     %select.select.select-bordered
- *   .card.bg-base-100.shadow-sm
- *     %table.table
- */
+ /**
+  * Orders Page
+  * DaisyUI components: input, select, table, btn, badge
+  */
  
  const ordersData = [
    { id: "DF-268-FF3A-040226", internalId: "68", date: "Feb 04, 2026", time: "11:24 AM", customer: "Aisyah Binti Rahman", branch: "Damascus Delivery", amount: "RM 503.20", delivery: "5.00", status: "accepted" },
@@ -28,18 +22,55 @@
    { id: "DF-180-280126", internalId: "59", date: "Jan 28, 2026", time: "05:58 PM", customer: "", branch: "Damascus Delivery", amount: "RM 52.70", delivery: "5.00", status: "completed" },
    { id: "DF-802-280126", internalId: "58", date: "Jan 28, 2026", time: "05:46 PM", customer: "Fatimah Binti Zahra", branch: "Damascus Delivery", amount: "RM 635.70", delivery: "5.00", status: "completed" },
    { id: "DF-659-280126", internalId: "57", date: "Jan 28, 2026", time: "05:43 PM", customer: "Aisyah Binti Rahman", branch: "Damascus Delivery", amount: "RM 482.00", delivery: "5.00", status: "completed" },
+   { id: "DF-123-270126", internalId: "56", date: "Jan 27, 2026", time: "04:30 PM", customer: "Ahmad Bin Ali", branch: "Damascus Delivery", amount: "RM 234.50", delivery: "5.00", status: "completed" },
+   { id: "DF-456-270126", internalId: "55", date: "Jan 27, 2026", time: "02:15 PM", customer: "Siti Binti Yusof", branch: "Damascus Delivery", amount: "RM 156.80", delivery: "5.00", status: "completed" },
+   { id: "DF-789-260126", internalId: "54", date: "Jan 26, 2026", time: "07:00 PM", customer: "Rashid Bin Omar", branch: "Damascus Delivery", amount: "RM 412.00", delivery: "5.00", status: "cancelled" },
+ ];
+ 
+ const ITEMS_PER_PAGE = 5;
+ 
+ const statusOptions = [
+   { label: "All Status", value: "all" },
+   { label: "New", value: "new" },
+   { label: "Kitchen Accepted", value: "accepted" },
+   { label: "Ready To Deliver", value: "delivering" },
+   { label: "Completed", value: "completed" },
+   { label: "Cancelled", value: "cancelled" },
  ];
  
  export default function Orders() {
    const [searchQuery, setSearchQuery] = useState("");
    const [statusFilter, setStatusFilter] = useState("all");
+   const [dateFrom, setDateFrom] = useState("");
+   const [dateTo, setDateTo] = useState("");
+   const [currentPage, setCurrentPage] = useState(1);
  
-   const filteredOrders = ordersData.filter((order) => {
+   const filteredOrders = useMemo(() => {
+     return ordersData.filter((order) => {
      const matchesSearch = order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
        order.customer.toLowerCase().includes(searchQuery.toLowerCase());
      const matchesStatus = statusFilter === "all" || order.status === statusFilter;
      return matchesSearch && matchesStatus;
-   });
+     });
+   }, [searchQuery, statusFilter]);
+ 
+   const totalPages = Math.ceil(filteredOrders.length / ITEMS_PER_PAGE);
+   const paginatedOrders = useMemo(() => {
+     const start = (currentPage - 1) * ITEMS_PER_PAGE;
+     return filteredOrders.slice(start, start + ITEMS_PER_PAGE);
+   }, [filteredOrders, currentPage]);
+ 
+   const clearFilters = () => {
+     setSearchQuery("");
+     setStatusFilter("all");
+     setDateFrom("");
+     setDateTo("");
+     setCurrentPage(1);
+   };
+ 
+   const handlePageChange = (page: number) => {
+     setCurrentPage(page);
+   };
  
    return (
      <div className="space-y-6">
@@ -50,43 +81,20 @@
        </div>
  
        {/* Filters */}
-      {/* DaisyUI: card bg-base-100 shadow-sm */}
-      <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
-         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-           <div className="flex-1">
-             <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              {/* DaisyUI: input input-bordered */}
-              <input
-                type="text"
-                 placeholder="Search by Order ID or Customer..."
-                className="w-full pl-9 pr-4 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#aa1e2c]/20 focus:border-[#aa1e2c]"
-                 value={searchQuery}
-                 onChange={(e) => setSearchQuery(e.target.value)}
-               />
-             </div>
-           </div>
-           <div className="flex flex-wrap items-center gap-2">
-            {/* DaisyUI: select select-bordered */}
-            <select 
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="select select-bordered w-36 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#aa1e2c]/20 focus:border-[#aa1e2c]"
-            >
-              <option value="all">All Status</option>
-              <option value="new">New</option>
-              <option value="accepted">Kitchen Accepted</option>
-              <option value="delivering">Ready To Deliver</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-            {/* DaisyUI: btn btn-square btn-outline */}
-            <button className="h-10 w-10 flex items-center justify-center border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white hover:border-[#aa1e2c] transition-all duration-200">
-              <Calendar className="h-4 w-4" />
-            </button>
-           </div>
-         </div>
-       </div>
+       <TableFilters
+         searchPlaceholder="Search by Order ID or Customer..."
+         searchValue={searchQuery}
+         onSearchChange={(value) => { setSearchQuery(value); setCurrentPage(1); }}
+         statusOptions={statusOptions}
+         statusValue={statusFilter}
+         onStatusChange={(value) => { setStatusFilter(value); setCurrentPage(1); }}
+         showDateFilters
+         dateFrom={dateFrom}
+         dateTo={dateTo}
+         onDateFromChange={setDateFrom}
+         onDateToChange={setDateTo}
+         onClearFilters={clearFilters}
+       />
  
        {/* Orders Table */}
       {/* DaisyUI: card bg-base-100 shadow-sm */}
@@ -106,7 +114,13 @@
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-               {filteredOrders.map((order) => (
+               {paginatedOrders.length === 0 ? (
+                 <tr>
+                   <td colSpan={7} className="p-0">
+                     <NoOrdersFound onClearFilters={clearFilters} />
+                   </td>
+                 </tr>
+               ) : paginatedOrders.map((order) => (
                 <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150">
                   <td className="px-4 py-3">
                      <div>
@@ -151,19 +165,15 @@
          </div>
  
          {/* Pagination */}
-        <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 px-4 py-3">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-             Showing 1-10 of 66 orders
-           </p>
-          {/* DaisyUI: btn-group */}
-           <div className="flex items-center gap-1">
-            <button disabled className="px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-400 cursor-not-allowed">Previous</button>
-            <button className="w-8 h-8 text-sm rounded-lg bg-[#aa1e2c] text-white font-medium">1</button>
-            <button className="w-8 h-8 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white hover:border-[#aa1e2c] transition-all duration-200">2</button>
-            <button className="w-8 h-8 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white hover:border-[#aa1e2c] transition-all duration-200">3</button>
-            <button className="px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-[#aa1e2c] hover:text-white hover:border-[#aa1e2c] transition-all duration-200">Next</button>
-           </div>
-         </div>
+         {filteredOrders.length > 0 && (
+           <TablePagination
+             currentPage={currentPage}
+             totalPages={totalPages}
+             totalItems={filteredOrders.length}
+             itemsPerPage={ITEMS_PER_PAGE}
+             onPageChange={handlePageChange}
+           />
+         )}
        </div>
      </div>
    );

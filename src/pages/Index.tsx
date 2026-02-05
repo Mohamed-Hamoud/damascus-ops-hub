@@ -6,7 +6,6 @@
    Star,
    Truck,
    Utensils,
-   Eye,
  } from "lucide-react";
  import { StatCard } from "@/components/dashboard/StatCard";
  import { SectionCard } from "@/components/dashboard/SectionCard";
@@ -19,7 +18,6 @@
    SelectTrigger,
    SelectValue,
  } from "@/components/ui/select";
- import { Button } from "@/components/ui/button";
  
  // Mock data
  const recentOrders = [
@@ -43,12 +41,12 @@
        {/* Page header */}
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
          <div>
-           <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-           <p className="text-sm text-muted-foreground">Welcome back! Here's your business overview.</p>
+          <h1 className="page-title">Dashboard</h1>
+          <p className="page-subtitle">Welcome back! Here's your business overview.</p>
          </div>
          <div className="flex items-center gap-2">
            <Select defaultValue="today">
-             <SelectTrigger className="w-32 bg-card">
+            <SelectTrigger className="w-32 bg-card shadow-sm">
                <SelectValue placeholder="Period" />
              </SelectTrigger>
              <SelectContent>
@@ -66,26 +64,26 @@
          <StatCard
            title="Total Revenue"
            value="RM 18,362.86"
-           icon={<DollarSign className="h-5 w-5" />}
+          icon={<DollarSign className="h-6 w-6" />}
            trend={{ value: 12.5, isPositive: true }}
            variant="success"
          />
          <StatCard
            title="Total Orders"
            value="66"
-           icon={<ShoppingCart className="h-5 w-5" />}
+          icon={<ShoppingCart className="h-6 w-6" />}
            trend={{ value: 8.2, isPositive: true }}
          />
          <StatCard
            title="Total Customers"
            value="234"
-           icon={<Users className="h-5 w-5" />}
+          icon={<Users className="h-6 w-6" />}
            trend={{ value: 5.1, isPositive: true }}
          />
          <StatCard
            title="Avg. Order Amount"
            value="RM 278.22"
-           icon={<TrendingUp className="h-5 w-5" />}
+          icon={<TrendingUp className="h-6 w-6" />}
            trend={{ value: 2.3, isPositive: false }}
            variant="warning"
          />
@@ -95,12 +93,12 @@
        <div className="grid gap-4 lg:grid-cols-3">
          <SectionCard title="Order Status Overview" className="lg:col-span-2">
            <div className="grid gap-4 sm:grid-cols-2">
-             <div className="flex flex-col items-center justify-center rounded-lg bg-success/5 p-6">
-               <span className="text-3xl font-bold text-success">62</span>
+            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-success/5 to-success/10 border border-success/20 p-8 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+              <span className="text-4xl font-bold text-success">62</span>
                <span className="text-sm text-muted-foreground">Completed</span>
              </div>
-             <div className="flex flex-col items-center justify-center rounded-lg bg-destructive/5 p-6">
-               <span className="text-3xl font-bold text-destructive">0</span>
+            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-destructive/5 to-destructive/10 border border-destructive/20 p-8 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+              <span className="text-4xl font-bold text-destructive">0</span>
                <span className="text-sm text-muted-foreground">Failed</span>
              </div>
            </div>
@@ -127,7 +125,7 @@
              {recentOrders.map((order) => (
                <div
                  key={order.id}
-                 className="flex items-center justify-between rounded-lg border bg-background/50 p-3"
+                className="flex items-center justify-between rounded-xl border bg-gradient-to-r from-background to-muted/20 p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-sm cursor-pointer"
                >
                  <div className="min-w-0 flex-1">
                    <div className="flex items-center gap-2">
@@ -153,9 +151,9 @@
              {topProducts.map((product, index) => (
                <div
                  key={product.name}
-                 className="flex items-center gap-3 rounded-lg border bg-background/50 p-3"
+                className="flex items-center gap-3 rounded-xl border bg-gradient-to-r from-background to-muted/20 p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-sm cursor-pointer"
                >
-                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-sm font-bold text-primary shadow-sm">
                    {index + 1}
                  </div>
                  <div className="min-w-0 flex-1">
@@ -176,7 +174,7 @@
            action={{ label: "View all", href: "/evaluations" }}
          >
            <div className="space-y-4">
-             <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-background to-muted/20 border transition-all duration-200 hover:shadow-sm">
                <div className="flex items-center gap-2">
                  <Utensils className="h-4 w-4 text-warning" />
                  <span className="text-sm">Food Quality</span>
@@ -187,7 +185,7 @@
                  <span className="text-xs text-muted-foreground">(128 reviews)</span>
                </div>
              </div>
-             <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-background to-muted/20 border transition-all duration-200 hover:shadow-sm">
                <div className="flex items-center gap-2">
                  <Truck className="h-4 w-4 text-info" />
                  <span className="text-sm">Delivery Service</span>

@@ -14,6 +14,9 @@
    FileText,
    Coins,
    ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  UtensilsCrossed,
  } from "lucide-react";
  import { NavLink } from "@/components/NavLink";
  import {
@@ -26,6 +29,7 @@
    SidebarMenuButton,
    SidebarMenuItem,
    SidebarHeader,
+  SidebarFooter,
    useSidebar,
  } from "@/components/ui/sidebar";
  import {
@@ -34,6 +38,7 @@
    CollapsibleTrigger,
  } from "@/components/ui/collapsible";
  import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
  
  const mainNavItems = [
    { title: "Dashboard", url: "/", icon: LayoutDashboard },
@@ -87,11 +92,11 @@
                      to={item.url}
                      end
                      className={cn(
-                       "flex items-center gap-3 rounded-md px-3 py-2 text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                      "flex items-center justify-center rounded-lg p-2.5 text-sidebar-foreground/70 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                      )}
-                     activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                    activeClassName="bg-sidebar-primary text-sidebar-primary-foreground shadow-md"
                    >
-                     <item.icon className="h-4 w-4 shrink-0" />
+                    <item.icon className="h-5 w-5 shrink-0" />
                    </NavLink>
                  </SidebarMenuButton>
                </SidebarMenuItem>
@@ -106,9 +111,9 @@
      <Collapsible defaultOpen={defaultOpen || isActive} className="group/collapsible">
        <SidebarGroup>
          <CollapsibleTrigger asChild>
-           <SidebarGroupLabel className="flex cursor-pointer items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-sidebar-muted hover:text-sidebar-foreground">
+          <SidebarGroupLabel className="flex cursor-pointer items-center justify-between text-[10px] font-bold uppercase tracking-widest text-sidebar-muted hover:text-sidebar-foreground transition-colors px-3 py-2">
              {label}
-             <ChevronDown className="h-3 w-3 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+            <ChevronDown className="h-3 w-3 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
            </SidebarGroupLabel>
          </CollapsibleTrigger>
          <CollapsibleContent>
@@ -121,9 +126,9 @@
                        to={item.url}
                        end
                        className={cn(
-                         "flex items-center gap-3 rounded-md px-3 py-2 text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:translate-x-0.5"
                        )}
-                       activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                      activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-md !translate-x-0"
                      >
                        <item.icon className="h-4 w-4 shrink-0" />
                        <span>{item.title}</span>
@@ -140,32 +145,33 @@
  }
  
  export function AppSidebar() {
-   const { state } = useSidebar();
+  const { state, toggleSidebar } = useSidebar();
    const isCollapsed = state === "collapsed";
+  const location = useLocation();
  
    return (
      <Sidebar
        className={cn(
-         "border-r-0 transition-all duration-200",
+        "border-r-0 transition-all duration-300 ease-in-out",
          isCollapsed ? "w-14" : "w-60"
        )}
        collapsible="icon"
      >
-       <SidebarHeader className="border-b border-sidebar-border p-4">
-         <div className="flex items-center gap-3">
-           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-accent">
-             <Package className="h-4 w-4 text-sidebar-accent-foreground" />
+      <SidebarHeader className="border-b border-sidebar-border p-4 bg-sidebar-accent/30">
+        <div className="flex items-center gap-3 overflow-hidden">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sidebar-primary shadow-lg">
+            <UtensilsCrossed className="h-5 w-5 text-sidebar-primary-foreground" />
            </div>
            {!isCollapsed && (
-             <div className="flex flex-col">
-               <span className="text-sm font-semibold text-sidebar-foreground">Damascus</span>
-               <span className="text-[10px] text-sidebar-muted">Food Delivery</span>
+            <div className="flex flex-col overflow-hidden">
+              <span className="text-base font-bold text-sidebar-foreground truncate">Damascus</span>
+              <span className="text-[11px] font-medium text-sidebar-muted truncate">Food Delivery</span>
              </div>
            )}
          </div>
        </SidebarHeader>
  
-       <SidebarContent className="px-2 py-4">
+      <SidebarContent className="px-2 py-4 scrollbar-thin">
          {/* Main nav without collapsible */}
          <SidebarGroup>
            <SidebarGroupContent>
@@ -177,11 +183,12 @@
                        to={item.url}
                        end={item.url === "/"}
                        className={cn(
-                         "flex items-center gap-3 rounded-md px-3 py-2 text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                        isCollapsed && "justify-center p-2.5"
                        )}
-                       activeClassName="bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                      activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-semibold shadow-md"
                      >
-                       <item.icon className="h-4 w-4 shrink-0" />
+                      <item.icon className={cn("shrink-0", isCollapsed ? "h-5 w-5" : "h-4 w-4")} />
                        {!isCollapsed && <span>{item.title}</span>}
                      </NavLink>
                    </SidebarMenuButton>
@@ -196,6 +203,24 @@
          <NavSection label="Business" items={businessItems} />
          <NavSection label="System" items={systemItems} />
        </SidebarContent>
+
+      <SidebarFooter className="border-t border-sidebar-border p-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={toggleSidebar}
+          className="w-full justify-center text-sidebar-muted hover:text-sidebar-foreground hover:bg-sidebar-accent"
+        >
+          {isCollapsed ? (
+            <ChevronRight className="h-4 w-4" />
+          ) : (
+            <>
+              <ChevronLeft className="h-4 w-4 mr-2" />
+              <span className="text-xs">Collapse</span>
+            </>
+          )}
+        </Button>
+      </SidebarFooter>
      </Sidebar>
    );
  }

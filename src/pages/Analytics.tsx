@@ -12,6 +12,7 @@
    Tooltip,
    ResponsiveContainer,
    Legend,
+  Cell,
  } from "recharts";
  
  const revenueData = [
@@ -62,6 +63,22 @@
    { date: "05", completed: 0, failed: 0 },
  ];
  
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded-lg border bg-card p-3 shadow-lg">
+        <p className="text-xs font-medium text-muted-foreground mb-1">Day {label}</p>
+        {payload.map((entry: any, index: number) => (
+          <p key={index} className="text-sm font-semibold" style={{ color: entry.color }}>
+            {entry.name}: {entry.name === "revenue" ? `RM ${entry.value.toLocaleString()}` : entry.value}
+          </p>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
+
  export default function Analytics() {
    const [period, setPeriod] = useState("30days");
  
@@ -70,16 +87,17 @@
        {/* Page Header */}
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
          <div>
-           <h1 className="text-2xl font-semibold tracking-tight">Analytics</h1>
-           <p className="text-sm text-muted-foreground">Jan 06, 2026 — Feb 05, 2026</p>
+          <h1 className="page-title">Analytics</h1>
+          <p className="page-subtitle">Jan 06, 2026 — Feb 05, 2026</p>
          </div>
          <div className="flex flex-wrap items-center gap-2">
-           <div className="flex rounded-lg border bg-card p-1">
+          <div className="flex rounded-lg border bg-card p-1 shadow-sm">
              {["Today", "Yesterday", "7 Days", "30 Days", "90 Days"].map((label) => (
                <Button
                  key={label}
                  variant={period === label.toLowerCase().replace(" ", "") ? "default" : "ghost"}
                  size="sm"
+                className="transition-all duration-200"
                  onClick={() => setPeriod(label.toLowerCase().replace(" ", ""))}
                >
                  {label}
@@ -95,7 +113,7 @@
  
        {/* Tabs */}
        <Tabs defaultValue="overview" className="space-y-6">
-         <TabsList className="w-full justify-start rounded-lg border bg-card p-1">
+        <TabsList className="w-full justify-start rounded-xl border bg-card p-1.5 shadow-sm">
            <TabsTrigger value="overview" className="flex-1 sm:flex-none">Overview</TabsTrigger>
            <TabsTrigger value="orders" className="flex-1 sm:flex-none">Orders</TabsTrigger>
            <TabsTrigger value="products" className="flex-1 sm:flex-none">Products</TabsTrigger>
@@ -105,11 +123,11 @@
  
          <TabsContent value="overview" className="space-y-6">
            {/* Revenue Overview */}
-           <div className="rounded-lg border bg-card card-shadow">
-             <div className="border-b p-4">
-               <h2 className="text-lg font-semibold">Revenue Overview</h2>
+          <div className="rounded-xl border bg-card card-shadow overflow-hidden">
+            <div className="border-b bg-muted/30 px-6 py-4">
+              <h2 className="section-title">Revenue Overview</h2>
              </div>
-             <div className="p-4">
+            <div className="p-6">
                <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
                  <StatCard title="Total Revenue" value="RM 18,362.86" />
                  <StatCard title="Delivery Fees" value="RM 310.00" />
@@ -117,20 +135,18 @@
                  <StatCard title="Expenses" value="RM 553.88" variant="destructive" />
                  <StatCard title="Net Revenue" value="RM 17,808.98" variant="success" />
                </div>
-               <div className="h-64">
+              <div className="h-72">
                  <ResponsiveContainer width="100%" height="100%">
                    <BarChart data={revenueData}>
-                     <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                     <XAxis dataKey="date" className="text-xs" />
-                     <YAxis className="text-xs" />
-                     <Tooltip
-                       contentStyle={{
-                         backgroundColor: "hsl(var(--card))",
-                         border: "1px solid hsl(var(--border))",
-                         borderRadius: "8px",
-                       }}
-                     />
-                     <Bar dataKey="revenue" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.5} vertical={false} />
+                    <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} tickFormatter={(value) => `${value / 1000}k`} />
+                    <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))', opacity: 0.3 }} />
+                    <Bar dataKey="revenue" fill="hsl(var(--chart-2))" radius={[6, 6, 0, 0]} animationDuration={500}>
+                      {revenueData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fillOpacity={entry.revenue > 0 ? 1 : 0.3} />
+                      ))}
+                    </Bar>
                    </BarChart>
                  </ResponsiveContainer>
                </div>
@@ -138,33 +154,27 @@
            </div>
  
            {/* Orders Trend */}
-           <div className="rounded-lg border bg-card card-shadow">
-             <div className="border-b p-4">
-               <h2 className="text-lg font-semibold">Orders Trend</h2>
+          <div className="rounded-xl border bg-card card-shadow overflow-hidden">
+            <div className="border-b bg-muted/30 px-6 py-4">
+              <h2 className="section-title">Orders Trend</h2>
              </div>
-             <div className="p-4">
+            <div className="p-6">
                <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                  <StatCard title="Total Orders" value="66" />
                  <StatCard title="Completed" value="62" variant="success" />
                  <StatCard title="Failed" value="0" variant="destructive" />
                  <StatCard title="Success Rate" value="93.9%" variant="success" />
                </div>
-               <div className="h-64">
+              <div className="h-72">
                  <ResponsiveContainer width="100%" height="100%">
                    <BarChart data={ordersData}>
-                     <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                     <XAxis dataKey="date" className="text-xs" />
-                     <YAxis className="text-xs" />
-                     <Tooltip
-                       contentStyle={{
-                         backgroundColor: "hsl(var(--card))",
-                         border: "1px solid hsl(var(--border))",
-                         borderRadius: "8px",
-                       }}
-                     />
-                     <Legend />
-                     <Bar dataKey="completed" fill="hsl(var(--chart-1))" name="Completed" radius={[4, 4, 0, 0]} />
-                     <Bar dataKey="failed" fill="hsl(var(--chart-2))" name="Failed" radius={[4, 4, 0, 0]} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.5} vertical={false} />
+                    <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                    <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))', opacity: 0.3 }} />
+                    <Legend iconType="circle" iconSize={8} wrapperStyle={{ paddingTop: 20 }} formatter={(value) => <span className="text-sm text-muted-foreground">{value}</span>} />
+                    <Bar dataKey="completed" fill="hsl(var(--chart-1))" name="Completed" radius={[6, 6, 0, 0]} animationDuration={500} />
+                    <Bar dataKey="failed" fill="hsl(var(--chart-2))" name="Failed" radius={[6, 6, 0, 0]} animationDuration={500} />
                    </BarChart>
                  </ResponsiveContainer>
                </div>
@@ -172,66 +182,72 @@
            </div>
  
            {/* Financial Summary */}
-           <div className="rounded-lg border bg-card card-shadow">
-             <div className="flex items-center justify-between border-b p-4">
-               <h2 className="text-lg font-semibold">Financial Summary</h2>
+          <div className="rounded-xl border bg-card card-shadow overflow-hidden">
+            <div className="flex items-center justify-between border-b bg-muted/30 px-6 py-4">
+              <h2 className="section-title">Financial Summary</h2>
                <span className="text-sm text-muted-foreground">Jan 06 — Feb 05, 2026</span>
              </div>
-             <div className="p-4">
-               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-                 <div className="rounded-lg border bg-background/50 p-4">
-                   <span className="text-xs font-medium uppercase text-muted-foreground">Revenue</span>
-                   <p className="text-xl font-bold text-success">RM 18,362.86</p>
+            <div className="p-6">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                <div className="rounded-xl border bg-gradient-to-br from-background to-muted/30 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Revenue</span>
+                  <p className="text-2xl font-bold text-success mt-1">RM 18,362.86</p>
                  </div>
-                 <div className="rounded-lg border bg-background/50 p-4">
-                   <span className="text-xs font-medium uppercase text-muted-foreground">Delivery Fees Collected</span>
-                   <p className="text-xl font-bold">RM 310.00</p>
+                <div className="rounded-xl border bg-gradient-to-br from-background to-muted/30 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Delivery Fees</span>
+                  <p className="text-2xl font-bold mt-1">RM 310.00</p>
                  </div>
-                 <div className="rounded-lg border bg-background/50 p-4">
-                   <span className="text-xs font-medium uppercase text-muted-foreground">Tax Collected</span>
-                   <p className="text-xl font-bold">RM 1,021.86</p>
+                <div className="rounded-xl border bg-gradient-to-br from-background to-muted/30 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Tax Collected</span>
+                  <p className="text-2xl font-bold mt-1">RM 1,021.86</p>
                  </div>
-                 <div className="rounded-lg border bg-background/50 p-4">
-                   <span className="text-xs font-medium uppercase text-muted-foreground">Gateway Fees</span>
-                   <p className="text-xl font-bold text-destructive">-RM 553.88</p>
+                <div className="rounded-xl border bg-gradient-to-br from-background to-muted/30 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Gateway Fees</span>
+                  <p className="text-2xl font-bold text-destructive mt-1">-RM 553.88</p>
                  </div>
-                 <div className="rounded-lg border bg-background/50 p-4">
-                   <span className="text-xs font-medium uppercase text-muted-foreground">Total Expenses</span>
-                   <p className="text-xl font-bold text-destructive">-RM 553.88</p>
+                <div className="rounded-xl border bg-gradient-to-br from-background to-muted/30 p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total Expenses</span>
+                  <p className="text-2xl font-bold text-destructive mt-1">-RM 553.88</p>
                  </div>
                </div>
-               <div className="mt-4 rounded-lg bg-success/10 p-4">
-                 <span className="text-xs font-medium uppercase text-muted-foreground">Net Revenue</span>
-                 <p className="text-2xl font-bold text-success">RM 17,808.98</p>
+              <div className="mt-4 rounded-xl bg-gradient-to-r from-success/10 to-success/5 border border-success/20 p-5">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Net Revenue</span>
+                <p className="text-3xl font-bold text-success mt-1">RM 17,808.98</p>
                </div>
              </div>
            </div>
          </TabsContent>
  
          <TabsContent value="orders">
-           <div className="rounded-lg border bg-card p-8 text-center card-shadow">
-             <p className="text-muted-foreground">Orders analytics coming soon...</p>
-           </div>
+          <EmptyState title="Orders Analytics" description="Detailed order analytics and trends coming soon" />
          </TabsContent>
  
          <TabsContent value="products">
-           <div className="rounded-lg border bg-card p-8 text-center card-shadow">
-             <p className="text-muted-foreground">Products analytics coming soon...</p>
-           </div>
+          <EmptyState title="Products Analytics" description="Product performance metrics coming soon" />
          </TabsContent>
  
          <TabsContent value="customers">
-           <div className="rounded-lg border bg-card p-8 text-center card-shadow">
-             <p className="text-muted-foreground">Customers analytics coming soon...</p>
-           </div>
+          <EmptyState title="Customers Analytics" description="Customer insights and behavior analysis coming soon" />
          </TabsContent>
  
          <TabsContent value="finance">
-           <div className="rounded-lg border bg-card p-8 text-center card-shadow">
-             <p className="text-muted-foreground">Finance analytics coming soon...</p>
-           </div>
+          <EmptyState title="Finance Analytics" description="Financial reports and projections coming soon" />
          </TabsContent>
        </Tabs>
      </div>
    );
  }
+
+function EmptyState({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="rounded-xl border bg-card p-12 text-center card-shadow">
+      <div className="mx-auto w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-4">
+        <BarChart3 className="h-8 w-8 text-muted-foreground" />
+      </div>
+      <h3 className="text-lg font-semibold mb-2">{title}</h3>
+      <p className="text-muted-foreground max-w-sm mx-auto">{description}</p>
+    </div>
+  );
+}
+
+import { BarChart3 } from "lucide-react";

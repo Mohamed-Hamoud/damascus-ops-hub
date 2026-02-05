@@ -1,6 +1,6 @@
  import { useState } from "react";
  import { useNavigate, useParams, useLocation } from "react-router-dom";
- import { ArrowLeft, Plus, Edit, Trash2 } from "lucide-react";
+ import { ArrowLeft, Plus } from "lucide-react";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
  import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +12,14 @@
    SelectTrigger,
    SelectValue,
  } from "@/components/ui/select";
+ import { DivisionCard } from "@/components/products/DivisionCard";
+ import { CategoryCard } from "@/components/products/CategoryCard";
+ import {
+   Tooltip,
+   TooltipContent,
+   TooltipProvider,
+   TooltipTrigger,
+ } from "@/components/ui/tooltip";
  
  /**
   * Products Page
@@ -351,50 +359,28 @@
        )}
  
        {activeTab === "divisions" && (
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-6">
+         <div className="rounded-xl border border-border bg-card shadow-sm p-6">
            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
              {divisionsData.map((division) => (
-               <div key={division.id} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
-                 <div className="flex items-center justify-between">
-                   <div>
-                     <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{division.name}</h3>
-                     <p className="text-sm text-gray-500 dark:text-gray-400">{division.productCount} products</p>
-                   </div>
-                   <div className="flex gap-1">
-                     <button className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-[#aa1e2c] hover:text-white">
-                       <Edit className="h-4 w-4" />
-                     </button>
-                     <button className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-red-500 hover:text-white">
-                       <Trash2 className="h-4 w-4" />
-                     </button>
-                   </div>
-                 </div>
-               </div>
+               <DivisionCard
+                 key={division.id}
+                 name={division.name}
+                 productCount={division.productCount}
+               />
              ))}
            </div>
          </div>
        )}
  
        {activeTab === "categories" && (
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-6">
+         <div className="rounded-xl border border-border bg-card shadow-sm p-6">
            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
              {categoriesData.map((category) => (
-               <div key={category.id} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
-                 <div className="flex items-center justify-between">
-                   <div>
-                     <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{category.name}</h3>
-                     <p className="text-sm text-gray-500 dark:text-gray-400">{category.productCount} products</p>
-                   </div>
-                   <div className="flex gap-1">
-                     <button className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-[#aa1e2c] hover:text-white">
-                       <Edit className="h-4 w-4" />
-                     </button>
-                     <button className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-red-500 hover:text-white">
-                       <Trash2 className="h-4 w-4" />
-                     </button>
-                   </div>
-                 </div>
-               </div>
+               <CategoryCard
+                 key={category.id}
+                 name={category.name}
+                 productCount={category.productCount}
+               />
              ))}
            </div>
          </div>

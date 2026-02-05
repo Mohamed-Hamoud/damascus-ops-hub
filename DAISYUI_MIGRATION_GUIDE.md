@@ -68,15 +68,48 @@ All colors use HSL format for easy theming. Copy these to your Rails `applicatio
 }
 
 .dark {
-  --background: 222 47% 8%;
-  --foreground: 210 40% 98%;
-  --card: 222 47% 11%;
-  --primary: 348 72% 50%;
-  --secondary: 222 30% 18%;
-  --muted: 222 30% 18%;
-  --muted-foreground: 215 20% 65%;
-  --border: 222 30% 22%;
-  --sidebar-background: 222 47% 11%;
+  /* Railway-inspired: Pure neutral grays (0% saturation) */
+  --background: 0 0% 8%;
+  --foreground: 0 0% 95%;
+  --card: 0 0% 11%;
+  --card-foreground: 0 0% 95%;
+  --popover: 0 0% 11%;
+  --popover-foreground: 0 0% 95%;
+  
+  /* Damascus Red - muted for dark mode */
+  --primary: 348 65% 52%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 95%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 55%;
+  --accent: 0 0% 18%;
+  --accent-foreground: 0 0% 95%;
+  
+  /* Muted status colors (40% saturation) */
+  --destructive: 0 40% 50%;
+  --success: 142 40% 45%;
+  --warning: 38 40% 50%;
+  --info: 217 40% 55%;
+  
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: 348 65% 52%;
+  
+  /* Sidebar - neutral dark */
+  --sidebar-background: 0 0% 10%;
+  --sidebar-foreground: 0 0% 95%;
+  --sidebar-accent: 0 0% 15%;
+  --sidebar-border: 0 0% 18%;
+  --sidebar-muted: 0 0% 55%;
+  
+  /* Charts - muted colors (35% saturation) */
+  --chart-1: 142 35% 45%;
+  --chart-2: 348 35% 50%;
+  --chart-3: 217 35% 55%;
+  --chart-4: 38 35% 50%;
+  --chart-5: 270 35% 55%;
 }
 ```
 
@@ -180,15 +213,15 @@ These utilities are defined in `index.css`. Use them directly in HAML:
  --error: red-500/600
  --info: blue-500/600
  
- /* Text Colors (Tailwind gray scale) */
- --text-primary: gray-900 (light) / white (dark)
- --text-secondary: gray-500 (light) / gray-400 (dark)
- --text-muted: gray-400
+  /* Text Colors (Neutral gray scale) */
+  --text-primary: gray-900 (light) / neutral-100 (dark)
+  --text-secondary: gray-500 (light) / neutral-500 (dark)
+  --text-muted: gray-400 (light) / neutral-600 (dark)
  
- /* Background Colors */
- --bg-base: white (light) / gray-800 (dark)
- --bg-base-200: gray-50 (light) / gray-800/50 (dark)
- --border: gray-200 (light) / gray-700 (dark)
+  /* Background Colors (Railway-inspired neutral grays in dark mode) */
+  --bg-base: white (light) / neutral-900 (dark)
+  --bg-base-200: gray-50 (light) / neutral-850 (dark)
+  --border: gray-200 (light) / neutral-800 (dark)
  ```
  
  ## Component Mappings
@@ -497,7 +530,22 @@ These utilities are defined in `index.css`. Use them directly in HAML:
            "warning": "#eab308",
            "error": "#ef4444",
          },
-         damascusdark: {
+          /* Railway-inspired neutral dark mode */
+          "damascus-dark": {
+            "primary": "#c74b5a",          /* Muted Damascus Red (65% sat) */
+            "primary-focus": "#b8424f",
+            "primary-content": "#ffffff",
+            "secondary": "#262626",         /* Neutral gray */
+            "accent": "#2e2e2e",
+            "neutral": "#1a1a1a",
+            "base-100": "#1c1c1c",          /* Pure neutral (0% sat) */
+            "base-200": "#171717",
+            "base-300": "#141414",
+            "info": "#6b8cad",              /* Muted blue (40% sat) */
+            "success": "#5a8a5a",           /* Muted green (40% sat) */
+            "warning": "#a6855c",           /* Muted amber (40% sat) */
+            "error": "#a66666",             /* Muted red (40% sat) */
+          },
            "primary": "#aa1e2c",
            "primary-focus": "#8a1824",
            "primary-content": "#ffffff",

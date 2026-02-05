@@ -12,52 +12,59 @@
  
  | Token | Light Mode | Dark Mode | Usage |
  |-------|------------|-----------|-------|
- | `--background` | `220 20% 97%` | `222 47% 8%` | Page background |
- | `--foreground` | `222 47% 11%` | `210 40% 98%` | Primary text |
- | `--card` | `0 0% 100%` | `222 47% 11%` | Card backgrounds |
- | `--card-foreground` | `222 47% 11%` | `210 40% 98%` | Card text |
- | `--muted` | `220 14% 96%` | `222 30% 18%` | Muted backgrounds |
- | `--muted-foreground` | `220 9% 46%` | `215 20% 65%` | Secondary text |
- | `--border` | `220 13% 91%` | `222 30% 22%` | Border color |
- | `--input` | `220 13% 91%` | `222 30% 22%` | Input borders |
+| `--background` | `220 20% 97%` | `0 0% 8%` | Page background |
+| `--foreground` | `222 47% 11%` | `0 0% 95%` | Primary text |
+| `--card` | `0 0% 100%` | `0 0% 11%` | Card backgrounds |
+| `--card-foreground` | `222 47% 11%` | `0 0% 95%` | Card text |
+| `--muted` | `220 14% 96%` | `0 0% 15%` | Muted backgrounds |
+| `--muted-foreground` | `220 9% 46%` | `0 0% 55%` | Secondary text |
+| `--border` | `220 13% 91%` | `0 0% 20%` | Border color |
+| `--input` | `220 13% 91%` | `0 0% 20%` | Input borders |
  
  ### Brand Colors
  
  | Token | Light Mode | Dark Mode | Usage |
  |-------|------------|-----------|-------|
- | `--primary` | `348 72% 38%` | `348 72% 50%` | Damascus Red |
+| `--primary` | `348 72% 38%` | `348 65% 52%` | Damascus Red (muted in dark) |
  | `--primary-foreground` | `0 0% 100%` | `0 0% 100%` | Text on primary |
- | `--secondary` | `220 14% 96%` | `222 30% 18%` | Secondary actions |
- | `--accent` | `220 14% 96%` | `222 30% 18%` | Highlights |
+| `--secondary` | `220 14% 96%` | `0 0% 15%` | Secondary actions |
+| `--accent` | `220 14% 96%` | `0 0% 18%` | Highlights |
  
  ### Status Colors
  
- | Token | Value | Usage |
- |-------|-------|-------|
- | `--success` | `142 71% 45%` | Completed, active, positive |
- | `--warning` | `38 92% 50%` | Pending, caution |
- | `--destructive` | `0 72% 51%` | Error, failed, danger |
- | `--info` | `217 91% 60%` | Information, processing |
+| Token | Light Mode | Dark Mode | Usage |
+|-------|------------|-----------|-------|
+| `--success` | `142 71% 45%` | `142 40% 45%` | Completed, active, positive |
+| `--warning` | `38 92% 50%` | `38 40% 50%` | Pending, caution |
+| `--destructive` | `0 72% 51%` | `0 40% 50%` | Error, failed, danger |
+| `--info` | `217 91% 60%` | `217 40% 55%` | Information, processing |
  
  ### Sidebar Colors
  
  | Token | Light Mode | Dark Mode |
  |-------|------------|-----------|
- | `--sidebar-background` | `348 72% 38%` | `222 47% 11%` |
- | `--sidebar-foreground` | `0 0% 100%` | `210 40% 98%` |
- | `--sidebar-accent` | `348 72% 32%` | `222 30% 18%` |
- | `--sidebar-border` | `348 60% 45%` | `222 30% 22%` |
- | `--sidebar-muted` | `348 40% 70%` | `215 20% 65%` |
+| `--sidebar-background` | `348 72% 38%` | `0 0% 10%` |
+| `--sidebar-foreground` | `0 0% 100%` | `0 0% 95%` |
+| `--sidebar-accent` | `348 72% 32%` | `0 0% 15%` |
+| `--sidebar-border` | `348 60% 45%` | `0 0% 18%` |
+| `--sidebar-muted` | `348 40% 70%` | `0 0% 55%` |
  
  ### Chart Colors
  
- | Token | Value | Color |
- |-------|-------|-------|
- | `--chart-1` | `142 71% 45%` | Green |
- | `--chart-2` | `348 72% 38%` | Damascus Red |
- | `--chart-3` | `217 91% 60%` | Blue |
- | `--chart-4` | `38 92% 50%` | Amber |
- | `--chart-5` | `270 50% 60%` | Purple |
+| Token | Light Mode | Dark Mode | Color |
+|-------|------------|-----------|-------|
+| `--chart-1` | `142 71% 45%` | `142 35% 45%` | Green |
+| `--chart-2` | `348 72% 38%` | `348 35% 50%` | Damascus Red |
+| `--chart-3` | `217 91% 60%` | `217 35% 55%` | Blue |
+| `--chart-4` | `38 92% 50%` | `38 35% 50%` | Amber |
+| `--chart-5` | `270 50% 60%` | `270 35% 55%` | Purple |
+
+### Dark Mode Philosophy
+
+The dark mode uses a **Railway-inspired neutral palette**:
+- **Pure neutral grays** (0% saturation) for backgrounds - no blue tint
+- **Muted accent colors** (35-40% saturation vs 70-92% in light mode) - easier on eyes
+- **Reduced contrast** for comfortable extended viewing
  
  ---
  

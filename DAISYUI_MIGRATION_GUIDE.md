@@ -684,3 +684,149 @@ This mockup was built with:
 - **shadcn/ui** components (Radix-based)
 
 All styling uses semantic CSS variables and utility classes that map directly to DaisyUI.
+ 
+ ---
+ 
+ ## NEW: Additional Utilities (v2)
+ 
+ These new utilities were added to make migration even easier:
+ 
+ ### Card Base
+ ```haml
+ .card-base
+   / Equivalent to: rounded-xl border border-border bg-card card-shadow
+ ```
+ 
+ ### Table Cell Variants
+ ```haml
+ %td.table-cell-right= price   / Right-aligned
+ %td.table-cell-center= count  / Center-aligned
+ ```
+ 
+ ### Tab Navigation
+ ```haml
+ .border-b.border-border
+   .flex.gap-6
+     %button.tab-item Tab 1
+     %button.tab-item.tab-active Tab 2
+ ```
+ 
+ **DaisyUI equivalent:** `tabs tabs-bordered` with `tab` and `tab-active`
+ 
+ ### Action Button Group
+ ```haml
+ .action-group
+   %button.btn-primary.btn-sm Edit
+   %button.btn-outline.btn-sm View
+   %button.btn-destructive.btn-sm Delete
+ ```
+ 
+ ### Stat Display
+ ```haml
+ .text-center
+   %p.stat-value 42
+   %p.stat-label Total Orders
+ 
+ / Large variant
+ %p.stat-value-lg 1,234
+ ```
+ 
+ ### Icon Button
+ ```haml
+ %button.icon-btn
+   = lucide_icon "eye", class: "h-4 w-4"
+ 
+ / Small variant
+ %button.icon-btn-sm
+   = lucide_icon "x", class: "h-3 w-3"
+ ```
+ 
+ ### Quick Navigation Card
+ ```haml
+ %button.quick-nav-card
+   .h-10.w-10.rounded-lg.bg-primary\/10.flex.items-center.justify-center
+     = lucide_icon "ticket", class: "h-5 w-5 text-primary"
+   %span.text-xs.font-medium Tickets
+ ```
+ 
+ ### Data List
+ ```haml
+ .space-y-3
+   .data-list-item
+     %span.data-list-label Open Tickets
+     %span.data-list-value 42
+   .data-list-item
+     %span.data-list-label Resolved Today
+     %span.data-list-value 15
+ ```
+ 
+ ---
+ 
+ ## TypeScript Types Reference
+ 
+ All shared types are in `src/types/index.ts`. Use as reference for Rails models:
+ 
+ | TypeScript Type | Rails Model | Key Fields |
+ |-----------------|-------------|------------|
+ | `Order` | `Order` | id, status, customer, branch, amount |
+ | `Customer` | `Customer` | id, name, email, orders, totalSpent |
+ | `Product` | `Product` | id, name, nameMs, price, category, division |
+ | `Voucher` | `Voucher` | id, code, remaining, limit, points |
+ | `SupportTicket` | `SupportTicket` | id, subject, status, priority, agent |
+ | `Branch` | `Branch` | id, name, address, status |
+ | `Banner` | `Banner` | id, title, image, position, active |
+ | `Evaluation` | `Evaluation` | id, orderId, foodRating, deliveryRating |
+ 
+ ### Status Enums
+ ```ruby
+ # Order status
+ enum status: { new: 0, pending: 1, accepted: 2, delivering: 3, completed: 4, cancelled: 5, failed: 6 }
+ 
+ # Ticket status
+ enum status: { open: 0, pending: 1, resolved: 2, closed: 3 }
+ 
+ # Ticket priority
+ enum priority: { low: 0, medium: 1, high: 2, urgent: 3 }
+ ```
+ 
+ ---
+ 
+ ## Component Library Reference
+ 
+ ### Shared Components
+ | Component | File | Purpose |
+ |-----------|------|---------|
+ | `PageHeader` | `shared/PageHeader.tsx` | Page title with actions |
+ | `DataTable` | `shared/DataTable.tsx` | Generic table |
+ | `TabNavigation` | `shared/TabNavigation.tsx` | Tab navigation |
+ | `TableFilters` | `shared/TableFilters.tsx` | Search + filters |
+ | `TablePagination` | `shared/TablePagination.tsx` | Pagination |
+ | `EmptyState` | `shared/EmptyState.tsx` | No data display |
+ | `FormModal` | `shared/FormModal.tsx` | Modal with form |
+ | `FormField` | `shared/FormField.tsx` | Form field wrapper |
+ | `Breadcrumb` | `shared/Breadcrumb.tsx` | Navigation crumbs |
+ 
+ ### Dashboard Components
+ | Component | File | Purpose |
+ |-----------|------|---------|
+ | `StatCard` | `dashboard/StatCard.tsx` | KPI display |
+ | `SectionCard` | `dashboard/SectionCard.tsx` | Content section |
+ | `StatusBadge` | `dashboard/StatusBadge.tsx` | Status indicator |
+ | `ProgressBar` | `dashboard/ProgressBar.tsx` | Percentage bar |
+ 
+ ---
+ 
+ ## Updated Migration Checklist
+ 
+ - [ ] Copy CSS variables to Rails `application.css`
+ - [ ] Copy utility classes from `index.css` to Rails
+ - [ ] Install DaisyUI and configure theme
+ - [ ] Install Lucide icons gem (`lucide-rails`)
+ - [ ] Set up dark mode toggle with `data-theme`
+ - [ ] Create Rails partials matching shared components
+ - [ ] Create model enums matching TypeScript types
+ - [ ] Convert pages using this mapping guide
+ - [ ] Test responsive breakpoints (`sm:`, `lg:`)
+ - [ ] Verify form validations work
+ - [ ] Test all status badge variants
+ - [ ] Test dark mode in all pages

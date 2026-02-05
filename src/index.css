@@ -429,4 +429,96 @@
   .empty-state-description {
     @apply text-sm text-muted-foreground max-w-sm;
   }
+
+   /* ========================================
+      CARD BASE UTILITY
+      HAML: .card-base
+      ======================================== */
+   .card-base {
+     @apply rounded-xl border border-border bg-card card-shadow;
+   }
+
+   /* ========================================
+      TABLE CELL UTILITIES
+      HAML: %td.table-cell-right
+      ======================================== */
+   .table-cell-right {
+     @apply px-4 py-3 text-right text-foreground;
+   }
+
+   .table-cell-center {
+     @apply px-4 py-3 text-center text-foreground;
+   }
+
+   /* ========================================
+      TAB NAVIGATION UTILITIES
+      HAML: %button.tab-item{ class: active ? 'tab-active' : nil }
+      ======================================== */
+   .tab-item {
+     @apply pb-3 text-sm font-medium capitalize border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors;
+   }
+
+   .tab-active {
+     @apply border-primary text-primary;
+   }
+
+   /* ========================================
+      ACTION BUTTON GROUP
+      HAML: .action-group
+      ======================================== */
+   .action-group {
+     @apply flex items-center gap-1;
+   }
+
+   /* ========================================
+      STAT VALUE UTILITIES
+      HAML: %span.stat-value, %span.stat-label
+      ======================================== */
+   .stat-value {
+     @apply text-2xl font-bold text-foreground;
+   }
+
+   .stat-value-lg {
+     @apply text-3xl font-bold text-foreground;
+   }
+
+   .stat-label {
+     @apply text-xs text-muted-foreground;
+   }
+
+   /* ========================================
+      ICON BUTTON UTILITY
+      HAML: %button.icon-btn
+      ======================================== */
+   .icon-btn {
+     @apply h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors;
+   }
+
+   .icon-btn-sm {
+     @apply h-6 w-6 flex items-center justify-center rounded text-muted-foreground hover:text-foreground transition-colors;
+   }
+
+   /* ========================================
+      QUICK NAV CARD
+      HAML: .quick-nav-card
+      ======================================== */
+   .quick-nav-card {
+     @apply rounded-xl border border-border bg-card p-4 flex flex-col items-center gap-2 hover:border-primary/30 transition-colors;
+   }
+
+   /* ========================================
+      DATA LIST ITEM
+      HAML: .data-list-item
+      ======================================== */
+   .data-list-item {
+     @apply flex items-center justify-between py-2 border-b border-border last:border-0;
+   }
+
+   .data-list-label {
+     @apply text-sm text-muted-foreground;
+   }
+
+   .data-list-value {
+     @apply text-sm font-semibold text-foreground;
+   }
 }

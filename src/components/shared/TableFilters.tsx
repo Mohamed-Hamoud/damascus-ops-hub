@@ -4,7 +4,29 @@
  
  /**
   * TableFilters Component
-  * DaisyUI: input, select, btn, form-control
+ * 
+ * HAML Equivalent:
+ * ```haml
+ * .rounded-xl.border.bg-card.p-4.mb-4.space-y-4
+ *   .flex.flex-col.sm:flex-row.gap-3
+ *     .relative.flex-1
+ *       = lucide_icon "search", class: "absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+ *       %input.input-base.pl-9{ type: "text", placeholder: search_placeholder }
+ *     - if status_options.present?
+ *       %select.input-base.min-w-[150px]
+ *         - status_options.each do |opt|
+ *           %option{ value: opt[:value] }= opt[:label]
+ *     - if show_date_filters
+ *       %button.btn-outline.gap-2
+ *         = lucide_icon "filter", class: "h-4 w-4"
+ *         More Filters
+ *     - if has_active_filters
+ *       %button.btn-ghost.text-destructive
+ *         Clear
+ * ```
+ * 
+ * DaisyUI: input input-bordered, select select-bordered, btn btn-outline
+ * CSS Utilities: .input-base, .btn-outline, .btn-ghost (index.css)
   */
  
  interface FilterOption {

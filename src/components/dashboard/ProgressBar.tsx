@@ -2,14 +2,29 @@
  
  /**
   * ProgressBar Component
-  * DaisyUI equivalent: progress progress-{variant}
   * 
-  * HAML structure:
-  * .space-y-2
-  *   .flex.items-center.justify-between.text-sm
-  *     %span.font-medium.text-gray-900= label
-  *     %span.font-semibold= "#{percentage}%"
-  *   %progress.progress.progress-primary.w-full{ value: percentage, max: 100 }
+ * HAML Equivalent:
+ * ```haml
+ * .space-y-2
+ *   .flex.items-center.justify-between.text-sm
+ *     %span.font-medium.text-foreground= label
+ *     - if show_percentage
+ *       %span.font-semibold.text-foreground= "#{percentage}%"
+ *   .h-2\.5.w-full.overflow-hidden.rounded-full.bg-muted
+ *     .h-full.rounded-full.transition-all{ class: variant_class, style: "width: #{percentage}%" }
+ * ```
+ * 
+ * DaisyUI Mapping:
+ * - default: progress progress-primary
+ * - success: progress progress-success
+ * - warning: progress progress-warning
+ * - destructive: progress progress-error
+ * - info: progress progress-info
+ * 
+ * CSS Variables Used:
+ * - --primary (default variant)
+ * - --success, --warning, --destructive, --info (status variants)
+ * - --muted (track background)
   */
  
  interface ProgressBarProps {
@@ -22,16 +37,11 @@
  }
  
  const variantStyles = {
-   /* DaisyUI: progress-primary - Damascus red */
-   default: "bg-[#aa1e2c]",
-   /* DaisyUI: progress-success */
-   success: "bg-green-500",
-   /* DaisyUI: progress-warning */
-   warning: "bg-yellow-500",
-   /* DaisyUI: progress-error */
-   destructive: "bg-red-500",
-   /* DaisyUI: progress-info */
-   info: "bg-blue-500",
+   default: "bg-primary",
+   success: "bg-success",
+   warning: "bg-warning",
+   destructive: "bg-destructive",
+   info: "bg-info",
  };
  
  export function ProgressBar({
@@ -47,13 +57,12 @@
    return (
      <div className={cn("space-y-2", className)}>
        <div className="flex items-center justify-between text-sm">
-         <span className="font-medium text-gray-900 dark:text-white">{label}</span>
+           <span className="font-medium text-foreground">{label}</span>
          {showPercentage && (
-           <span className="font-semibold text-gray-900 dark:text-white">{percentage.toFixed(0)}%</span>
+             <span className="font-semibold text-foreground">{percentage.toFixed(0)}%</span>
          )}
        </div>
-       {/* DaisyUI: progress w-full */}
-       <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+         <div className="h-2.5 w-full overflow-hidden rounded-full bg-muted">
          <div
            className={cn(
              "h-full rounded-full transition-all duration-500 ease-out",

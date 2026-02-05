@@ -2,17 +2,30 @@
  
  /**
   * StatusBadge Component
-  * DaisyUI equivalent: badge badge-{variant}
   * 
-  * HAML structure:
-  * %span.badge.badge-sm{ class: badge_class(status) }= label
+ * HAML Equivalent:
+ * ```haml
+ * %span.inline-flex.items-center.rounded-full.border.px-2\.5.py-0\.5.text-xs.font-medium{ class: status_class(status) }
+ *   = status_label(status)
+ * ```
   * 
-  * Badge classes mapping:
-  * - completed: badge-success
-  * - pending: badge-warning
-  * - accepted, delivering: badge-info
-  * - cancelled, failed: badge-error
-  * - new: badge-ghost
+ * DaisyUI Mapping:
+ * | Status     | DaisyUI Class   | CSS Utility     |
+ * |------------|-----------------|-----------------|
+ * | completed  | badge-success   | .badge-success  |
+ * | pending    | badge-warning   | .badge-warning  |
+ * | accepted   | badge-info      | .badge-info     |
+ * | delivering | badge-info      | .badge-info     |
+ * | cancelled  | badge-error     | .badge-destructive |
+ * | failed     | badge-error     | .badge-destructive |
+ * | new        | badge-ghost     | .badge-muted    |
+ * 
+ * CSS Utilities (from index.css):
+ * - .badge-success: bg-success/10 text-success border-success/20
+ * - .badge-warning: bg-warning/10 text-warning border-warning/20
+ * - .badge-destructive: bg-destructive/10 text-destructive border-destructive/20
+ * - .badge-info: bg-info/10 text-info border-info/20
+ * - .badge-muted: bg-muted text-muted-foreground border-border
   */
  
  type StatusType = "completed" | "pending" | "accepted" | "delivering" | "cancelled" | "failed" | "new";

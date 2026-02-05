@@ -20,6 +20,7 @@
    TooltipProvider,
    TooltipTrigger,
  } from "@/components/ui/tooltip";
+ import { TabNavigation } from "@/components/shared/TabNavigation";
  
  /**
   * Products Page
@@ -60,7 +61,14 @@
    const isFormView = isNewView || isEditView;
  
    const [categoryFilter, setCategoryFilter] = useState("all");
-   const [activeTab, setActiveTab] = useState("products");
+     const [activeTab, setActiveTab] = useState<string>("products");
+   
+     const productTabs = [
+       { id: "products", label: "Products" },
+       { id: "divisions", label: "Divisions" },
+       { id: "categories", label: "Categories" },
+       { id: "bestsellers", label: "Bestsellers" },
+     ];
  
    const product = id ? productsData.find((p) => p.id === parseInt(id)) : null;
  
@@ -270,23 +278,11 @@
        </div>
  
        {/* Tabs */}
-        <div className="border-b border-border">
-         <div className="flex gap-6">
-           {["products", "divisions", "categories", "bestsellers"].map((tab) => (
-             <button
-               key={tab}
-               onClick={() => setActiveTab(tab)}
-               className={`pb-3 text-sm font-medium capitalize border-b-2 ${
-                 activeTab === tab
-                    ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
-               }`}
-             >
-               {tab}
-             </button>
-           ))}
-         </div>
-       </div>
+         <TabNavigation
+           tabs={productTabs}
+           activeTab={activeTab}
+           onTabChange={setActiveTab}
+         />
  
        {activeTab === "products" && (
           <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
@@ -327,12 +323,12 @@
                        RM {product.price}
                      </td>
                      <td className="px-4 py-3 text-center">
-                        <span className={`text-xs font-semibold ${product.bestseller ? "text-green-600" : "text-muted-foreground"}`}>
+                         <span className={`text-xs font-semibold ${product.bestseller ? "text-success" : "text-muted-foreground"}`}>
                          {product.bestseller ? "YES" : "NO"}
                        </span>
                      </td>
                      <td className="px-4 py-3">
-                       <div className="flex items-center gap-1">
+                         <div className="action-group">
                          <button
                            onClick={() => navigate(`/products/${product.id}`)}
                             className="btn-primary btn-sm"

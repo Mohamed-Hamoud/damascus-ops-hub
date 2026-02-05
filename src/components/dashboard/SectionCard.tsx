@@ -5,16 +5,22 @@
  
  /**
   * SectionCard Component
-  * DaisyUI equivalent: card bg-base-100 shadow-sm
-  * 
-  * HAML structure:
-  * .card.bg-base-100.shadow-sm
-  *   .card-header.bg-base-200.border-b.px-5.py-4
-  *     %h3.text-base.font-semibold= title
-  *     - if action
-  *       %a.link.link-primary.text-xs{ href: action[:href] }= action[:label]
-  *   .card-body.p-5
-  *     = yield
+ * 
+ * HAML Equivalent:
+ * ```haml
+ * .card-base.overflow-hidden{ class: additional_classes }
+ *   .card-header
+ *     %h3.section-title= title
+ *     - if action.present?
+ *       = link_to action[:href], class: "link-primary text-xs font-semibold flex items-center gap-1" do
+ *         = action[:label]
+ *         = lucide_icon "chevron-right", class: "h-3 w-3"
+ *   .card-body
+ *     = yield
+ * ```
+ * 
+ * DaisyUI: card bg-base-100 shadow-sm, card-body
+ * CSS Utilities: .card-base, .card-header, .card-body, .section-title (index.css)
   */
  
  interface SectionCardProps {

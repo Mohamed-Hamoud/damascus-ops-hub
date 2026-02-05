@@ -14,6 +14,7 @@
    TableRow,
  } from "@/components/ui/table";
  import { FormModal } from "@/components/shared/FormModal";
+ import { PageHeader } from "@/components/shared/PageHeader";
  
  type TabType = "delivery-fees" | "discounts" | "custom-discounts" | "vouchers";
  
@@ -66,13 +67,14 @@
    return (
      <div className="space-y-6">
        {/* Header */}
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="page-title">
-           {activeTab === "delivery-fees" && "Delivery Fee Rules"}
-           {activeTab === "discounts" && "Discounts"}
-           {activeTab === "custom-discounts" && "Custom Discounts"}
-           {activeTab === "vouchers" && "Vouchers"}
-         </h1>
+        <PageHeader
+          title={
+            activeTab === "delivery-fees" ? "Delivery Fee Rules" :
+            activeTab === "discounts" ? "Discounts" :
+            activeTab === "custom-discounts" ? "Custom Discounts" : "Vouchers"
+          }
+          subtitle="Manage delivery fees, discounts, and vouchers"
+        >
          {activeTab === "vouchers" && (
             <Button onClick={() => navigate("/promotions/vouchers/new")} className="bg-primary hover:bg-primary/90">
              <Plus className="mr-2 h-4 w-4" />
@@ -85,7 +87,7 @@
              Add Rule
            </Button>
          )}
-       </div>
+        </PageHeader>
  
        {/* Tabs */}
         <div className="border-b">
@@ -203,7 +205,7 @@
                <TableBody>
                  {mockDeliveryRules.length === 0 ? (
                    <TableRow>
-                     <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                      <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                        No delivery fee rules found
                      </TableCell>
                    </TableRow>

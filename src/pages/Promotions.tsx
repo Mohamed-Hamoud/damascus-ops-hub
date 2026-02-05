@@ -1,6 +1,6 @@
  import { useState } from "react";
 import { Plus, GripVertical } from "lucide-react";
- import { useNavigate } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
  import { Button } from "@/components/ui/button";
  import { Input } from "@/components/ui/input";
  import { Textarea } from "@/components/ui/textarea";
@@ -19,6 +19,51 @@ import { Plus, GripVertical } from "lucide-react";
  
  type TabType = "delivery-fees" | "discounts" | "custom-discounts" | "vouchers";
  
+/**
+ * Promotions Page
+ * Manages delivery fees, discounts, and vouchers
+ * 
+ * RAILS IMPLEMENTATION NOTES:
+ * 
+ * 1. VOUCHER TABLE REORDERING
+ *    The vouchers table includes drag handles (GripVertical icons) for reordering.
+ *    See DAISYUI_MIGRATION_GUIDE.md section "Drag-and-Drop Reordering Implementation"
+ *    - Use Stimulus controller with Sortable.js
+ *    - The .drag-handle class triggers Sortable.js handle behavior
+ *    - Update position via PATCH /vouchers/update_positions
+ * 
+ * 2. HAML TEMPLATE for Vouchers Table:
+ *    ```haml
+ *    %tbody.divide-y.divide-border{ data: { controller: "sortable", sortable_url_value: update_positions_vouchers_path } }
+ *      - @vouchers.each do |voucher|
+ *        %tr.table-row-hover{ data: { id: voucher.id } }
+ *          %td.table-cell.font-medium= voucher.title
+ *          %td.table-cell= voucher.code
+ *          %td.table-cell
+ *            %span.text-primary.font-medium= number_with_delimiter(voucher.remaining)
+ *          / ... other columns ...
+ *          %td.table-cell.text-right
+ *            .action-group
+ *              %button.drag-handle{ title: "Drag to reorder" }
+ *                = lucide_icon "grip-vertical", class: "h-4 w-4"
+ *              = link_to voucher_path(voucher), class: "btn-secondary btn-sm" do
+ *                View
+ *              = link_to edit_voucher_path(voucher), class: "btn-outline btn-sm" do
+ *                Edit
+ *              = button_to voucher_path(voucher), method: :delete, class: "btn-destructive btn-sm" do
+ *                Delete
+ *    ```
+ * 
+ * 3. ROUTES for Vouchers:
+ *    ```ruby
+ *    resources :vouchers do
+ *      collection do
+ *        patch :update_positions
+ *      end
+ *    end
+ *    ```
+ */
+
  const mockVouchers = [
    {
      id: 1,

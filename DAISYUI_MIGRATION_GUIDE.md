@@ -1513,6 +1513,8 @@ The React mockup includes visual drag handles (⋮⋮ icons) for items with posi
 | Banners Table | `Banners.tsx` | Banners by position |
 | CategoryCard | `CategoryCard.tsx` | Categories |
 | DivisionCard | `DivisionCard.tsx` | Divisions |
+| Bestsellers List | `Products.tsx` | Bestseller products order |
+| Vouchers Table | `Promotions.tsx` | Vouchers by priority |
 
 ### Rails Implementation with Stimulus + Sortable.js
 

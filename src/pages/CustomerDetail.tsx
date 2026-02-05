@@ -1,9 +1,10 @@
  import { useParams, useNavigate } from "react-router-dom";
  import { useState } from "react";
- import { ArrowLeft, ShoppingCart, DollarSign, BarChart3, Star, CheckCircle, Calendar, MapPin, Edit } from "lucide-react";
+import { ShoppingCart, DollarSign, BarChart3, Star, CheckCircle, Calendar, MapPin } from "lucide-react";
  import { FormModal } from "@/components/shared/FormModal";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/shared/PageHeader";
  
  /**
   * Customer Detail Page
@@ -60,100 +61,94 @@
    const getStatusColor = (status: string) => {
      switch (status.toLowerCase()) {
        case "completed":
-         return "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400";
+        return "bg-success/10 text-success";
        case "kitchen accepted":
-         return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400";
+        return "bg-warning/10 text-warning";
        default:
-         return "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300";
+        return "bg-muted text-muted-foreground";
      }
    };
  
    return (
      <div className="space-y-6">
-       {/* Back Link */}
-       <button
-         onClick={() => navigate("/customers")}
-         className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-       >
-         <ArrowLeft className="h-4 w-4" />
-         Customers
-       </button>
- 
-       {/* Header */}
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-         <div className="flex items-center gap-3">
-           <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{customerData.name}</h1>
-           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-             {customerData.status}
-           </span>
-         </div>
-         <div className="flex items-center gap-2">
-           <button 
-             onClick={() => setEditModalOpen(true)}
-             className="px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white hover:bg-gray-700 transition-all duration-200"
-           >
-             Edit
-           </button>
-           <button className="px-4 py-2 text-sm font-medium rounded-lg bg-red-500 text-white hover:bg-red-600 transition-all duration-200">
-             Suspend
-           </button>
-         </div>
-       </div>
+      <PageHeader
+        title={customerData.name}
+        backLink="/customers"
+        backLabel="Customers"
+        badge={
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success/10 text-success">
+            {customerData.status}
+          </span>
+        }
+        actions={
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => setEditModalOpen(true)}
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            >
+              Edit
+            </button>
+            <button className="px-4 py-2 text-sm font-medium rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Suspend
+            </button>
+          </div>
+        }
+      />
  
        {/* Stats Cards */}
        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex items-center gap-3">
-           <div className="h-10 w-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-             <ShoppingCart className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center">
+            <ShoppingCart className="h-5 w-5 text-info" />
            </div>
            <div>
-             <p className="text-xl font-bold text-gray-900 dark:text-white">{customerData.stats.totalOrders}</p>
-             <p className="text-xs text-gray-500 dark:text-gray-400">Total Orders</p>
+            <p className="text-xl font-bold text-foreground">{customerData.stats.totalOrders}</p>
+            <p className="text-xs text-muted-foreground">Total Orders</p>
            </div>
          </div>
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex items-center gap-3">
-           <div className="h-10 w-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-             <DollarSign className="h-5 w-5 text-green-600 dark:text-green-400" />
+        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center">
+            <DollarSign className="h-5 w-5 text-success" />
            </div>
            <div>
-             <p className="text-xl font-bold text-gray-900 dark:text-white">RM {customerData.stats.totalSpent.toFixed(1)}</p>
-             <p className="text-xs text-gray-500 dark:text-gray-400">Total Spent</p>
+            <p className="text-xl font-bold text-foreground">RM {customerData.stats.totalSpent.toFixed(1)}</p>
+            <p className="text-xs text-muted-foreground">Total Spent</p>
            </div>
          </div>
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex items-center gap-3">
-           <div className="h-10 w-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-             <BarChart3 className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+            <BarChart3 className="h-5 w-5 text-primary" />
            </div>
            <div>
-             <p className="text-xl font-bold text-gray-900 dark:text-white">RM {customerData.stats.avgOrderValue.toFixed(1)}</p>
-             <p className="text-xs text-gray-500 dark:text-gray-400">Avg Order Value</p>
+            <p className="text-xl font-bold text-foreground">RM {customerData.stats.avgOrderValue.toFixed(1)}</p>
+            <p className="text-xs text-muted-foreground">Avg Order Value</p>
            </div>
          </div>
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex items-center gap-3">
-           <div className="h-10 w-10 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
-             <Star className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center">
+            <Star className="h-5 w-5 text-warning" />
            </div>
            <div>
-             <p className="text-xl font-bold text-gray-900 dark:text-white">{customerData.stats.points}</p>
-             <p className="text-xs text-gray-500 dark:text-gray-400">Points</p>
+            <p className="text-xl font-bold text-foreground">{customerData.stats.points}</p>
+            <p className="text-xs text-muted-foreground">Points</p>
            </div>
          </div>
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex items-center gap-3">
-           <div className="h-10 w-10 rounded-lg bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center">
-             <CheckCircle className="h-5 w-5 text-teal-600 dark:text-teal-400" />
+        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center">
+            <CheckCircle className="h-5 w-5 text-success" />
            </div>
            <div>
-             <p className="text-xl font-bold text-gray-900 dark:text-white">{customerData.stats.completed}</p>
-             <p className="text-xs text-gray-500 dark:text-gray-400">Completed</p>
+            <p className="text-xl font-bold text-foreground">{customerData.stats.completed}</p>
+            <p className="text-xs text-muted-foreground">Completed</p>
            </div>
          </div>
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex items-center gap-3">
-           <div className="h-10 w-10 rounded-lg bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
-             <Calendar className="h-5 w-5 text-pink-600 dark:text-pink-400" />
+        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+            <Calendar className="h-5 w-5 text-primary" />
            </div>
            <div>
-             <p className="text-xl font-bold text-gray-900 dark:text-white">{customerData.stats.memberSince.split(" ")[0]}</p>
-             <p className="text-xs text-gray-500 dark:text-gray-400">Member Since</p>
+            <p className="text-xl font-bold text-foreground">{customerData.stats.memberSince.split(" ")[0]}</p>
+            <p className="text-xs text-muted-foreground">Member Since</p>
            </div>
          </div>
        </div>
@@ -161,85 +156,85 @@
        {/* Info Cards Grid */}
        <div className="grid gap-6 lg:grid-cols-3">
          {/* Personal Information */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Personal Information</h3>
+        <div className="rounded-xl border border-border bg-card p-6">
+          <h3 className="section-title mb-4">Personal Information</h3>
            <div className="grid grid-cols-2 gap-4 text-sm">
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">ID</p>
-               <p className="text-gray-900 dark:text-white font-medium">{customerData.id}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">ID</p>
+              <p className="text-foreground font-medium">{customerData.id}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Phone</p>
-               <p className="text-[#aa1e2c] font-medium">{customerData.phone}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Phone</p>
+              <p className="text-primary font-medium">{customerData.phone}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Email</p>
-               <p className="text-[#aa1e2c] font-medium">{customerData.email}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Email</p>
+              <p className="text-primary font-medium">{customerData.email}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Language</p>
-               <p className="text-gray-900 dark:text-white font-medium">{customerData.language}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Language</p>
+              <p className="text-foreground font-medium">{customerData.language}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Device</p>
-               <p className="text-gray-900 dark:text-white font-medium">{customerData.device}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Device</p>
+              <p className="text-foreground font-medium">{customerData.device}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Sign-ins</p>
-               <p className="text-gray-900 dark:text-white font-medium">{customerData.signIns}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Sign-ins</p>
+              <p className="text-foreground font-medium">{customerData.signIns}</p>
              </div>
            </div>
          </div>
  
          {/* Account Activity */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Account Activity</h3>
+        <div className="rounded-xl border border-border bg-card p-6">
+          <h3 className="section-title mb-4">Account Activity</h3>
            <div className="grid grid-cols-2 gap-4 text-sm">
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Last Sign In</p>
-               <p className="text-gray-900 dark:text-white font-medium italic">{customerData.lastSignIn}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Last Sign In</p>
+              <p className="text-foreground font-medium italic">{customerData.lastSignIn}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Last Order</p>
-               <p className="text-gray-900 dark:text-white font-medium">{customerData.lastOrder}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Last Order</p>
+              <p className="text-foreground font-medium">{customerData.lastOrder}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Favourite Restaurant</p>
-               <p className="text-gray-900 dark:text-white font-medium italic">{customerData.favouriteRestaurant}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Favourite Restaurant</p>
+              <p className="text-foreground font-medium italic">{customerData.favouriteRestaurant}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Avg Rating Given</p>
-               <p className="text-gray-900 dark:text-white font-medium italic">{customerData.avgRating}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Avg Rating Given</p>
+              <p className="text-foreground font-medium italic">{customerData.avgRating}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Last IP Address</p>
-               <p className="text-gray-900 dark:text-white font-medium italic">{customerData.lastIP}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Last IP Address</p>
+              <p className="text-foreground font-medium italic">{customerData.lastIP}</p>
              </div>
              <div>
-               <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">Payment Methods</p>
-               <p className="text-gray-900 dark:text-white font-medium">{customerData.paymentMethods}</p>
+              <p className="text-muted-foreground text-xs uppercase tracking-wider">Payment Methods</p>
+              <p className="text-foreground font-medium">{customerData.paymentMethods}</p>
              </div>
            </div>
          </div>
  
          {/* Delivery Addresses */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
            <div className="flex items-center justify-between mb-4">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Delivery Addresses</h3>
-             <span className="text-sm text-gray-500 dark:text-gray-400">{customerData.addresses.length}</span>
+            <h3 className="section-title">Delivery Addresses</h3>
+            <span className="text-sm text-muted-foreground">{customerData.addresses.length}</span>
            </div>
            <div className="space-y-3">
              {customerData.addresses.map((addr) => (
                <div key={addr.id} className="flex items-start gap-3">
-                 <MapPin className="h-4 w-4 text-gray-400 mt-0.5" />
+                <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
                  <div>
                    <div className="flex items-center gap-2">
-                     <span className="font-medium text-gray-900 dark:text-white">{addr.label}</span>
+                    <span className="font-medium text-foreground">{addr.label}</span>
                      {addr.isDefault && (
-                       <span className="text-xs font-semibold text-green-600 dark:text-green-400">DEFAULT</span>
+                      <span className="text-xs font-semibold text-success">DEFAULT</span>
                      )}
                    </div>
-                   <p className="text-sm text-gray-500 dark:text-gray-400">{addr.address}</p>
+                  <p className="text-sm text-muted-foreground">{addr.address}</p>
                  </div>
                </div>
              ))}
@@ -250,42 +245,42 @@
        {/* Orders */}
        <div className="space-y-4">
          <div className="flex items-center gap-2">
-           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Orders</h2>
-           <span className="text-lg text-gray-500 dark:text-gray-400">{customerData.orders.length}</span>
+          <h2 className="section-title">Orders</h2>
+          <span className="text-lg text-muted-foreground">{customerData.orders.length}</span>
          </div>
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+        <div className="rounded-xl border border-border bg-card card-shadow overflow-hidden">
            <div className="overflow-x-auto">
              <table className="w-full">
                <thead>
-                 <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
-                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Order</th>
-                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Date</th>
-                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Branch</th>
-                   <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Amount</th>
-                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                <tr className="bg-muted/30 border-b border-border">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Order</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Date</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Branch</th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Amount</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
                    <th className="px-4 py-3"></th>
                  </tr>
                </thead>
-               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="divide-y divide-border">
                  {customerData.orders.map((order) => (
-                   <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150">
+                  <tr key={order.id} className="hover:bg-muted/50">
                      <td className="px-4 py-3">
                        <div>
-                         <span className="font-medium text-gray-900 dark:text-white">{order.orderNumber}</span>
-                         <p className="text-xs text-gray-500 dark:text-gray-400">ID {order.id}</p>
+                        <span className="font-medium text-foreground">{order.orderNumber}</span>
+                        <p className="text-xs text-muted-foreground">ID {order.id}</p>
                        </div>
                      </td>
                      <td className="px-4 py-3">
                        <div>
-                         <span className="text-gray-900 dark:text-white">{order.date}</span>
-                         <p className="text-xs text-gray-500 dark:text-gray-400">{order.time}</p>
+                        <span className="text-foreground">{order.date}</span>
+                        <p className="text-xs text-muted-foreground">{order.time}</p>
                        </div>
                      </td>
-                     <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{order.branch}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{order.branch}</td>
                      <td className="px-4 py-3 text-right">
                        <div>
-                         <span className="font-semibold text-gray-900 dark:text-white">RM {order.amount.toFixed(1)}</span>
-                         <p className="text-xs text-gray-500 dark:text-gray-400">{order.subtotal.toFixed(1)} + {order.delivery.toFixed(1)} delivery</p>
+                        <span className="font-semibold text-foreground">RM {order.amount.toFixed(1)}</span>
+                        <p className="text-xs text-muted-foreground">{order.subtotal.toFixed(1)} + {order.delivery.toFixed(1)} delivery</p>
                        </div>
                      </td>
                      <td className="px-4 py-3">
@@ -294,7 +289,7 @@
                        </span>
                      </td>
                      <td className="px-4 py-3">
-                       <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-all duration-200">
+                      <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80">
                          View
                        </button>
                      </td>
@@ -317,14 +312,13 @@
        >
          <div className="space-y-6">
            <div>
-             <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Personal Information</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4">Personal Information</h4>
              <div className="grid gap-4 sm:grid-cols-2">
                <div className="space-y-2">
                  <Label>First Name</Label>
                  <Input
                    value={formData.firstName}
                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                   className="bg-white dark:bg-gray-800"
                  />
                </div>
                <div className="space-y-2">
@@ -332,15 +326,13 @@
                  <Input
                    value={formData.lastName}
                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                   className="bg-white dark:bg-gray-800"
                  />
                </div>
                <div className="space-y-2">
-                 <Label>Phone Number <span className="text-red-500">*</span></Label>
+                <Label>Phone Number <span className="text-destructive">*</span></Label>
                  <Input
                    value={formData.phone}
                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                   className="bg-white dark:bg-gray-800"
                  />
                </div>
                <div className="space-y-2">

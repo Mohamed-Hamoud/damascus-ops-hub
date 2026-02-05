@@ -1,10 +1,11 @@
  import { useParams, useNavigate } from "react-router-dom";
  import { useState } from "react";
- import { ArrowLeft, Eye, Edit, Trash2, Plus } from "lucide-react";
+import { Edit, Trash2, Plus } from "lucide-react";
  import { FormModal, DeleteModal } from "@/components/shared/FormModal";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
  import { Textarea } from "@/components/ui/textarea";
+import { PageHeader } from "@/components/shared/PageHeader";
  
  /**
   * Product Detail Page
@@ -87,77 +88,71 @@
  
    return (
      <div className="space-y-6">
-       {/* Back Link */}
-       <button
-         onClick={() => navigate("/products")}
-         className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-       >
-         <ArrowLeft className="h-4 w-4" />
-         Products
-       </button>
- 
-       {/* Header */}
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{productData.name}</h1>
-         <div className="flex items-center gap-2">
-           <button 
-             onClick={() => setEditModalOpen(true)}
-             className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200 flex items-center gap-2"
-           >
-             <Edit className="h-4 w-4" />
-             Edit
-           </button>
-           <button 
-             onClick={() => setDeleteModalOpen(true)}
-             className="px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-200 flex items-center gap-2"
-           >
-             <Trash2 className="h-4 w-4" />
-             Delete
-           </button>
-         </div>
-       </div>
+      <PageHeader
+        title={productData.name}
+        backLink="/products"
+        backLabel="Products"
+        actions={
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => setEditModalOpen(true)}
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
+            >
+              <Edit className="h-4 w-4" />
+              Edit
+            </button>
+            <button 
+              onClick={() => setDeleteModalOpen(true)}
+              className="px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card text-foreground hover:bg-destructive hover:text-destructive-foreground hover:border-destructive flex items-center gap-2"
+            >
+              <Trash2 className="h-4 w-4" />
+              Delete
+            </button>
+          </div>
+        }
+      />
  
        {/* Product Info Card */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+      <div className="rounded-xl border border-border bg-card p-6">
          <div className="flex flex-col lg:flex-row gap-6">
            {/* Photo */}
-           <div className="h-32 w-32 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-5xl shadow-sm flex-shrink-0">
+          <div className="h-32 w-32 rounded-xl bg-muted flex items-center justify-center text-5xl flex-shrink-0">
              {productData.photo}
            </div>
  
            {/* Info Grid */}
            <div className="flex-1 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
              <div>
-               <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Division</p>
-               <p className="text-gray-900 dark:text-white font-medium mt-1">{productData.division}</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Division</p>
+              <p className="text-foreground font-medium mt-1">{productData.division}</p>
              </div>
              <div>
-               <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category</p>
-               <p className="text-gray-900 dark:text-white font-medium mt-1">{productData.category}</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Category</p>
+              <p className="text-foreground font-medium mt-1">{productData.category}</p>
              </div>
              <div>
-               <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Old Price</p>
-               <p className="text-gray-900 dark:text-white font-medium mt-1">{productData.oldPrice ? `RM ${productData.oldPrice}` : "-"}</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Old Price</p>
+              <p className="text-foreground font-medium mt-1">{productData.oldPrice ? `RM ${productData.oldPrice}` : "-"}</p>
              </div>
              <div>
-               <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Current Price</p>
-               <p className="text-gray-900 dark:text-white font-bold mt-1">RM {productData.currentPrice.toFixed(2)}</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Current Price</p>
+              <p className="text-foreground font-bold mt-1">RM {productData.currentPrice.toFixed(2)}</p>
              </div>
              <div>
-               <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title (English)</p>
-               <p className="text-gray-900 dark:text-white font-medium mt-1">{productData.titleEN}</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Title (English)</p>
+              <p className="text-foreground font-medium mt-1">{productData.titleEN}</p>
              </div>
            </div>
          </div>
  
-         <div className="grid gap-4 sm:grid-cols-2 mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
+        <div className="grid gap-4 sm:grid-cols-2 mt-6 pt-6 border-t border-border">
            <div>
-             <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description (English)</p>
-             <p className="text-gray-900 dark:text-white mt-1">{productData.descriptionEN}</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Description (English)</p>
+            <p className="text-foreground mt-1">{productData.descriptionEN}</p>
            </div>
            <div>
-             <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description (Malaysia)</p>
-             <p className="text-gray-900 dark:text-white mt-1">{productData.descriptionMS}</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Description (Malaysia)</p>
+            <p className="text-foreground mt-1">{productData.descriptionMS}</p>
            </div>
          </div>
        </div>
@@ -165,16 +160,16 @@
        {/* Modifiers & Add-ons */}
        <div className="grid gap-6 lg:grid-cols-2">
          {/* Modifiers */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
            <div className="flex items-center justify-between mb-4">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Modificators</h3>
+            <h3 className="section-title">Modificators</h3>
              <button 
                onClick={() => {
                  setEditingModifier(null);
                  setModifierForm({ titleEN: "", titleMS: "", position: 0, minQty: 0, maxQty: 0, options: [{ nameEN: "", nameMS: "", price: 0 }] });
                  setModifierModalOpen(true);
                }}
-               className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200 flex items-center gap-2"
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
              >
                <Plus className="h-4 w-4" />
                Add Modificator
@@ -182,27 +177,27 @@
            </div>
            <div className="space-y-4">
              {productData.modifiers.map((modifier) => (
-               <div key={modifier.id} className="border border-gray-100 dark:border-gray-700 rounded-lg p-4">
+              <div key={modifier.id} className="border border-border rounded-lg p-4">
                  <div className="flex items-start justify-between">
                    <div>
-                     <p className="font-medium text-gray-900 dark:text-white">Name: <span className="font-semibold">{modifier.nameEN} / {modifier.nameMS}</span></p>
-                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Min Amount: <span className="font-medium text-gray-900 dark:text-white">{modifier.minAmount}</span></p>
-                     <p className="text-sm text-gray-500 dark:text-gray-400">Max Amount: <span className="font-medium text-gray-900 dark:text-white">{modifier.maxAmount}</span></p>
+                    <p className="font-medium text-foreground">Name: <span className="font-semibold">{modifier.nameEN} / {modifier.nameMS}</span></p>
+                    <p className="text-sm text-muted-foreground mt-1">Min Amount: <span className="font-medium text-foreground">{modifier.minAmount}</span></p>
+                    <p className="text-sm text-muted-foreground">Max Amount: <span className="font-medium text-foreground">{modifier.maxAmount}</span></p>
                      {modifier.options.map((opt) => (
-                       <div key={opt.id} className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100 dark:border-gray-700">
-                         <span className="text-sm text-gray-900 dark:text-white">{opt.nameEN}</span>
-                         <span className="text-sm font-semibold text-gray-900 dark:text-white">{opt.price.toFixed(2)}</span>
+                      <div key={opt.id} className="flex items-center justify-between mt-2 pt-2 border-t border-border">
+                        <span className="text-sm text-foreground">{opt.nameEN}</span>
+                        <span className="text-sm font-semibold text-foreground">{opt.price.toFixed(2)}</span>
                        </div>
                      ))}
                    </div>
                    <div className="flex gap-1">
                      <button 
                        onClick={() => openEditModifier(modifier)}
-                       className="h-8 w-8 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-muted"
                      >
                        <Edit className="h-4 w-4" />
                      </button>
-                     <button className="h-8 w-8 flex items-center justify-center rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                    <button className="h-8 w-8 flex items-center justify-center rounded-lg text-destructive hover:bg-destructive/10">
                        <Trash2 className="h-4 w-4" />
                      </button>
                    </div>
@@ -210,27 +205,27 @@
                </div>
              ))}
              {productData.modifiers.length === 0 && (
-               <p className="text-center text-gray-500 dark:text-gray-400 py-4">No modifiers configured</p>
+              <p className="text-center text-muted-foreground py-4">No modifiers configured</p>
              )}
            </div>
          </div>
  
          {/* Add-ons */}
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
            <div className="flex items-center justify-between mb-4">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Add On</h3>
+            <h3 className="section-title">Add On</h3>
              <button 
                onClick={() => setAddOnModalOpen(true)}
-               className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200 flex items-center gap-2"
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
              >
                <Plus className="h-4 w-4" />
                Add Add On
              </button>
            </div>
            <div className="space-y-4">
-             <p className="font-medium text-gray-900 dark:text-white">Name: <span className="font-semibold">Add On</span></p>
+            <p className="font-medium text-foreground">Name: <span className="font-semibold">Add On</span></p>
              {productData.addOns.length === 0 && (
-               <p className="text-gray-500 dark:text-gray-400">No add-ons configured</p>
+              <p className="text-muted-foreground">No add-ons configured</p>
              )}
            </div>
          </div>
@@ -248,70 +243,70 @@
          <div className="space-y-6">
            {/* Basic Info */}
            <div>
-             <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Basic Information</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4">Basic Information</h4>
              <div className="grid gap-4 sm:grid-cols-2">
                <div className="sm:col-span-2 flex gap-6">
                  <div className="space-y-2">
                    <Label>Photo</Label>
-                   <div className="h-24 w-32 rounded-lg bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-3xl">
+                  <div className="h-24 w-32 rounded-lg bg-muted flex items-center justify-center text-3xl">
                      {productData.photo}
                    </div>
-                   <button className="text-xs text-red-500 hover:text-red-600">Remove</button>
+                  <button className="text-xs text-destructive hover:text-destructive/80">Remove</button>
                  </div>
                  <div className="flex items-center gap-2 pt-6">
-                   <input type="checkbox" id="bestseller" className="rounded border-gray-300" defaultChecked={productData.bestseller} />
+                  <input type="checkbox" id="bestseller" className="rounded border-border" defaultChecked={productData.bestseller} />
                    <Label htmlFor="bestseller">Show as Bestseller</Label>
                  </div>
                </div>
                <div className="space-y-2">
-                 <Label>Title (English) <span className="text-red-500">*</span></Label>
-                 <Input defaultValue={productData.titleEN} className="bg-white dark:bg-gray-800" />
+                <Label>Title (English) <span className="text-destructive">*</span></Label>
+                <Input defaultValue={productData.titleEN} />
                </div>
                <div className="space-y-2">
-                 <Label>Title (Malaysia) <span className="text-red-500">*</span></Label>
-                 <Input defaultValue={productData.titleMS} placeholder="Enter product name in Malay" className="bg-white dark:bg-gray-800" />
+                <Label>Title (Malaysia) <span className="text-destructive">*</span></Label>
+                <Input defaultValue={productData.titleMS} placeholder="Enter product name in Malay" />
                </div>
                <div className="space-y-2">
-                 <Label>Description (English) <span className="text-red-500">*</span></Label>
-                 <Textarea defaultValue={productData.descriptionEN} className="bg-white dark:bg-gray-800" rows={3} />
+                <Label>Description (English) <span className="text-destructive">*</span></Label>
+                <Textarea defaultValue={productData.descriptionEN} rows={3} />
                </div>
                <div className="space-y-2">
-                 <Label>Description (Malaysia) <span className="text-red-500">*</span></Label>
-                 <Textarea defaultValue={productData.descriptionMS} placeholder="Enter product description in Malay" className="bg-white dark:bg-gray-800" rows={3} />
+                <Label>Description (Malaysia) <span className="text-destructive">*</span></Label>
+                <Textarea defaultValue={productData.descriptionMS} placeholder="Enter product description in Malay" rows={3} />
                </div>
              </div>
            </div>
  
            {/* Category & Pricing */}
            <div>
-             <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Category & Pricing</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4">Category & Pricing</h4>
              <div className="grid gap-4 sm:grid-cols-2">
                <div className="space-y-2">
-                 <Label>Division <span className="text-red-500">*</span></Label>
-                 <select defaultValue={productData.division} className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+                <Label>Division <span className="text-destructive">*</span></Label>
+                <select defaultValue={productData.division} className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground">
                    <option value="Bar">Bar</option>
                    <option value="Kitchen">Kitchen</option>
                  </select>
                </div>
                <div className="space-y-2">
-                 <Label>Category <span className="text-red-500">*</span></Label>
-                 <select defaultValue={productData.category} className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+                <Label>Category <span className="text-destructive">*</span></Label>
+                <select defaultValue={productData.category} className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground">
                    <option value="Beverages">Beverages</option>
                    <option value="Main Course">Main Course</option>
                    <option value="Appetizer">Appetizer</option>
                  </select>
                </div>
                <div className="space-y-2">
-                 <Label>Current Price (RM) <span className="text-red-500">*</span></Label>
-                 <Input type="number" step="0.01" defaultValue={productData.currentPrice} className="bg-white dark:bg-gray-800" />
+                <Label>Current Price (RM) <span className="text-destructive">*</span></Label>
+                <Input type="number" step="0.01" defaultValue={productData.currentPrice} />
                </div>
                <div className="space-y-2">
                  <Label>Old Price (RM)</Label>
-                 <Input type="number" step="0.01" placeholder="0.00 (optional)" className="bg-white dark:bg-gray-800" />
+                <Input type="number" step="0.01" placeholder="0.00 (optional)" />
                </div>
                <div className="space-y-2">
                  <Label>Position</Label>
-                 <Input type="number" defaultValue={productData.position} className="bg-white dark:bg-gray-800" />
+                <Input type="number" defaultValue={productData.position} />
                </div>
              </div>
            </div>

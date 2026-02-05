@@ -1,4 +1,4 @@
- import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, GripVertical } from "lucide-react";
  import {
    Tooltip,
    TooltipContent,
@@ -6,14 +6,38 @@
    TooltipTrigger,
  } from "@/components/ui/tooltip";
  
+/**
+ * DivisionCard Component
+ * Card for displaying division with reorder handle
+ * 
+ * HAML Equivalent:
+ * ```haml
+ * .rounded-xl.border.border-border.bg-card.p-5
+ *   .flex.items-center.justify-between
+ *     %div
+ *       %h3.font-semibold.text-lg.text-foreground= name
+ *       %p.text-sm.text-muted-foreground= "#{product_count} products"
+ *     .flex.gap-1
+ *       %button.icon-btn{ title: 'Edit Division' }
+ *         = lucide_icon "edit", class: "h-4 w-4"
+ *       %button.icon-btn{ title: 'Delete Division' }
+ *         = lucide_icon "trash-2", class: "h-4 w-4"
+ *       %button.drag-handle{ title: 'Drag to reorder' }
+ *         = lucide_icon "grip-vertical", class: "h-4 w-4"
+ * ```
+ * 
+ * DaisyUI: card, btn btn-ghost btn-sm
+ */
+
  interface DivisionCardProps {
    name: string;
    productCount: number;
    onEdit?: () => void;
    onDelete?: () => void;
+  onDrag?: () => void;
  }
  
- export function DivisionCard({ name, productCount, onEdit, onDelete }: DivisionCardProps) {
+export function DivisionCard({ name, productCount, onEdit, onDelete, onDrag }: DivisionCardProps) {
    return (
      <div className="rounded-xl border border-border bg-card p-5">
        <div className="flex items-center justify-between">
@@ -48,6 +72,19 @@
                <TooltipContent>Delete Division</TooltipContent>
              </Tooltip>
            </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button 
+                  onMouseDown={onDrag}
+                  className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-muted cursor-grab active:cursor-grabbing transition-colors"
+                >
+                  <GripVertical className="h-4 w-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Drag to reorder</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
          </div>
        </div>
      </div>

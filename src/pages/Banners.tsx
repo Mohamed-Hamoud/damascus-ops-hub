@@ -1,12 +1,20 @@
  import { useState } from "react";
- import { Plus, Eye, Edit, Trash2 } from "lucide-react";
- import { FormModal, DeleteModal } from "@/components/shared/FormModal";
+ import { useNavigate, useParams, useLocation } from "react-router-dom";
+ import { ArrowLeft, Plus, Eye, Trash2 } from "lucide-react";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
+ import { Checkbox } from "@/components/ui/checkbox";
+ import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+ } from "@/components/ui/select";
  
  /**
   * Banners Page
-  * DaisyUI: tabs, table, btn, badge, modal
+  * List view + Edit/Create forms matching reference screenshots
   */
  
  const bannersData = [
@@ -14,24 +22,165 @@
    { id: 2, name: "Hi 54545", photoEN: "🍛", photoMS: "🍛", url: "", created: "2026-01-28 23:20", promotedProduct: "Chicken Rice", visible: true, type: "DEFAULT" },
  ];
  
- const customBannersData: typeof bannersData = [];
+ const productsOptions = [
+   { value: "", label: "Select Product (optional)" },
+   { value: "chicken-rice", label: "Chicken Rice" },
+   { value: "nasi-lemak", label: "Nasi Lemak" },
+ ];
  
  export default function Banners() {
-   const [activeTab, setActiveTab] = useState("banners");
-   const [addModalOpen, setAddModalOpen] = useState(false);
-   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-   const [selectedBanner, setSelectedBanner] = useState<typeof bannersData[0] | null>(null);
+   const navigate = useNavigate();
+   const { id } = useParams();
+   const location = useLocation();
  
-   const currentData = activeTab === "banners" ? bannersData : customBannersData;
+   const isNewView = location.pathname.includes("new");
+   const isEditView = id && location.pathname.includes("edit");
+   const isFormView = isNewView || isEditView;
+ 
+   const [activeTab, setActiveTab] = useState("banners");
+   const banner = id ? bannersData.find((b) => b.id === parseInt(id)) : null;
+ 
+   // Form View (Create/Edit)
+   if (isFormView) {
+     return (
+       <div className="space-y-6">
+         <button
+           onClick={() => navigate("/banners")}
+           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+         >
+           <ArrowLeft className="h-4 w-4" />
+           Banners
+         </button>
+ 
+         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+           {isNewView ? "New Banner" : "Edit Banner"}
+         </h1>
+ 
+         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+           <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+               {isNewView ? "New Banner" : "Edit Banner"}
+             </h2>
+             {isEditView && (
+               <button
+                 onClick={() => navigate(`/banners/${id}`)}
+                 className="px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white hover:bg-gray-700 flex items-center gap-2"
+               >
+                 <Eye className="h-4 w-4" />
+                 View Banner
+               </button>
+             )}
+           </div>
+ 
+           <div className="p-6 space-y-6">
+             {/* Banner Information */}
+             <div className="space-y-4">
+               <h3 className="text-base font-semibold text-gray-900 dark:text-white">Banner Information</h3>
+               
+               <div className="space-y-2">
+                 <Label className="text-gray-700 dark:text-gray-300">Name <span className="text-red-500">*</span></Label>
+                 <Input
+                   defaultValue={banner?.name || ""}
+                   className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700"
+                 />
+               </div>
+ 
+               <div className="grid gap-4 sm:grid-cols-2">
+                 <div className="space-y-2">
+                   <Label className="text-gray-700 dark:text-gray-300">Promoted Product</Label>
+                   <Select defaultValue={banner?.promotedProduct || ""}>
+                     <SelectTrigger className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
+                       <SelectValue placeholder="Select Product (optional)" />
+                     </SelectTrigger>
+                     <SelectContent>
+                       {productsOptions.map((opt) => (
+                         <SelectItem key={opt.value} value={opt.value || "none"}>
+                           {opt.label}
+                         </SelectItem>
+                       ))}
+                     </SelectContent>
+                   </Select>
+                 </div>
+                 <div className="space-y-2">
+                   <Label className="text-gray-700 dark:text-gray-300">Banner URL</Label>
+                   <Input
+                     defaultValue={banner?.url || ""}
+                     className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700"
+                   />
+                 </div>
+               </div>
+ 
+               <div className="space-y-2">
+                 <Label className="text-gray-700 dark:text-gray-300">Visibility</Label>
+                 <div className="flex items-center gap-2">
+                   <Checkbox id="visible" defaultChecked={banner?.visible ?? true} />
+                   <Label htmlFor="visible" className="text-sm text-gray-700 dark:text-gray-300">Show banner to users</Label>
+                 </div>
+               </div>
+             </div>
+ 
+             {/* Banner Images */}
+             <div className="space-y-4">
+               <h3 className="text-base font-semibold text-gray-900 dark:text-white">Banner Images</h3>
+               
+               <div className="grid gap-4 sm:grid-cols-2">
+                 <div className="space-y-2">
+                   <Label className="text-gray-700 dark:text-gray-300">Image (English) <span className="text-red-500">*</span></Label>
+                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                     <div className="h-32 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-4xl">
+                       {banner?.photoEN || "📷"}
+                     </div>
+                     <button className="w-full px-3 py-2 text-xs font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center justify-center gap-1 border-t border-gray-200 dark:border-gray-700">
+                       <Trash2 className="h-3 w-3" />
+                       Remove
+                     </button>
+                   </div>
+                 </div>
+                 <div className="space-y-2">
+                   <Label className="text-gray-700 dark:text-gray-300">Image (Malaysia) <span className="text-red-500">*</span></Label>
+                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                     <div className="h-32 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-4xl">
+                       {banner?.photoMS || "📷"}
+                     </div>
+                     <button className="w-full px-3 py-2 text-xs font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center justify-center gap-1 border-t border-gray-200 dark:border-gray-700">
+                       <Trash2 className="h-3 w-3" />
+                       Remove
+                     </button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+ 
+           <div className="flex items-center justify-center gap-3 p-6 border-t border-gray-200 dark:border-gray-700">
+             <button
+               onClick={() => navigate("/banners")}
+               className="px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white hover:bg-gray-700"
+             >
+               Cancel
+             </button>
+             <button
+               onClick={() => navigate("/banners")}
+               className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824]"
+             >
+               {isNewView ? "Create Banner" : "Update Banner"}
+             </button>
+           </div>
+         </div>
+       </div>
+     );
+   }
+ 
+   // List View
+   const currentData = activeTab === "banners" ? bannersData : [];
  
    return (
      <div className="space-y-6">
-       {/* Header */}
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Banners</h1>
-         <button 
-           onClick={() => setAddModalOpen(true)}
-           className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200 flex items-center gap-2"
+         <button
+           onClick={() => navigate("/banners/new")}
+           className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] flex items-center gap-2"
          >
            <Plus className="h-4 w-4" />
            Add Banner
@@ -41,23 +190,29 @@
        {/* Tabs */}
        <div className="border-b border-gray-200 dark:border-gray-700">
          <div className="flex gap-6">
-           {["banners", "custom banner"].map((tab) => (
-             <button
-               key={tab}
-               onClick={() => setActiveTab(tab)}
-               className={`pb-3 text-sm font-medium capitalize border-b-2 transition-all ${
-                 activeTab === tab
-                   ? "border-[#aa1e2c] text-[#aa1e2c]"
-                   : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-               }`}
-             >
-               {tab === "custom banner" ? "Custom Banner" : "Banners"}
-             </button>
-           ))}
+           <button
+             onClick={() => setActiveTab("banners")}
+             className={`pb-3 text-sm font-medium border-b-2 ${
+               activeTab === "banners"
+                 ? "border-[#aa1e2c] text-[#aa1e2c]"
+                 : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+             }`}
+           >
+             Banners
+           </button>
+           <button
+             onClick={() => setActiveTab("custom")}
+             className={`pb-3 text-sm font-medium border-b-2 ${
+               activeTab === "custom"
+                 ? "border-[#aa1e2c] text-[#aa1e2c]"
+                 : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+             }`}
+           >
+             Custom Banner
+           </button>
          </div>
        </div>
  
-       {/* Table */}
        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
          <div className="overflow-x-auto">
            <table className="w-full">
@@ -76,15 +231,15 @@
              </thead>
              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                {currentData.map((banner) => (
-                 <tr key={banner.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150">
+                 <tr key={banner.id}>
                    <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{banner.name}</td>
                    <td className="px-4 py-3">
-                     <div className="h-12 w-16 rounded-lg bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-xl">
+                     <div className="h-12 w-16 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xl">
                        {banner.photoEN}
                      </div>
                    </td>
                    <td className="px-4 py-3">
-                     <div className="h-12 w-16 rounded-lg bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-xl">
+                     <div className="h-12 w-16 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xl">
                        {banner.photoMS}
                      </div>
                    </td>
@@ -101,19 +256,19 @@
                    </td>
                    <td className="px-4 py-3">
                      <div className="flex items-center gap-1">
-                       <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-all duration-200">
+                       <button
+                         onClick={() => navigate(`/banners/${banner.id}`)}
+                         className="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-800 text-white hover:bg-gray-700"
+                       >
                          View
                        </button>
-                       <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200">
+                       <button
+                         onClick={() => navigate(`/banners/${banner.id}/edit`)}
+                         className="px-3 py-1.5 text-xs font-medium rounded-md bg-[#aa1e2c] text-white hover:bg-[#8a1824]"
+                       >
                          Edit
                        </button>
-                       <button 
-                         onClick={() => {
-                           setSelectedBanner(banner);
-                           setDeleteModalOpen(true);
-                         }}
-                         className="px-3 py-1.5 text-xs font-medium rounded-md bg-red-500 text-white hover:bg-red-600 transition-all duration-200"
-                       >
+                       <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-red-500 text-white hover:bg-red-600">
                          Delete
                        </button>
                      </div>
@@ -131,72 +286,6 @@
            </table>
          </div>
        </div>
- 
-       {/* Add Banner Modal */}
-       <FormModal
-         open={addModalOpen}
-         onOpenChange={setAddModalOpen}
-         title="Add Banner"
-         onSubmit={() => setAddModalOpen(false)}
-         submitLabel="Create Banner"
-         size="lg"
-       >
-         <div className="space-y-4">
-           <div className="grid gap-4 sm:grid-cols-2">
-             <div className="space-y-2">
-               <Label>Name <span className="text-red-500">*</span></Label>
-               <Input placeholder="Banner name" className="bg-white dark:bg-gray-800" />
-             </div>
-             <div className="space-y-2">
-               <Label>URL</Label>
-               <Input placeholder="https://..." className="bg-white dark:bg-gray-800" />
-             </div>
-           </div>
-           <div className="grid gap-4 sm:grid-cols-2">
-             <div className="space-y-2">
-               <Label>Photo (English)</Label>
-               <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
-                 <p className="text-sm text-gray-500 dark:text-gray-400">Click to upload</p>
-               </div>
-             </div>
-             <div className="space-y-2">
-               <Label>Photo (Malaysia)</Label>
-               <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
-                 <p className="text-sm text-gray-500 dark:text-gray-400">Click to upload</p>
-               </div>
-             </div>
-           </div>
-           <div className="grid gap-4 sm:grid-cols-2">
-             <div className="space-y-2">
-               <Label>Promoted Product</Label>
-               <select className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-                 <option value="">Select product...</option>
-                 <option value="chicken-rice">Chicken Rice</option>
-                 <option value="nasi-lemak">Nasi Lemak</option>
-               </select>
-             </div>
-             <div className="space-y-2">
-               <Label>Type</Label>
-               <select className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-                 <option value="DEFAULT">Default</option>
-                 <option value="CUSTOM">Custom</option>
-               </select>
-             </div>
-           </div>
-           <div className="flex items-center gap-2">
-             <input type="checkbox" id="visible" className="rounded border-gray-300" defaultChecked />
-             <Label htmlFor="visible">Visible</Label>
-           </div>
-         </div>
-       </FormModal>
- 
-       {/* Delete Modal */}
-       <DeleteModal
-         open={deleteModalOpen}
-         onOpenChange={setDeleteModalOpen}
-         onConfirm={() => setDeleteModalOpen(false)}
-         itemName={selectedBanner?.name}
-       />
      </div>
    );
  }

@@ -1,4 +1,5 @@
  import { Ticket, Users, Grid3X3, ShieldCheck, MessageSquare, HelpCircle, BarChart3, Settings, Star } from "lucide-react";
+ import { EmptyState } from "@/components/shared/EmptyState";
  import { useNavigate } from "react-router-dom";
  
  /**
@@ -7,21 +8,21 @@
   */
  
  const quickNavItems = [
-   { icon: Ticket, label: "Tickets", color: "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400", link: "/support/tickets" },
-   { icon: Users, label: "Teams", color: "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400", link: "/support/settings" },
-   { icon: Grid3X3, label: "Categories", color: "bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400", link: "/support/settings" },
-   { icon: ShieldCheck, label: "SLA Policies", color: "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400", link: "/support/settings" },
-   { icon: MessageSquare, label: "Canned Responses", color: "bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400", link: "/support/settings" },
-   { icon: HelpCircle, label: "Help Center", color: "bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400", link: "/support/settings" },
-   { icon: BarChart3, label: "Analytics", color: "bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400", link: "/support/tickets" },
-   { icon: Settings, label: "Settings", color: "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400", link: "/support/settings" },
+   { icon: Ticket, label: "Tickets", color: "bg-primary/10 text-primary", link: "/support/tickets" },
+   { icon: Users, label: "Teams", color: "bg-secondary text-secondary-foreground", link: "/support/settings" },
+   { icon: Grid3X3, label: "Categories", color: "bg-accent text-accent-foreground", link: "/support/settings" },
+   { icon: ShieldCheck, label: "SLA Policies", color: "bg-muted text-muted-foreground", link: "/support/settings" },
+   { icon: MessageSquare, label: "Canned Responses", color: "bg-primary/10 text-primary", link: "/support/settings" },
+   { icon: HelpCircle, label: "Help Center", color: "bg-secondary text-secondary-foreground", link: "/support/settings" },
+   { icon: BarChart3, label: "Analytics", color: "bg-accent text-accent-foreground", link: "/support/tickets" },
+   { icon: Settings, label: "Settings", color: "bg-muted text-muted-foreground", link: "/support/settings" },
  ];
  
  const statsData = [
-   { label: "Open Tickets", value: 0, color: "bg-orange-100 dark:bg-orange-900/30" },
-   { label: "Unassigned", value: 0, color: "bg-blue-100 dark:bg-blue-900/30" },
-   { label: "Escalated", value: 0, color: "bg-red-100 dark:bg-red-900/30" },
-   { label: "Resolved Today", value: 0, color: "bg-green-100 dark:bg-green-900/30" },
+   { label: "Open Tickets", value: 0 },
+   { label: "Unassigned", value: 0 },
+   { label: "Escalated", value: 0 },
+   { label: "Resolved Today", value: 0 },
  ];
  
  const slaPerformance = [
@@ -138,7 +139,7 @@
                </button>
              </div>
              <div className="flex items-center justify-center py-8 text-muted-foreground text-sm">
-               No SLA breaches
+               <EmptyState message="No SLA breaches" />
              </div>
            </div>
  
@@ -153,7 +154,7 @@
                </button>
              </div>
              <div className="flex items-center justify-center py-8 text-muted-foreground text-sm">
-               All tickets assigned
+               <EmptyState message="All tickets assigned" />
                </div>
              </div>
            </div>

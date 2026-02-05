@@ -1,3 +1,4 @@
+ import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
  import { Toaster } from "@/components/ui/toaster";
  import { Toaster as Sonner } from "@/components/ui/sonner";
  import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,12 +34,20 @@ import BranchDetail from "./pages/BranchDetail";
  import VoucherForm from "./pages/VoucherForm";
  import VoucherDetail from "./pages/VoucherDetail";
 
-const queryClient = new QueryClient();
+ const queryClient = new QueryClient({
+   defaultOptions: {
+     queries: {
+       retry: 1,
+       refetchOnWindowFocus: false,
+     },
+   },
+ });
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <TooltipProvider>
+         <ErrorBoundary>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -78,6 +87,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+         </ErrorBoundary>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>

@@ -200,29 +200,55 @@
 
   /* Action button styles */
   .btn-primary {
-    @apply px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors;
+     @apply px-3 py-2 sm:px-4 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors;
   }
 
   .btn-secondary {
-    @apply px-4 py-2 text-sm font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors;
+     @apply px-3 py-2 sm:px-4 text-sm font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors;
   }
 
   .btn-outline {
-    @apply px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card text-foreground hover:bg-muted transition-colors;
+     @apply px-3 py-2 sm:px-4 text-sm font-medium rounded-lg border border-border bg-card text-foreground hover:bg-muted transition-colors;
   }
 
   .btn-ghost {
-    @apply px-4 py-2 text-sm font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors;
+     @apply px-3 py-2 sm:px-4 text-sm font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors;
   }
 
   .btn-destructive {
-    @apply px-4 py-2 text-sm font-medium rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors;
+     @apply px-3 py-2 sm:px-4 text-sm font-medium rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors;
   }
 
   .btn-sm {
     @apply px-3 py-1.5 text-xs;
   }
 
+   /* Mobile-first responsive utilities */
+   .mobile-stack {
+     @apply flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3;
+   }
+ 
+   .mobile-full {
+     @apply w-full sm:w-auto;
+   }
+ 
+   .mobile-hidden {
+     @apply hidden sm:block;
+   }
+ 
+   .mobile-only {
+     @apply block sm:hidden;
+   }
+ 
+   /* Touch-friendly targets */
+   .touch-target {
+     @apply min-h-[44px] min-w-[44px];
+   }
+ 
+   .touch-target-sm {
+     @apply min-h-[36px] min-w-[36px];
+   }
+ 
   /* Card hover effect */
   .card-hover {
     @apply transition-all duration-200 hover:card-shadow-md hover:-translate-y-0.5;

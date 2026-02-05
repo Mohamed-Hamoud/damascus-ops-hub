@@ -31,7 +31,7 @@
    return (
      <div className={cn(
        /* DaisyUI: card bg-base-100 shadow-sm */
-       "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden",
+       "rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden hover:shadow-none",
        className
      )}>
        {/* DaisyUI: bg-base-200 */}
@@ -41,7 +41,7 @@
            <Link
              to={action.href}
              /* DaisyUI: link link-primary */
-             className="flex items-center gap-1 text-xs font-semibold text-[#aa1e2c] hover:text-[#aa1e2c]/80 transition-colors"
+             className="flex items-center gap-1 text-xs font-semibold text-[#aa1e2c] hover:text-[#aa1e2c]/80"
            >
              {action.label}
              <ChevronRight className="h-3 w-3" />

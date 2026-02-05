@@ -63,7 +63,7 @@
      <div
        className={cn(
          /* DaisyUI: card card-compact shadow-sm hover:shadow-md */
-         "rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5",
+         "rounded-xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm",
          variantStyles[variant],
          className
        )}

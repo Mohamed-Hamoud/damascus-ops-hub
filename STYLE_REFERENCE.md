@@ -493,4 +493,295 @@
  | `StatCard` | KPI card with trend |
  | `SectionCard` | Content section with header |
  | `StatusBadge` | Order/ticket status |
- | `ProgressBar` | Percentage bar |
+| `ProgressBar` | Percentage bar |
+
+---
+
+## 19. Complete Page Structure Reference
+
+Each page follows a consistent structure:
+
+### Standard Page Template
+```html
+<div class="space-y-6">
+  <!-- 1. PageHeader -->
+  <PageHeader
+    title="Page Title"
+    subtitle="Page description"
+    actions={<Button>Action</Button>}
+  />
+
+  <!-- 2. Optional: Tab Navigation -->
+  <TabNavigation tabs={tabs} activeTab={active} onTabChange={setActive} />
+
+  <!-- 3. Optional: Filters -->
+  <TableFilters ... />
+
+  <!-- 4. Content Area -->
+  <div class="rounded-xl border border-border bg-card card-shadow">
+    <!-- Table, Cards, or other content -->
+  </div>
+
+  <!-- 5. Optional: Pagination -->
+  <TablePagination ... />
+</div>
+```
+
+---
+
+## 20. Page Component Usage Matrix
+
+| Page | PageHeader | TabNavigation | TableFilters | DataTable | StatCard | SectionCard | EmptyState |
+|------|------------|---------------|--------------|-----------|----------|-------------|------------|
+| Dashboard | ✓ | — | — | — | ✓ | ✓ | — |
+| Orders | ✓ | ✓ | ✓ | ✓ | — | — | — |
+| Customers | ✓ | — | ✓ | ✓ | — | — | — |
+| Products | ✓ | ✓ | ✓ | ✓ | — | — | — |
+| Promotions | ✓ | ✓ | — | ✓ | — | — | — |
+| Points | ✓ | — | — | ✓ | — | — | — |
+| Support | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Evaluations | ✓ | — | ✓ | ✓ | ✓ | — | ✓ |
+| Feedbacks | ✓ | — | ✓ | — | — | — | ✓ |
+| Settings | ✓ | ✓ | — | — | — | — | — |
+| Security | ✓ | — | — | — | — | — | — |
+| Reports | ✓ | — | — | — | — | — | — |
+| Branches | ✓ | ✓ | — | — | — | — | — |
+| Banners | ✓ | — | — | — | — | — | — |
+| Analytics | ✓ | — | — | — | ✓ | ✓ | — |
+| RestaurantApp | ✓ | — | — | — | — | — | — |
+
+---
+
+## 21. Status Badge Mapping
+
+### Order Status
+| Status | Badge Class | Color |
+|--------|-------------|-------|
+| `new` | `badge-info` | Blue |
+| `pending` | `badge-warning` | Amber |
+| `accepted` | `badge-info` | Blue |
+| `delivering` | `badge-info` | Blue |
+| `completed` | `badge-success` | Green |
+| `cancelled` | `badge-destructive` | Red |
+| `failed` | `badge-destructive` | Red |
+
+### Ticket Status
+| Status | Badge Class | Color |
+|--------|-------------|-------|
+| `open` | `badge-info` | Blue |
+| `pending` | `badge-warning` | Amber |
+| `resolved` | `badge-success` | Green |
+| `closed` | `badge-muted` | Gray |
+
+### Ticket Priority
+| Priority | Badge Class | Color |
+|----------|-------------|-------|
+| `low` | `badge-muted` | Gray |
+| `medium` | `badge-warning` | Amber |
+| `high` | `badge-destructive` | Red |
+| `urgent` | `badge-destructive` | Red (darker) |
+
+### Branch Status
+| Status | Badge Class | Color |
+|--------|-------------|-------|
+| `active` | `badge-success` | Green |
+| `inactive` | `badge-muted` | Gray |
+
+---
+
+## 22. Form Patterns
+
+### Standard Form Layout
+```html
+<form class="space-y-4">
+  <div class="form-group">
+    <label class="form-label">
+      Field Label <span class="text-destructive">*</span>
+    </label>
+    <input class="input-base" type="text" />
+    <p class="form-hint">Optional helper text</p>
+  </div>
+</form>
+```
+
+### Form Modal Pattern
+```html
+<FormModal
+  open={open}
+  onOpenChange={setOpen}
+  title="Modal Title"
+  description="Optional description"
+  onSubmit={handleSubmit}
+  submitLabel="Save"
+  size="md"
+>
+  <!-- Form fields -->
+</FormModal>
+```
+
+### Size Options
+| Size | Width |
+|------|-------|
+| `sm` | `max-w-md` |
+| `md` | `max-w-lg` |
+| `lg` | `max-w-2xl` |
+| `xl` | `max-w-4xl` |
+
+---
+
+## 23. Table Patterns
+
+### Standard Table Structure
+```html
+<div class="rounded-xl border border-border bg-card card-shadow overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="bg-muted/30 border-b border-border">
+          <th class="table-header">Column</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border">
+        <tr class="table-row-hover cursor-pointer">
+          <td class="table-cell">Value</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+```
+
+### Table Header Classes
+| Content Type | Class |
+|--------------|-------|
+| Left-aligned (default) | `table-header` |
+| Right-aligned | `table-header text-right` |
+| Center-aligned | `table-header text-center` |
+
+### Table Cell Classes
+| Content Type | Class |
+|--------------|-------|
+| Default | `table-cell` |
+| ID/Link | `table-cell font-semibold text-primary` |
+| Money | `table-cell font-bold text-primary` |
+| Muted | `table-cell text-muted-foreground` |
+| Right | `table-cell-right` |
+| Center | `table-cell-center` |
+
+---
+
+## 24. Card Patterns
+
+### Settings Card
+```html
+<div class="rounded-xl border border-border bg-card card-shadow">
+  <div class="px-6 py-4 border-b border-border bg-muted/30">
+    <h3 class="section-title">Section Title</h3>
+  </div>
+  <div class="p-6 space-y-6">
+    <!-- Content -->
+  </div>
+</div>
+```
+
+### Stat Card Variants
+| Variant | Border Color | Icon Background |
+|---------|--------------|-----------------|
+| `default` | `border-border` | `bg-primary/10 text-primary` |
+| `success` | `border-success/30` | `bg-success/10 text-success` |
+| `warning` | `border-warning/30` | `bg-warning/10 text-warning` |
+| `destructive` | `border-destructive/30` | `bg-destructive/10 text-destructive` |
+
+### Interactive Card
+```html
+<div class="card-interactive">
+  <!-- Clickable card with hover effects -->
+</div>
+```
+
+---
+
+## 25. Icon Usage Guide
+
+### Common Actions
+| Action | Icon | Usage |
+|--------|------|-------|
+| Add | `Plus` | Primary buttons |
+| Edit | `Edit` | Edit actions |
+| Delete | `Trash2` | Destructive actions |
+| View | `Eye` | View details |
+| Back | `ArrowLeft` | Navigation |
+| Close | `X` | Modal close |
+| Search | `Search` | Search inputs |
+| Filter | `Filter` | Filter buttons |
+| Export | `Download` | Export actions |
+| Refresh | `RefreshCw` | Refresh data |
+
+### Status Icons
+| Status | Icon | Color |
+|--------|------|-------|
+| Success | `CheckCircle` | `text-success` |
+| Warning | `AlertTriangle` | `text-warning` |
+| Error | `XCircle` | `text-destructive` |
+| Info | `Info` | `text-info` |
+
+### Navigation Icons
+| Page | Icon |
+|------|------|
+| Dashboard | `LayoutDashboard` |
+| Orders | `ShoppingCart` |
+| Customers | `Users` |
+| Products | `Package` |
+| Promotions | `Tag` |
+| Banners | `Image` |
+| Branches | `Building` |
+| Support | `HelpCircle` |
+| Settings | `Settings` |
+| Security | `Shield` |
+| Analytics | `BarChart3` |
+| Reports | `FileText` |
+
+---
+
+## 26. Animation Classes
+
+### Transitions
+```css
+.transition-colors { transition-property: color, background-color, border-color; }
+.transition-all { transition-property: all; }
+.duration-200 { transition-duration: 200ms; }
+```
+
+### Hover Effects
+| Class | Effect |
+|-------|--------|
+| `hover:bg-muted/30` | Light background on hover |
+| `hover:bg-accent` | Accent background |
+| `hover:text-foreground` | Darken text |
+| `hover:border-primary` | Primary border |
+| `card-hover` | Lift with shadow |
+
+---
+
+## 27. Accessibility
+
+### Focus States
+All interactive elements use the `.focus-ring` pattern:
+```css
+focus:outline-none focus:ring-2 focus:ring-ring/20 focus:ring-offset-2
+```
+
+### Touch Targets
+| Class | Min Size |
+|-------|----------|
+| `.touch-target` | 44×44px |
+| `.touch-target-sm` | 36×36px |
+
+### Screen Reader
+Use `sr-only` class for visually hidden but accessible text:
+```html
+<button>
+  <Icon class="h-4 w-4" />
+  <span class="sr-only">Close menu</span>
+</button>
+```

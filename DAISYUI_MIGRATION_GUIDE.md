@@ -830,3 +830,671 @@ All styling uses semantic CSS variables and utility classes that map directly to
  - [ ] Verify form validations work
  - [ ] Test all status badge variants
  - [ ] Test dark mode in all pages
+
+---
+
+## Page-by-Page Migration Reference
+
+This section provides exact patterns for each page in the dashboard.
+
+---
+
+### Dashboard (Index.tsx)
+
+**Components Used:** `PageHeader`, `StatCard`, `SectionCard`, `StatusBadge`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  / Header
+  .page-header
+    %h1.page-title Dashboard
+    %p.page-subtitle Welcome back, here's what's happening
+
+  / Stats Grid
+  .grid.gap-4.md:grid-cols-4
+    - stats.each do |stat|
+      = render 'shared/stat_card', stat: stat
+
+  / Quick Actions + Recent Orders
+  .grid.gap-6.lg:grid-cols-3
+    .lg:col-span-2
+      = render 'shared/section_card', title: 'Recent Orders', action: { label: 'View all', href: orders_path } do
+        / Table content
+    = render 'shared/section_card', title: 'Quick Actions' do
+      / Quick action buttons
+```
+
+---
+
+### Orders (Orders.tsx)
+
+**Components Used:** `PageHeader`, `TabNavigation`, `TableFilters`, `DataTable`, `StatusBadge`, `TablePagination`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Orders', subtitle: 'Manage and track all customer orders', actions: order_actions
+
+  / Tab Navigation
+  = render 'shared/tab_navigation', tabs: order_tabs, active: @active_tab
+
+  / Filters
+  = render 'shared/table_filters', search_placeholder: 'Search orders...'
+
+  / Table
+  .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+    %table.w-full
+      %thead
+        %tr.bg-muted\/30.border-b.border-border
+          %th.table-header Order ID
+          %th.table-header Date
+          %th.table-header Customer
+          %th.table-header Amount
+          %th.table-header Status
+      %tbody.divide-y.divide-border
+        - @orders.each do |order|
+          %tr.table-row-hover.cursor-pointer{ data: { href: order_path(order) } }
+            %td.table-cell.font-semibold.text-primary= order.id
+            %td.table-cell= order.date
+            %td.table-cell= order.customer
+            %td.table-cell.font-bold= order.amount
+            %td.table-cell
+              = render 'shared/status_badge', status: order.status
+
+  / Pagination
+  = render 'shared/table_pagination', current: @page, total: @total_pages
+```
+
+---
+
+### Customers (Customers.tsx)
+
+**Components Used:** `PageHeader`, `TableFilters`, `DataTable`, `TablePagination`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Customers', subtitle: 'View and manage customer accounts'
+
+  / Filters
+  = render 'shared/table_filters', search_placeholder: 'Search customers...'
+
+  / Table
+  .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+    %table.w-full
+      %thead
+        %tr.bg-muted\/30.border-b.border-border
+          %th.table-header Customer
+          %th.table-header Phone
+          %th.table-header Orders
+          %th.table-header Total Spent
+          %th.table-header Last Order
+      %tbody.divide-y.divide-border
+        - @customers.each do |customer|
+          %tr.table-row-hover.cursor-pointer
+            %td.table-cell
+              .flex.items-center.gap-3
+                .h-8.w-8.rounded-full.bg-primary.text-primary-foreground.flex.items-center.justify-center.text-xs.font-semibold
+                  = customer.name[0..1].upcase
+                .flex.flex-col
+                  %span.font-semibold.text-foreground= customer.name
+                  %span.text-xs.text-muted-foreground= customer.email
+            %td.table-cell= customer.phone
+            %td.table-cell.font-semibold= customer.orders_count
+            %td.table-cell.font-bold.text-primary= number_to_currency(customer.total_spent)
+            %td.table-cell.text-muted-foreground= time_ago_in_words(customer.last_order_at)
+
+  / Pagination
+  = render 'shared/table_pagination', current: @page, total: @total_pages
+```
+
+---
+
+### Products (Products.tsx)
+
+**Components Used:** `PageHeader`, `TabNavigation`, `TableFilters`, `DataTable`
+
+**Tabs:** Products, Categories, Divisions
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Products', subtitle: 'Manage your menu items', actions: product_actions
+
+  / Tab Navigation (Products, Categories, Divisions)
+  = render 'shared/tab_navigation', tabs: product_tabs, active: @active_tab
+
+  / Products Tab Content
+  - if @active_tab == 'products'
+    = render 'shared/table_filters'
+    .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+      %table.w-full
+        %thead
+          %tr.bg-muted\/30.border-b.border-border
+            %th.table-header Product
+            %th.table-header Category
+            %th.table-header Price
+            %th.table-header Bestseller
+        %tbody.divide-y.divide-border
+          - @products.each do |product|
+            %tr.table-row-hover
+              %td.table-cell
+                .flex.items-center.gap-3
+                  %img.h-10.w-10.rounded-lg.object-cover{ src: product.photo }
+                  %span.font-semibold= product.name
+              %td.table-cell= product.category
+              %td.table-cell
+                - if product.old_price
+                  %span.text-muted-foreground.line-through.mr-2= product.old_price
+                %span.font-bold.text-primary= product.price
+              %td.table-cell
+                - if product.bestseller
+                  %span.badge-warning Bestseller
+
+  / Categories Tab Content
+  - if @active_tab == 'categories'
+    .grid.gap-4.sm:grid-cols-2.lg:grid-cols-3.xl:grid-cols-4
+      - @categories.each do |category|
+        = render 'products/category_card', category: category
+
+  / Divisions Tab Content
+  - if @active_tab == 'divisions'
+    .grid.gap-4.sm:grid-cols-2.lg:grid-cols-4
+      - @divisions.each do |division|
+        = render 'products/division_card', division: division
+```
+
+---
+
+### Promotions (Promotions.tsx)
+
+**Components Used:** `PageHeader`, `TabNavigation`
+
+**Tabs:** Vouchers, Delivery Rules
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Promotions', subtitle: 'Manage vouchers and delivery discounts', actions: promotion_actions
+
+  / Tab Navigation
+  = render 'shared/tab_navigation', tabs: [{ id: 'vouchers', label: 'Vouchers' }, { id: 'delivery', label: 'Delivery Rules' }], active: @active_tab
+
+  / Vouchers Tab
+  - if @active_tab == 'vouchers'
+    .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+      %table.w-full
+        / ... voucher table
+
+  / Delivery Rules Tab
+  - if @active_tab == 'delivery'
+    .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+      %table.w-full
+        / ... delivery rules table
+```
+
+---
+
+### Points (Points.tsx)
+
+**Components Used:** `PageHeader`, `FormModal`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Points Management', subtitle: 'Configure point conversion rates and manage customer points'
+
+  / Point Settings Card
+  .rounded-xl.border.border-border.bg-card.card-shadow
+    .px-6.py-4.border-b.border-border.bg-muted\/30
+      %h3.section-title Point Settings
+    .p-6
+      .flex.flex-col.gap-4.sm:flex-row.sm:items-center.sm:justify-between
+        %div
+          %p.text-lg.font-medium.text-foreground
+            Point Conversion Rate: 1 Point =
+            %span.text-primary.font-bold= "#{@conversion_rate} RM"
+          %p.text-sm.text-muted-foreground.mt-1 This rate applies to the conversion...
+        .flex.items-center.gap-2
+          %button.btn-secondary{ data: { modal: 'edit-rate' } }
+            = lucide_icon "edit", class: "h-4 w-4"
+            Edit Point Rate
+          %button.btn-primary{ data: { modal: 'bulk-generate' } } Bulk Generate Points
+
+  / Points History
+  .space-y-4
+    .flex.flex-col.gap-4.sm:flex-row.sm:items-center.sm:justify-between
+      %h2.text-xl.font-bold.tracking-tight.text-foreground Points History
+      %button.btn-primary.flex.items-center.gap-2
+        = lucide_icon "plus", class: "h-4 w-4"
+        Add Points
+
+    .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+      %table.w-full
+        %thead
+          %tr.bg-muted\/30.border-b.border-border
+            %th.table-header User ID
+            %th.table-header User
+            %th.table-header Points
+            %th.table-header Transaction Type
+            %th.table-header Rate
+            %th.table-header Created
+            %th.table-header Updated
+        %tbody.divide-y.divide-border
+          - @points_history.each do |entry|
+            %tr.table-row-hover
+              %td.table-cell.font-medium= entry.user_id
+              %td.table-cell= entry.user_name
+              %td.table-cell.font-bold.text-primary= entry.points
+              %td.table-cell
+                %span.inline-flex.items-center.px-2\.5.py-1.rounded.text-xs.font-semibold.bg-primary\/10.text-primary.border.border-primary\/20
+                  = entry.transaction_type
+              %td.table-cell.text-muted-foreground= entry.rate || "—"
+              %td.table-cell.text-muted-foreground= entry.created_at
+              %td.table-cell.text-muted-foreground= entry.updated_at
+```
+
+---
+
+### Support (Support.tsx)
+
+**Components Used:** `PageHeader`, `TabNavigation`, `SectionCard`, `StatCard`, `EmptyState`
+
+**Tabs:** Overview, Tickets, Settings
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Support', subtitle: 'Manage tickets, teams, and support settings'
+
+  / Tab Navigation
+  = render 'shared/tab_navigation', tabs: support_tabs, active: @active_tab
+
+  / Overview Tab
+  - if @active_tab == 'overview'
+    / Stats Row
+    .grid.gap-4.md:grid-cols-4
+      = render 'shared/stat_card', title: 'Open Tickets', value: @open_count, icon: 'ticket'
+      = render 'shared/stat_card', title: 'Pending', value: @pending_count, icon: 'clock'
+      = render 'shared/stat_card', title: 'Resolved Today', value: @resolved_today, icon: 'check-circle'
+      = render 'shared/stat_card', title: 'Avg Response', value: @avg_response, icon: 'timer'
+
+    / Quick Actions Grid
+    .grid.gap-4.md:grid-cols-2.lg:grid-cols-4
+      - quick_actions.each do |action|
+        %button.quick-nav-card{ onclick: "window.location='#{action[:href]}'" }
+          .h-10.w-10.rounded-lg.flex.items-center.justify-center{ class: action[:bg_class] }
+            = lucide_icon action[:icon], class: "h-5 w-5 #{action[:icon_class]}"
+          %span.text-xs.font-medium= action[:label]
+
+  / Tickets Tab
+  - if @active_tab == 'tickets'
+    = render 'support/tickets_table'
+
+  / Settings Tab
+  - if @active_tab == 'settings'
+    = render 'support/settings_panels'
+```
+
+---
+
+### Evaluations (Evaluations.tsx)
+
+**Components Used:** `PageHeader`, `TableFilters`, `EmptyState`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Evaluations', subtitle: 'Customer reviews and ratings'
+
+  / Stats Cards
+  .grid.gap-4.md:grid-cols-4
+    = render 'shared/stat_card', title: 'Average Food Rating', value: @avg_food, variant: 'warning', icon: 'utensils'
+    = render 'shared/stat_card', title: 'Average Delivery', value: @avg_delivery, variant: 'info', icon: 'truck'
+    = render 'shared/stat_card', title: 'Total Reviews', value: @total_reviews, icon: 'star'
+    = render 'shared/stat_card', title: '5-Star Reviews', value: @five_star_count, variant: 'success', icon: 'award'
+
+  / Filters
+  = render 'shared/table_filters', search_placeholder: 'Search evaluations...'
+
+  / Evaluations List or Empty State
+  - if @evaluations.empty?
+    = render 'shared/empty_state', title: 'No evaluations yet', description: 'Evaluations will appear here...', variant: 'ratings'
+  - else
+    .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+      %table.w-full
+        / ... table content
+```
+
+---
+
+### Feedbacks (Feedbacks.tsx)
+
+**Components Used:** `PageHeader`, `TableFilters`, `EmptyState`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Feedbacks', subtitle: 'Customer feedback and suggestions'
+
+  / Filters
+  = render 'shared/table_filters', search_placeholder: 'Search feedback...'
+
+  / Feedback List or Empty State
+  - if @feedbacks.empty?
+    = render 'shared/empty_state', title: 'No feedback yet', description: 'Customer feedback will appear here...', variant: 'messages'
+  - else
+    .space-y-4
+      - @feedbacks.each do |feedback|
+        .rounded-xl.border.border-border.bg-card.card-shadow.p-4
+          / Feedback card content
+```
+
+---
+
+### Settings (Settings.tsx)
+
+**Components Used:** `PageHeader`, `TabNavigation`, `Switch`
+
+**Tabs:** General, Notifications, Integrations
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Settings', subtitle: 'Manage your account and preferences'
+
+  / Tab Navigation
+  = render 'shared/tab_navigation', tabs: settings_tabs, active: @active_tab
+
+  / Settings Content
+  .rounded-xl.border.border-border.bg-card.card-shadow
+    .px-6.py-4.border-b.border-border.bg-muted\/30
+      %h3.section-title= section_title
+    .p-6.space-y-6
+      - settings_items.each do |item|
+        .flex.items-center.justify-between.py-3.border-b.border-border.last:border-0
+          %div
+            %p.font-medium.text-foreground= item[:label]
+            %p.text-sm.text-muted-foreground= item[:description]
+          / Use Switch component from shadcn/ui -> DaisyUI toggle
+          %input.toggle.toggle-primary{ type: 'checkbox', checked: item[:enabled] }
+```
+
+---
+
+### Security (Security.tsx)
+
+**Components Used:** `PageHeader`, `Switch`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Security', subtitle: 'Manage security settings and access controls'
+
+  / Two-Factor Authentication
+  .rounded-xl.border.border-border.bg-card.card-shadow
+    .px-6.py-4.border-b.border-border.bg-muted\/30
+      %h3.section-title Two-Factor Authentication
+    .p-6
+      .flex.items-center.justify-between
+        %div
+          %p.font-medium.text-foreground Enable 2FA
+          %p.text-sm.text-muted-foreground Add an extra layer of security...
+        %input.toggle.toggle-primary{ type: 'checkbox' }
+
+  / Sessions Card
+  .rounded-xl.border.border-border.bg-card.card-shadow
+    .px-6.py-4.border-b.border-border.bg-muted\/30
+      %h3.section-title Active Sessions
+    .p-6.space-y-4
+      - @sessions.each do |session|
+        .flex.items-center.justify-between.py-3.border-b.border-border.last:border-0
+          .flex.items-center.gap-3
+            .h-10.w-10.rounded-lg.bg-muted.flex.items-center.justify-center
+              = lucide_icon session[:icon], class: "h-5 w-5 text-muted-foreground"
+            %div
+              %p.font-medium.text-foreground= session[:device]
+              %p.text-xs.text-muted-foreground= session[:location]
+          - if session[:current]
+            %span.badge-success Current
+          - else
+            %button.btn-ghost.btn-sm.text-destructive Revoke
+```
+
+---
+
+### Reports (Reports.tsx)
+
+**Components Used:** `PageHeader`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Reports', subtitle: 'Generate and download reports'
+
+  / Report Types Grid
+  .grid.gap-4.md:grid-cols-2.lg:grid-cols-3
+    - report_types.each do |report|
+      .rounded-xl.border.border-border.bg-card.card-shadow.card-hover.p-6
+        .flex.items-start.gap-4
+          .h-12.w-12.rounded-lg.flex.items-center.justify-center{ class: report[:bg_class] }
+            = lucide_icon report[:icon], class: "h-6 w-6 #{report[:icon_class]}"
+          %div
+            %h3.font-semibold.text-foreground= report[:title]
+            %p.text-sm.text-muted-foreground.mt-1= report[:description]
+        .mt-4.flex.gap-2
+          %button.btn-primary.btn-sm Generate
+          %button.btn-outline.btn-sm Schedule
+```
+
+---
+
+### Branches (Branches.tsx)
+
+**Components Used:** `PageHeader`, `TabNavigation`
+
+**Tabs:** All Branches, Active, Inactive
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Branches', subtitle: 'Manage restaurant locations', actions: branch_actions
+
+  / Tab Navigation
+  = render 'shared/tab_navigation', tabs: branch_tabs, active: @active_tab
+
+  / Branches Grid
+  .grid.gap-4.md:grid-cols-2.lg:grid-cols-3
+    - @branches.each do |branch|
+      .rounded-xl.border.border-border.bg-card.card-shadow.card-hover.p-5
+        .flex.items-start.justify-between
+          %div
+            %h3.font-semibold.text-foreground= branch.name
+            %p.text-sm.text-muted-foreground.mt-1= branch.address
+          = render 'shared/status_badge', status: branch.status
+        .mt-4.flex.items-center.justify-between.pt-4.border-t.border-border
+          %div
+            %p.text-xs.text-muted-foreground Orders Today
+            %p.font-bold.text-foreground= branch.orders_today
+          .action-group
+            %button.btn-outline.btn-sm View
+            %button.btn-ghost.btn-sm Edit
+```
+
+---
+
+### Banners (Banners.tsx)
+
+**Components Used:** `PageHeader`, `TableFilters`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Banners', subtitle: 'Manage promotional banners', actions: banner_actions
+
+  / Banners Grid
+  .grid.gap-4.md:grid-cols-2.lg:grid-cols-3
+    - @banners.each do |banner|
+      .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden.card-hover
+        .aspect-video.relative
+          %img.w-full.h-full.object-cover{ src: banner.image, alt: banner.title }
+          - unless banner.active
+            .absolute.inset-0.bg-black\/50.flex.items-center.justify-center
+              %span.badge-muted Inactive
+        .p-4
+          .flex.items-center.justify-between
+            %h3.font-semibold.text-foreground= banner.title
+            %span.text-xs.text-muted-foreground Position: #{banner.position}
+          .mt-3.action-group
+            %button.btn-outline.btn-sm Edit
+            %button.btn-destructive.btn-sm Delete
+```
+
+---
+
+### Analytics (Analytics.tsx)
+
+**Components Used:** `PageHeader`, `SectionCard`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Analytics', subtitle: 'Track performance and insights'
+
+  / KPI Cards
+  .grid.gap-4.md:grid-cols-4
+    = render 'shared/stat_card', title: 'Total Revenue', value: @total_revenue, trend: { value: '+12.5%', positive: true }
+    = render 'shared/stat_card', title: 'Total Orders', value: @total_orders, trend: { value: '+8.2%', positive: true }
+    = render 'shared/stat_card', title: 'Avg Order Value', value: @avg_order_value
+    = render 'shared/stat_card', title: 'Conversion Rate', value: @conversion_rate
+
+  / Charts Grid
+  .grid.gap-6.lg:grid-cols-2
+    = render 'shared/section_card', title: 'Revenue Over Time' do
+      / Chart component (Recharts -> Chart.js or similar)
+    = render 'shared/section_card', title: 'Orders by Category' do
+      / Pie chart
+```
+
+---
+
+### RestaurantApp (RestaurantApp.tsx)
+
+**Components Used:** `PageHeader`, `Checkbox`
+
+**Layout Pattern:**
+```haml
+.space-y-6
+  = render 'shared/page_header', title: 'Restaurant App Settings', subtitle: 'Configure mobile app appearance and features'
+
+  / App Appearance Card
+  .rounded-xl.border.border-border.bg-card.card-shadow
+    .px-6.py-4.border-b.border-border.bg-muted\/30
+      %h3.section-title App Appearance
+    .p-6.space-y-4
+      / Color picker, logo upload, etc.
+
+  / Feature Toggles Card
+  .rounded-xl.border.border-border.bg-card.card-shadow
+    .px-6.py-4.border-b.border-border.bg-muted\/30
+      %h3.section-title Features
+    .p-6.space-y-4
+      - features.each do |feature|
+        .flex.items-center.gap-3
+          %input.checkbox.checkbox-primary{ type: 'checkbox', checked: feature[:enabled] }
+          %label.text-sm.text-foreground= feature[:label]
+```
+
+---
+
+## Rails Helper Methods
+
+### Badge Helper
+```ruby
+# app/helpers/badge_helper.rb
+module BadgeHelper
+  def status_badge(status)
+    classes = case status.to_s
+    when 'completed', 'active', 'resolved' then 'badge-success'
+    when 'pending', 'processing' then 'badge-warning'
+    when 'cancelled', 'failed', 'closed' then 'badge-destructive'
+    when 'new', 'open', 'delivering' then 'badge-info'
+    else 'badge-muted'
+    end
+
+    content_tag :span, status.to_s.titleize,
+      class: "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold #{classes}"
+  end
+end
+```
+
+### Button Helper
+```ruby
+# app/helpers/button_helper.rb
+module ButtonHelper
+  def primary_button(text, options = {})
+    options[:class] = "btn-primary #{options[:class]}"
+    button_tag text, options
+  end
+
+  def secondary_button(text, options = {})
+    options[:class] = "btn-secondary #{options[:class]}"
+    button_tag text, options
+  end
+
+  def outline_button(text, options = {})
+    options[:class] = "btn-outline #{options[:class]}"
+    button_tag text, options
+  end
+
+  def destructive_button(text, options = {})
+    options[:class] = "btn-destructive #{options[:class]}"
+    button_tag text, options
+  end
+end
+```
+
+### Icon Helper (using lucide-rails)
+```ruby
+# app/helpers/icon_helper.rb
+module IconHelper
+  def icon(name, options = {})
+    size = options.delete(:size) || 4
+    options[:class] = "h-#{size} w-#{size} #{options[:class]}"
+    lucide_icon name, options
+  end
+end
+```
+
+---
+
+## Rails Partials Structure
+
+```
+app/views/
+├── shared/
+│   ├── _page_header.html.haml
+│   ├── _tab_navigation.html.haml
+│   ├── _table_filters.html.haml
+│   ├── _table_pagination.html.haml
+│   ├── _data_table.html.haml
+│   ├── _stat_card.html.haml
+│   ├── _section_card.html.haml
+│   ├── _status_badge.html.haml
+│   ├── _empty_state.html.haml
+│   ├── _form_modal.html.haml
+│   └── _form_field.html.haml
+├── dashboard/
+│   └── _progress_bar.html.haml
+├── orders/
+│   ├── _order_info_card.html.haml
+│   ├── _order_timeline.html.haml
+│   └── _order_items.html.haml
+├── products/
+│   ├── _category_card.html.haml
+│   └── _division_card.html.haml
+└── support/
+    ├── _tickets_table.html.haml
+    └── _settings_panels.html.haml
+```

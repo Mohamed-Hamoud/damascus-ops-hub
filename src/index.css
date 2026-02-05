@@ -188,6 +188,52 @@
     @apply text-base font-semibold text-foreground;
   }
 
+  /* Page animations */
+  .animate-page-in {
+    animation: page-fade-in 0.3s ease-out;
+  }
+
+  @keyframes page-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Focus ring consistency */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-ring/20 focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  /* Action button styles */
+  .btn-primary {
+    @apply px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 text-sm font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors;
+  }
+
+  .btn-outline {
+    @apply px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card text-foreground hover:bg-muted transition-colors;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-sm font-medium rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors;
+  }
+
+  .btn-destructive {
+    @apply px-4 py-2 text-sm font-medium rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+
   /* Card hover effect */
   .card-hover {
     @apply transition-all duration-200 hover:card-shadow-md hover:-translate-y-0.5;

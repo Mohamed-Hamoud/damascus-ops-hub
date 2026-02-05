@@ -327,7 +327,7 @@
                        RM {product.price}
                      </td>
                      <td className="px-4 py-3 text-center">
-                        <span className={`text-xs font-semibold ${product.bestseller ? "text-green-600" : "text-muted-foreground"}`}>
+                         <span className={`text-xs font-semibold ${product.bestseller ? "text-success" : "text-muted-foreground"}`}>
                          {product.bestseller ? "YES" : "NO"}
                        </span>
                      </td>

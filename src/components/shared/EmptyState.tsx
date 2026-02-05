@@ -1,62 +1,109 @@
- import { LucideIcon, Package, FileText, Users, ShoppingCart, Search } from "lucide-react";
+ import { LucideIcon, Package, FileText, Users, ShoppingCart, Search, Ticket, Gift, MapPin, Star, Image, Settings } from "lucide-react";
  import { Button } from "@/components/ui/button";
  
  /**
   * EmptyState Component
-  * DaisyUI: hero, card
+  * Unified empty state with icons for all list views
   */
+ 
+ // Preset icons for common modules
+ export const emptyStateIcons = {
+   products: Package,
+   customers: Users,
+   orders: ShoppingCart,
+   reports: FileText,
+   tickets: Ticket,
+   vouchers: Gift,
+   branches: MapPin,
+   evaluations: Star,
+   banners: Image,
+   settings: Settings,
+   search: Search,
+ } as const;
  
  interface EmptyStateProps {
    icon?: LucideIcon;
    title: string;
-   description: string;
+   description?: string;
    actionLabel?: string;
    onAction?: () => void;
-   variant?: "default" | "search" | "error";
+   variant?: "default" | "compact" | "card";
  }
  
- const defaultIcons = {
-   default: Package,
-   search: Search,
-   error: FileText,
- };
- 
  export function EmptyState({
-   icon,
+   icon: Icon = Package,
    title,
    description,
    actionLabel,
    onAction,
    variant = "default",
  }: EmptyStateProps) {
-   const Icon = icon || defaultIcons[variant];
+   const isCompact = variant === "compact";
+   const isCard = variant === "card";
  
-   return (
-     <div className="rounded-xl border bg-card p-12 text-center">
-       <div className="mx-auto w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-4">
-         <Icon className="h-8 w-8 text-muted-foreground" />
+   const content = (
+     <div
+       className={`flex flex-col items-center justify-center text-center ${
+         isCompact ? "py-8 px-4" : "py-12 px-6"
+       }`}
+     >
+       <div
+         className={`rounded-full bg-muted flex items-center justify-center ${
+           isCompact ? "h-12 w-12 mb-3" : "h-16 w-16 mb-4"
+         }`}
+       >
+         <Icon
+           className={`text-muted-foreground ${isCompact ? "h-6 w-6" : "h-8 w-8"}`}
+         />
        </div>
-       <h3 className="text-lg font-semibold mb-2">{title}</h3>
-       <p className="text-muted-foreground max-w-sm mx-auto mb-6">{description}</p>
+       <h3
+         className={`font-semibold text-foreground ${
+           isCompact ? "text-sm" : "text-base"
+         }`}
+       >
+         {title}
+       </h3>
+       {description && (
+         <p
+           className={`text-muted-foreground mt-1 max-w-sm ${
+             isCompact ? "text-xs" : "text-sm"
+           }`}
+         >
+           {description}
+         </p>
+       )}
        {actionLabel && onAction && (
-        <Button onClick={onAction} className="bg-primary hover:bg-primary/90">
+         <Button
+           onClick={onAction}
+           size={isCompact ? "sm" : "default"}
+           className="mt-4"
+         >
            {actionLabel}
          </Button>
        )}
      </div>
    );
+ 
+   if (isCard) {
+     return (
+       <div className="rounded-xl border border-border bg-card">
+         {content}
+       </div>
+     );
+   }
+ 
+   return content;
  }
  
  // Pre-configured empty states for common scenarios
  export function NoOrdersFound({ onClearFilters }: { onClearFilters?: () => void }) {
    return (
      <EmptyState
-       icon={ShoppingCart}
+       icon={emptyStateIcons.orders}
        title="No orders found"
        description="Try adjusting your filters or search criteria"
        actionLabel={onClearFilters ? "Clear Filters" : undefined}
        onAction={onClearFilters}
-       variant="search"
      />
    );
  }
@@ -64,12 +111,11 @@
  export function NoProductsFound({ onClearFilters }: { onClearFilters?: () => void }) {
    return (
      <EmptyState
-       icon={Package}
+       icon={emptyStateIcons.products}
        title="No products found"
        description="Try adjusting your filters or search criteria"
        actionLabel={onClearFilters ? "Clear Filters" : undefined}
        onAction={onClearFilters}
-       variant="search"
      />
    );
  }
@@ -77,12 +123,11 @@
  export function NoCustomersFound({ onClearFilters }: { onClearFilters?: () => void }) {
    return (
      <EmptyState
-       icon={Users}
+       icon={emptyStateIcons.customers}
        title="No customers found"
        description="Try adjusting your filters or search criteria"
        actionLabel={onClearFilters ? "Clear Filters" : undefined}
        onAction={onClearFilters}
-       variant="search"
      />
    );
  }
@@ -92,7 +137,42 @@
      <EmptyState
        title={title}
        description="Data will appear here once it's available"
-       variant="default"
+     />
+   );
+ }
+ 
+ export function NoTicketsFound({ onClearFilters }: { onClearFilters?: () => void }) {
+   return (
+     <EmptyState
+       icon={emptyStateIcons.tickets}
+       title="No tickets found"
+       description="No support tickets match your criteria"
+       actionLabel={onClearFilters ? "Clear Filters" : undefined}
+       onAction={onClearFilters}
+     />
+   );
+ }
+ 
+ export function NoVouchersFound({ onClearFilters }: { onClearFilters?: () => void }) {
+   return (
+     <EmptyState
+       icon={emptyStateIcons.vouchers}
+       title="No vouchers found"
+       description="Create your first voucher to get started"
+       actionLabel={onClearFilters ? "Clear Filters" : undefined}
+       onAction={onClearFilters}
+     />
+   );
+ }
+ 
+ export function NoBranchesFound({ onClearFilters }: { onClearFilters?: () => void }) {
+   return (
+     <EmptyState
+       icon={emptyStateIcons.branches}
+       title="No branches found"
+       description="Add your first branch location"
+       actionLabel={onClearFilters ? "Clear Filters" : undefined}
+       onAction={onClearFilters}
      />
    );
  }

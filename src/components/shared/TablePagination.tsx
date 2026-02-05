@@ -3,7 +3,41 @@
  
  /**
   * TablePagination Component
-  * DaisyUI: join, btn, btn-sm
+ * 
+ * HAML Equivalent:
+ * ```haml
+ * .flex.flex-col.sm:flex-row.items-center.justify-between.gap-4.px-2.py-4
+ *   / Results text
+ *   %p.text-sm.text-muted-foreground
+ *     Showing
+ *     %span.font-medium.text-foreground= start_item
+ *     to
+ *     %span.font-medium.text-foreground= end_item
+ *     of
+ *     %span.font-medium.text-foreground= total_items
+ *     results
+ *   / Pagination buttons
+ *   .flex.items-center.gap-1
+ *     %button.btn-outline.h-8.w-8{ disabled: current_page == 1 }
+ *       = lucide_icon "chevrons-left", class: "h-4 w-4"
+ *     %button.btn-outline.h-8.w-8{ disabled: current_page == 1 }
+ *       = lucide_icon "chevron-left", class: "h-4 w-4"
+ *     .flex.items-center.gap-1.mx-2
+ *       - page_numbers.each do |page|
+ *         %button.h-8.w-8{ class: page == current_page ? 'btn-primary' : 'btn-outline' }= page
+ *     %button.btn-outline.h-8.w-8{ disabled: current_page == total_pages }
+ *       = lucide_icon "chevron-right", class: "h-4 w-4"
+ *     %button.btn-outline.h-8.w-8{ disabled: current_page == total_pages }
+ *       = lucide_icon "chevrons-right", class: "h-4 w-4"
+ * ```
+ * 
+ * DaisyUI Mapping:
+ * - Container: join (button group)
+ * - Buttons: btn btn-sm btn-outline, btn btn-sm btn-active
+ * 
+ * CSS Utilities Used:
+ * - .btn-outline, .btn-primary (from index.css)
+ * - Button component variants from shadcn/ui
   */
  
  interface TablePaginationProps {

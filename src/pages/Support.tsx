@@ -139,7 +139,7 @@
                </button>
              </div>
              <div className="flex items-center justify-center py-8 text-muted-foreground text-sm">
-               <EmptyState message="No SLA breaches" />
+               <EmptyState title="No SLA breaches" variant="compact" />
              </div>
            </div>
  
@@ -154,7 +154,7 @@
                </button>
              </div>
              <div className="flex items-center justify-center py-8 text-muted-foreground text-sm">
-               <EmptyState message="All tickets assigned" />
+               <EmptyState title="All tickets assigned" variant="compact" />
                </div>
              </div>
            </div>

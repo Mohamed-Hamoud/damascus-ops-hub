@@ -14,6 +14,11 @@
  import Security from "./pages/Security";
  import Settings from "./pages/Settings";
  import Reports from "./pages/Reports";
+ import Customers from "./pages/Customers";
+ import CustomerDetail from "./pages/CustomerDetail";
+ import Banners from "./pages/Banners";
+ import Support from "./pages/Support";
+ import ProductDetail from "./pages/ProductDetail";
  import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,16 +36,18 @@ const App = () => (
               <Route path="/orders" element={<Orders />} />
               <Route path="/orders/:id" element={<OrderDetail />} />
               <Route path="/products" element={<Products />} />
+             <Route path="/products/:id" element={<ProductDetail />} />
               <Route path="/analytics" element={<Analytics />} />
               {/* Placeholder routes for other sections */}
-              <Route path="/banners" element={<ComingSoon title="Banners" />} />
+             <Route path="/banners" element={<Banners />} />
               <Route path="/promotions" element={<ComingSoon title="Promotions" />} />
-              <Route path="/customers" element={<ComingSoon title="Customers" />} />
+             <Route path="/customers" element={<Customers />} />
+             <Route path="/customers/:id" element={<CustomerDetail />} />
               <Route path="/evaluations" element={<ComingSoon title="Evaluations" />} />
-              <Route path="/support" element={<ComingSoon title="Support" />} />
+             <Route path="/support" element={<Support />} />
               <Route path="/branches" element={<ComingSoon title="Branches" />} />
               <Route path="/restaurant-app" element={<ComingSoon title="Restaurant App" />} />
-              <Route path="/reports" element={<ComingSoon title="Reports" />} />
+             <Route path="/reports" element={<Reports />} />
                <Route path="/points" element={<ComingSoon title="Points" />} />
                <Route path="/feedbacks" element={<Feedbacks />} />
                <Route path="/security" element={<Security />} />

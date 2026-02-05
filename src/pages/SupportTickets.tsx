@@ -1,6 +1,7 @@
  import { useState } from "react";
  import { Label } from "@/components/ui/label";
  import { Input } from "@/components/ui/input";
+ import { Checkbox } from "@/components/ui/checkbox";
 import { PageHeader } from "@/components/shared/PageHeader";
  
  /**
@@ -124,30 +125,24 @@ import { PageHeader } from "@/components/shared/PageHeader";
              />
            </div>
            <div className="flex items-center gap-4">
-          <label className="flex items-center gap-2 text-sm text-muted-foreground">
-               <input
-                 type="checkbox"
+             <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
+               <Checkbox
                  checked={filters.unassigned}
-                 onChange={(e) => setFilters({ ...filters, unassigned: e.target.checked })}
-              className="rounded border-border"
+                 onCheckedChange={(checked) => setFilters({ ...filters, unassigned: checked === true })}
                />
                Unassigned
              </label>
-          <label className="flex items-center gap-2 text-sm text-muted-foreground">
-               <input
-                 type="checkbox"
+             <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
+               <Checkbox
                  checked={filters.escalated}
-                 onChange={(e) => setFilters({ ...filters, escalated: e.target.checked })}
-              className="rounded border-border"
+                 onCheckedChange={(checked) => setFilters({ ...filters, escalated: checked === true })}
                />
                Escalated
              </label>
-          <label className="flex items-center gap-2 text-sm text-muted-foreground">
-               <input
-                 type="checkbox"
+             <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
+               <Checkbox
                  checked={filters.slaBreached}
-                 onChange={(e) => setFilters({ ...filters, slaBreached: e.target.checked })}
-              className="rounded border-destructive"
+                 onCheckedChange={(checked) => setFilters({ ...filters, slaBreached: checked === true })}
                />
                SLA Breached
              </label>

@@ -387,25 +387,25 @@
        )}
  
        {activeTab === "bestsellers" && (
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-6">
+         <div className="rounded-xl border border-border bg-card shadow-sm p-6">
            <div className="space-y-4">
              {productsData.filter((p) => p.bestseller).map((product, index) => (
-               <div key={product.id} className="flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5">
-                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#aa1e2c]/10 text-lg font-bold text-[#aa1e2c]">
+               <div key={product.id} className="flex items-center gap-4 rounded-xl border border-border bg-card p-5">
+                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-lg font-bold text-primary">
                    {index + 1}
                  </div>
-                 <div className="h-14 w-14 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-2xl">
+                 <div className="h-14 w-14 rounded-xl bg-muted flex items-center justify-center text-2xl">
                    {product.photo}
                  </div>
                  <div className="flex-1">
-                   <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{product.name}</h3>
-                   <p className="text-sm text-gray-500 dark:text-gray-400">{product.category}</p>
+                   <h3 className="font-semibold text-lg text-foreground">{product.name}</h3>
+                   <p className="text-sm text-muted-foreground">{product.category}</p>
                  </div>
-                 <span className="text-lg font-semibold text-gray-900 dark:text-white">RM {product.price}</span>
+                 <span className="text-lg font-semibold text-foreground">RM {product.price}</span>
                </div>
              ))}
              {productsData.filter((p) => p.bestseller).length === 0 && (
-               <p className="text-center text-gray-500 dark:text-gray-400 py-8">No bestsellers marked yet.</p>
+               <p className="text-center text-muted-foreground py-8">No bestsellers marked yet.</p>
              )}
            </div>
          </div>

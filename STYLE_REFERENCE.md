@@ -1,0 +1,356 @@
+ # Damascus Dashboard Style Reference
+ 
+ A complete reference of all design tokens, utility classes, and patterns for developers.
+ 
+ ---
+ 
+ ## 1. Design Tokens (CSS Variables)
+ 
+ All tokens are in HSL format. Use with `hsl(var(--token-name))`.
+ 
+ ### Core Colors
+ 
+ | Token | Light Mode | Dark Mode | Usage |
+ |-------|------------|-----------|-------|
+ | `--background` | `220 20% 97%` | `222 47% 8%` | Page background |
+ | `--foreground` | `222 47% 11%` | `210 40% 98%` | Primary text |
+ | `--card` | `0 0% 100%` | `222 47% 11%` | Card backgrounds |
+ | `--card-foreground` | `222 47% 11%` | `210 40% 98%` | Card text |
+ | `--muted` | `220 14% 96%` | `222 30% 18%` | Muted backgrounds |
+ | `--muted-foreground` | `220 9% 46%` | `215 20% 65%` | Secondary text |
+ | `--border` | `220 13% 91%` | `222 30% 22%` | Border color |
+ | `--input` | `220 13% 91%` | `222 30% 22%` | Input borders |
+ 
+ ### Brand Colors
+ 
+ | Token | Light Mode | Dark Mode | Usage |
+ |-------|------------|-----------|-------|
+ | `--primary` | `348 72% 38%` | `348 72% 50%` | Damascus Red |
+ | `--primary-foreground` | `0 0% 100%` | `0 0% 100%` | Text on primary |
+ | `--secondary` | `220 14% 96%` | `222 30% 18%` | Secondary actions |
+ | `--accent` | `220 14% 96%` | `222 30% 18%` | Highlights |
+ 
+ ### Status Colors
+ 
+ | Token | Value | Usage |
+ |-------|-------|-------|
+ | `--success` | `142 71% 45%` | Completed, active, positive |
+ | `--warning` | `38 92% 50%` | Pending, caution |
+ | `--destructive` | `0 72% 51%` | Error, failed, danger |
+ | `--info` | `217 91% 60%` | Information, processing |
+ 
+ ### Sidebar Colors
+ 
+ | Token | Light Mode | Dark Mode |
+ |-------|------------|-----------|
+ | `--sidebar-background` | `348 72% 38%` | `222 47% 11%` |
+ | `--sidebar-foreground` | `0 0% 100%` | `210 40% 98%` |
+ | `--sidebar-accent` | `348 72% 32%` | `222 30% 18%` |
+ | `--sidebar-border` | `348 60% 45%` | `222 30% 22%` |
+ | `--sidebar-muted` | `348 40% 70%` | `215 20% 65%` |
+ 
+ ### Chart Colors
+ 
+ | Token | Value | Color |
+ |-------|-------|-------|
+ | `--chart-1` | `142 71% 45%` | Green |
+ | `--chart-2` | `348 72% 38%` | Damascus Red |
+ | `--chart-3` | `217 91% 60%` | Blue |
+ | `--chart-4` | `38 92% 50%` | Amber |
+ | `--chart-5` | `270 50% 60%` | Purple |
+ 
+ ---
+ 
+ ## 2. Typography
+ 
+ ### Font Family
+ ```css
+ font-family: "DM Sans", system-ui, sans-serif;
+ ```
+ 
+ ### Text Utilities
+ 
+ | Class | Properties | Example |
+ |-------|------------|---------|
+ | `.page-title` | `text-2xl font-bold tracking-tight` | Page headings |
+ | `.page-subtitle` | `text-sm text-muted-foreground mt-1` | Page descriptions |
+ | `.section-title` | `text-base font-semibold` | Section headings |
+ 
+ ---
+ 
+ ## 3. Button Classes
+ 
+ ### Primary Button
+ ```html
+ <button class="btn-primary">Save Changes</button>
+ ```
+ Properties: `px-3 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90`
+ 
+ ### Secondary Button
+ ```html
+ <button class="btn-secondary">Cancel</button>
+ ```
+ Properties: `bg-secondary text-secondary-foreground hover:bg-secondary/80`
+ 
+ ### Outline Button
+ ```html
+ <button class="btn-outline">View Details</button>
+ ```
+ Properties: `border border-border bg-card text-foreground hover:bg-muted`
+ 
+ ### Ghost Button
+ ```html
+ <button class="btn-ghost">Edit</button>
+ ```
+ Properties: `text-muted-foreground hover:text-foreground hover:bg-muted`
+ 
+ ### Destructive Button
+ ```html
+ <button class="btn-destructive">Delete</button>
+ ```
+ Properties: `bg-destructive text-destructive-foreground hover:bg-destructive/90`
+ 
+ ### Size Modifier
+ ```html
+ <button class="btn-primary btn-sm">Small Button</button>
+ ```
+ `.btn-sm` adds: `px-3 py-1.5 text-xs`
+ 
+ ---
+ 
+ ## 4. Badge Classes
+ 
+ All badges include: `bg-{color}/10 text-{color} border-{color}/20`
+ 
+ | Class | Color | Usage |
+ |-------|-------|-------|
+ | `.badge-success` | Green | Active, Completed, Enabled |
+ | `.badge-warning` | Amber | Pending, Processing |
+ | `.badge-destructive` | Red | Failed, Cancelled, Error |
+ | `.badge-info` | Blue | Info, New |
+ | `.badge-muted` | Gray | Draft, Inactive |
+ 
+ ### Example
+ ```html
+ <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold badge-success">
+   Active
+ </span>
+ ```
+ 
+ ---
+ 
+ ## 5. Card Patterns
+ 
+ ### Basic Card
+ ```html
+ <div class="rounded-xl border border-border bg-card shadow-sm">
+   <div class="card-header">
+     <h3 class="section-title">Title</h3>
+   </div>
+   <div class="card-body">
+     Content here
+   </div>
+ </div>
+ ```
+ 
+ ### Card Shadow Variants
+ | Class | Shadow |
+ |-------|--------|
+ | `.card-shadow` | Subtle (default) |
+ | `.card-shadow-md` | Medium elevation |
+ 
+ ### Interactive Cards
+ | Class | Effect |
+ |-------|--------|
+ | `.card-hover` | Lift on hover |
+ | `.card-interactive` | Border highlight + cursor |
+ 
+ ---
+ 
+ ## 6. Table Patterns
+ 
+ ### Standard Table
+ ```html
+ <div class="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
+   <table class="w-full">
+     <thead>
+       <tr class="bg-muted/30 border-b border-border">
+         <th class="table-header">Column</th>
+       </tr>
+     </thead>
+     <tbody class="divide-y divide-border">
+       <tr class="table-row-hover">
+         <td class="table-cell">Value</td>
+       </tr>
+     </tbody>
+   </table>
+ </div>
+ ```
+ 
+ ### Table Classes
+ | Class | Properties |
+ |-------|------------|
+ | `.table-header` | `px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider` |
+ | `.table-cell` | `px-4 py-3 text-foreground` |
+ | `.table-row-hover` | `transition-colors hover:bg-muted/30` |
+ 
+ ---
+ 
+ ## 7. Form Patterns
+ 
+ ### Form Group
+ ```html
+ <div class="form-group">
+   <label class="form-label">Email</label>
+   <input type="email" class="input-base" placeholder="you@example.com">
+   <p class="form-hint">We'll never share your email.</p>
+ </div>
+ ```
+ 
+ ### Form Classes
+ | Class | Properties |
+ |-------|------------|
+ | `.form-group` | `space-y-2` |
+ | `.form-label` | `text-sm font-medium text-foreground` |
+ | `.form-hint` | `text-xs text-muted-foreground` |
+ | `.input-base` | Full input styling with focus ring |
+ | `.input-focus` | Focus ring only (for custom inputs) |
+ 
+ ---
+ 
+ ## 8. Link Classes
+ 
+ | Class | Style | Usage |
+ |-------|-------|-------|
+ | `.link-primary` | Primary color, underline on hover | Action links |
+ | `.link-muted` | Muted, darkens on hover | Secondary links |
+ | `.link-nav` | No underline, for navigation | Breadcrumbs, nav |
+ 
+ ---
+ 
+ ## 9. Layout Utilities
+ 
+ ### Responsive Helpers
+ | Class | Behavior |
+ |-------|----------|
+ | `.mobile-stack` | Column on mobile, row on `sm:` |
+ | `.mobile-full` | Full width on mobile, auto on `sm:` |
+ | `.mobile-hidden` | Hidden on mobile |
+ | `.mobile-only` | Visible only on mobile |
+ 
+ ### Touch Targets
+ | Class | Min Size |
+ |-------|----------|
+ | `.touch-target` | 44×44px |
+ | `.touch-target-sm` | 36×36px |
+ 
+ ### Scrollbar
+ | Class | Effect |
+ |-------|--------|
+ | `.scrollbar-thin` | Thin, styled scrollbar |
+ | `.scrollbar-none` | Hidden scrollbar |
+ 
+ ---
+ 
+ ## 10. Icon Containers
+ 
+ ```html
+ <div class="icon-container icon-container-md bg-primary/10 text-primary">
+   <svg>...</svg>
+ </div>
+ ```
+ 
+ | Class | Size |
+ |-------|------|
+ | `.icon-container-sm` | 40×40px |
+ | `.icon-container-md` | 48×48px |
+ | `.icon-container-lg` | 56×56px |
+ 
+ ---
+ 
+ ## 11. Empty States
+ 
+ ```html
+ <div class="empty-state">
+   <svg class="empty-state-icon">...</svg>
+   <h3 class="empty-state-title">No orders found</h3>
+   <p class="empty-state-description">Try adjusting your filters or search query.</p>
+ </div>
+ ```
+ 
+ ---
+ 
+ ## 12. Focus States
+ 
+ All interactive elements use:
+ ```css
+ .focus-ring {
+   focus:outline-none focus:ring-2 focus:ring-ring/20 focus:ring-offset-2 focus:ring-offset-background
+ }
+ ```
+ 
+ ---
+ 
+ ## 13. Border Radius
+ 
+ | Token | Value |
+ |-------|-------|
+ | `--radius` | `0.5rem` (8px) |
+ | `rounded-lg` | `var(--radius)` |
+ | `rounded-md` | `calc(var(--radius) - 2px)` |
+ | `rounded-sm` | `calc(var(--radius) - 4px)` |
+ 
+ ---
+ 
+ ## 14. Spacing Scale
+ 
+ Standard Tailwind spacing is used throughout:
+ - Cards: `p-4` or `p-5`
+ - Sections: `space-y-6`
+ - Grid gaps: `gap-4` or `gap-6`
+ - Header gaps: `gap-3`
+ 
+ ---
+ 
+ ## 15. Breakpoints
+ 
+ | Prefix | Min Width | Usage |
+ |--------|-----------|-------|
+ | (none) | 0px | Mobile-first base |
+ | `sm:` | 640px | Small tablets |
+ | `md:` | 768px | Tablets |
+ | `lg:` | 1024px | Laptops |
+ | `xl:` | 1280px | Desktops |
+ | `2xl:` | 1400px | Large screens |
+ 
+ ---
+ 
+ ## Quick Copy Reference
+ 
+ ### Page Layout
+ ```html
+ <div class="space-y-6">
+   <div class="page-title">Page Title</div>
+   <!-- Content sections -->
+ </div>
+ ```
+ 
+ ### Section Card
+ ```html
+ <div class="rounded-xl border border-border bg-card card-shadow">
+   <div class="card-header">
+     <h2 class="section-title">Section</h2>
+   </div>
+   <div class="card-body">
+     <!-- Content -->
+   </div>
+ </div>
+ ```
+ 
+ ### Action Bar
+ ```html
+ <div class="flex items-center justify-between">
+   <h1 class="page-title">Title</h1>
+   <button class="btn-primary">Action</button>
+ </div>
+ ```

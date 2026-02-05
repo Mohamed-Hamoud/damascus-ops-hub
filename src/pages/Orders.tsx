@@ -5,6 +5,12 @@
  import { TableFilters } from "@/components/shared/TableFilters";
  import { TablePagination } from "@/components/shared/TablePagination";
  import { NoOrdersFound } from "@/components/shared/EmptyState";
+ import {
+   Tooltip,
+   TooltipContent,
+   TooltipProvider,
+   TooltipTrigger,
+ } from "@/components/ui/tooltip";
  
  /**
   * Orders Page
@@ -78,6 +84,14 @@
        <div>
           <h1 className="page-title">Orders</h1>
           <p className="page-subtitle">Manage and track all customer orders</p>
+          <div className="mt-2 flex items-center gap-4 text-sm">
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+              <span className="text-muted-foreground">{ordersData.filter(o => o.status === "new" || o.status === "accepted").length} active</span>
+            </span>
+            <span className="text-muted-foreground">•</span>
+            <span className="text-muted-foreground">{ordersData.length} total orders</span>
+          </div>
        </div>
  
        {/* Filters */}
@@ -148,12 +162,21 @@
                      <StatusBadge status={order.status} />
                   </td>
                   <td className="px-4 py-3">
-                    <Link 
-                      to={`/orders/${order.id}`}
-                        className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-primary hover:text-primary-foreground"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Link>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link 
+                            to={`/orders/${order.id}`}
+                            className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>View Order Details</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </td>
                 </tr>
                ))}

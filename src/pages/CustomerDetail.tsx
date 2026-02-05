@@ -340,7 +340,6 @@ import { PageHeader } from "@/components/shared/PageHeader";
                  <Input
                    value={formData.email}
                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                   className="bg-white dark:bg-gray-800"
                  />
                </div>
                <div className="space-y-2 sm:col-span-2">
@@ -348,7 +347,7 @@ import { PageHeader } from "@/components/shared/PageHeader";
                  <select
                    value={formData.language}
                    onChange={(e) => setFormData({ ...formData, language: e.target.value })}
-                   className="w-full h-10 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className="w-full h-10 px-3 rounded-md border border-input bg-background text-foreground"
                  >
                    <option value="EN">English</option>
                    <option value="MS">Malaysia</option>

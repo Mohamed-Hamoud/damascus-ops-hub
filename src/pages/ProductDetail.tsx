@@ -324,29 +324,27 @@ import { PageHeader } from "@/components/shared/PageHeader";
        >
          <div className="space-y-6">
            <div>
-             <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Add Title</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4">Add Title</h4>
              <div className="grid gap-4 sm:grid-cols-2">
                <div className="space-y-2">
-                 <Label>Title English <span className="text-red-500">*</span></Label>
+                <Label>Title English <span className="text-destructive">*</span></Label>
                  <Input 
                    value={modifierForm.titleEN} 
                    onChange={(e) => setModifierForm({ ...modifierForm, titleEN: e.target.value })}
-                   className="bg-white dark:bg-gray-800" 
                  />
                </div>
                <div className="space-y-2">
-                 <Label>Title Malaysia <span className="text-red-500">*</span></Label>
+                <Label>Title Malaysia <span className="text-destructive">*</span></Label>
                  <Input 
                    value={modifierForm.titleMS} 
                    onChange={(e) => setModifierForm({ ...modifierForm, titleMS: e.target.value })}
-                   className="bg-white dark:bg-gray-800" 
                  />
                </div>
              </div>
            </div>
  
            <div>
-             <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Settings</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4">Settings</h4>
              <div className="grid gap-4 sm:grid-cols-3">
                <div className="space-y-2">
                  <Label>Position</Label>
@@ -354,37 +352,34 @@ import { PageHeader } from "@/components/shared/PageHeader";
                    type="number" 
                    value={modifierForm.position}
                    onChange={(e) => setModifierForm({ ...modifierForm, position: parseInt(e.target.value) || 0 })}
-                   className="bg-white dark:bg-gray-800" 
                  />
                </div>
                <div className="space-y-2">
-                 <Label>Min QTY <span className="text-red-500">*</span></Label>
+                <Label>Min QTY <span className="text-destructive">*</span></Label>
                  <Input 
                    type="number"
                    value={modifierForm.minQty}
                    onChange={(e) => setModifierForm({ ...modifierForm, minQty: parseInt(e.target.value) || 0 })}
-                   className="bg-white dark:bg-gray-800" 
                  />
                </div>
                <div className="space-y-2">
-                 <Label>Max QTY <span className="text-red-500">*</span></Label>
+                <Label>Max QTY <span className="text-destructive">*</span></Label>
                  <Input 
                    type="number"
                    value={modifierForm.maxQty}
                    onChange={(e) => setModifierForm({ ...modifierForm, maxQty: parseInt(e.target.value) || 0 })}
-                   className="bg-white dark:bg-gray-800" 
                  />
                </div>
              </div>
            </div>
  
            <div>
-             <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Add Options</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4">Add Options</h4>
              <div className="space-y-3">
                {modifierForm.options.map((option, index) => (
                  <div key={index} className="grid gap-4 sm:grid-cols-4 items-end">
                    <div className="space-y-2">
-                     <Label>Option English <span className="text-red-500">*</span></Label>
+                    <Label>Option English <span className="text-destructive">*</span></Label>
                      <Input 
                        value={option.nameEN}
                        onChange={(e) => {
@@ -392,11 +387,10 @@ import { PageHeader } from "@/components/shared/PageHeader";
                          newOptions[index].nameEN = e.target.value;
                          setModifierForm({ ...modifierForm, options: newOptions });
                        }}
-                       className="bg-white dark:bg-gray-800" 
                      />
                    </div>
                    <div className="space-y-2">
-                     <Label>Option Malaysia <span className="text-red-500">*</span></Label>
+                    <Label>Option Malaysia <span className="text-destructive">*</span></Label>
                      <Input 
                        value={option.nameMS}
                        onChange={(e) => {
@@ -404,7 +398,6 @@ import { PageHeader } from "@/components/shared/PageHeader";
                          newOptions[index].nameMS = e.target.value;
                          setModifierForm({ ...modifierForm, options: newOptions });
                        }}
-                       className="bg-white dark:bg-gray-800" 
                      />
                    </div>
                    <div className="space-y-2">
@@ -418,12 +411,11 @@ import { PageHeader } from "@/components/shared/PageHeader";
                          newOptions[index].price = parseFloat(e.target.value) || 0;
                          setModifierForm({ ...modifierForm, options: newOptions });
                        }}
-                       className="bg-white dark:bg-gray-800" 
                      />
                    </div>
                    <button 
                      onClick={() => removeOption(index)}
-                     className="h-10 w-10 flex items-center justify-center rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    className="h-10 w-10 flex items-center justify-center rounded-lg text-destructive hover:bg-destructive/10"
                    >
                      <Trash2 className="h-4 w-4" />
                    </button>
@@ -432,7 +424,7 @@ import { PageHeader } from "@/components/shared/PageHeader";
              </div>
              <button 
                onClick={addOption}
-               className="mt-4 px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white hover:bg-gray-700 transition-all duration-200 flex items-center gap-2"
+              className="mt-4 px-4 py-2 text-sm font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-2"
              >
                <Plus className="h-4 w-4" />
                Add Option
@@ -453,17 +445,17 @@ import { PageHeader } from "@/components/shared/PageHeader";
          <div className="space-y-4">
            <div className="grid gap-4 sm:grid-cols-2">
              <div className="space-y-2">
-               <Label>Name (English) <span className="text-red-500">*</span></Label>
-               <Input className="bg-white dark:bg-gray-800" />
+              <Label>Name (English) <span className="text-destructive">*</span></Label>
+              <Input />
              </div>
              <div className="space-y-2">
-               <Label>Name (Malaysia) <span className="text-red-500">*</span></Label>
-               <Input className="bg-white dark:bg-gray-800" />
+              <Label>Name (Malaysia) <span className="text-destructive">*</span></Label>
+              <Input />
              </div>
            </div>
            <div className="space-y-2">
-             <Label>Price (RM) <span className="text-red-500">*</span></Label>
-             <Input type="number" step="0.01" className="bg-white dark:bg-gray-800" />
+            <Label>Price (RM) <span className="text-destructive">*</span></Label>
+            <Input type="number" step="0.01" />
            </div>
          </div>
        </FormModal>

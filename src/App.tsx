@@ -27,6 +27,8 @@
  import NotFound from "./pages/NotFound";
  import Promotions from "./pages/Promotions";
  import Evaluations from "./pages/Evaluations";
+ import VoucherForm from "./pages/VoucherForm";
+ import VoucherDetail from "./pages/VoucherDetail";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +50,9 @@ const App = () => (
               {/* Placeholder routes for other sections */}
              <Route path="/banners" element={<Banners />} />
               <Route path="/promotions" element={<Promotions />} />
+              <Route path="/promotions/vouchers/new" element={<VoucherForm />} />
+              <Route path="/promotions/vouchers/:id" element={<VoucherDetail />} />
+              <Route path="/promotions/vouchers/:id/edit" element={<VoucherForm />} />
              <Route path="/customers" element={<Customers />} />
              <Route path="/customers/:id" element={<CustomerDetail />} />
               <Route path="/evaluations" element={<Evaluations />} />

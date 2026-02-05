@@ -96,15 +96,14 @@
        <div className="grid gap-4 lg:grid-cols-3">
          <SectionCard title="Order Status Overview" className="lg:col-span-2">
            <div className="grid gap-4 sm:grid-cols-2">
-            {/* DaisyUI: stats shadow */}
-            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-900/20 dark:to-green-800/20 border border-green-200 dark:border-green-700 p-8 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-900/20 dark:to-green-800/20 border border-green-200 dark:border-green-700 p-6">
               <span className="text-4xl font-bold text-green-600 dark:text-green-400">62</span>
               <span className="text-sm text-gray-500 dark:text-gray-400">Completed</span>
-             </div>
-            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-red-50 to-red-100/50 dark:from-red-900/20 dark:to-red-800/20 border border-red-200 dark:border-red-700 p-8 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+            </div>
+            <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-red-50 to-red-100/50 dark:from-red-900/20 dark:to-red-800/20 border border-red-200 dark:border-red-700 p-6">
               <span className="text-4xl font-bold text-red-600 dark:text-red-400">0</span>
               <span className="text-sm text-gray-500 dark:text-gray-400">Failed</span>
-             </div>
+            </div>
            </div>
            <div className="mt-4 space-y-3">
              <ProgressBar label="Success Rate" value={93.9} variant="success" />
@@ -129,7 +128,7 @@
              {recentOrders.map((order) => (
                <div
                  key={order.id}
-                className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-gray-700 bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 p-4 transition-all duration-200 hover:border-[#aa1e2c]/20 hover:shadow-sm cursor-pointer"
+                className="flex items-center justify-between rounded-lg border border-gray-200 dark:border-gray-700 bg-card p-3"
                >
                  <div className="min-w-0 flex-1">
                    <div className="flex items-center gap-2">
@@ -155,10 +154,9 @@
              {topProducts.map((product, index) => (
                <div
                  key={product.name}
-                className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 p-4 transition-all duration-200 hover:border-[#aa1e2c]/20 hover:shadow-sm cursor-pointer"
+                className="flex items-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-card p-3"
                >
-                {/* DaisyUI: avatar placeholder */}
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#aa1e2c]/10 text-sm font-bold text-[#aa1e2c] shadow-sm">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">
                    {index + 1}
                  </div>
                  <div className="min-w-0 flex-1">
@@ -179,26 +177,26 @@
            action={{ label: "View all", href: "/evaluations" }}
          >
            <div className="space-y-4">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:shadow-sm">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-card border border-gray-200 dark:border-gray-700">
                <div className="flex items-center gap-2">
-                <Utensils className="h-4 w-4 text-yellow-500" />
-                <span className="text-sm text-gray-900 dark:text-white">Food Quality</span>
+                <Utensils className="h-4 w-4 text-amber-500" />
+                <span className="text-sm font-medium">Food Quality</span>
                </div>
                <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">4.5</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">(128 reviews)</span>
+                <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
+                <span className="text-sm font-semibold">4.5</span>
+                <span className="text-xs text-muted-foreground">(128 reviews)</span>
                </div>
              </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700 transition-all duration-200 hover:shadow-sm">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-card border border-gray-200 dark:border-gray-700">
                <div className="flex items-center gap-2">
-                <Truck className="h-4 w-4 text-blue-500" />
-                <span className="text-sm text-gray-900 dark:text-white">Delivery Service</span>
+                <Truck className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">Delivery Service</span>
                </div>
                <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">4.2</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">(98 reviews)</span>
+                <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
+                <span className="text-sm font-semibold">4.2</span>
+                <span className="text-xs text-muted-foreground">(98 reviews)</span>
                </div>
              </div>
            </div>

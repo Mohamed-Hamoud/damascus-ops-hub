@@ -123,15 +123,15 @@
             <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Items</h2>
              <div className="space-y-4">
                {orderData.items.map((item, index) => (
-                <div key={index} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 p-5">
+              <div key={index} className="rounded-lg border bg-card p-4">
                    <div className="flex items-start justify-between">
                      <div className="flex gap-4">
-                      <div className="h-16 w-16 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-2xl shadow-sm">
+                    <div className="h-14 w-14 rounded-lg bg-muted flex items-center justify-center text-2xl">
                          🍛
                        </div>
                        <div>
-                        <h4 className="font-bold text-[#aa1e2c] text-lg">{item.name}</h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{item.price}</p>
+                      <h4 className="font-semibold text-primary">{item.name}</h4>
+                      <p className="text-sm text-muted-foreground">{item.price}</p>
                          {item.addons.length > 0 && (
                            <div className="mt-2">
                             <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Addons</span>
@@ -195,22 +195,22 @@
           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
             <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Locations</h2>
              <div className="space-y-4">
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700">
-                <div className="h-8 w-8 rounded-lg bg-[#aa1e2c]/10 flex items-center justify-center">
-                  <Building className="h-4 w-4 text-[#aa1e2c]" />
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
+                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Building className="h-4 w-4 text-primary" />
                 </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Branch</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.branch}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Branch</span>
+                  <p className="font-medium">{orderData.branch}</p>
                  </div>
                </div>
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700">
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
                 <div className="h-8 w-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
                   <MapPin className="h-4 w-4 text-blue-500" />
                 </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Delivery Address</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.address}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Delivery Address</span>
+                  <p className="font-medium">{orderData.address}</p>
                  </div>
                </div>
              </div>
@@ -220,31 +220,31 @@
           <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
             <h2 className="mb-4 text-base font-semibold text-gray-900 dark:text-white">Customer Details</h2>
              <div className="space-y-4">
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700">
-                <div className="h-8 w-8 rounded-lg bg-[#aa1e2c]/10 flex items-center justify-center">
-                  <User className="h-4 w-4 text-[#aa1e2c]" />
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
+                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <User className="h-4 w-4 text-primary" />
                 </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Name</span>
-                  <p className="font-semibold text-[#aa1e2c]">{orderData.customer.name}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Name</span>
+                  <p className="font-semibold text-primary">{orderData.customer.name}</p>
                  </div>
                </div>
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700">
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
                 <div className="h-8 w-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                   <Phone className="h-4 w-4 text-green-500" />
                 </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Phone</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.customer.phone}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Phone</span>
+                  <p className="font-medium">{orderData.customer.phone}</p>
                  </div>
                </div>
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-gradient-to-r from-white to-gray-50/50 dark:from-gray-800 dark:to-gray-800/50 border border-gray-200 dark:border-gray-700">
-                <div className="h-8 w-8 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
-                  <Smartphone className="h-4 w-4 text-yellow-500" />
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border">
+                <div className="h-8 w-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                  <Smartphone className="h-4 w-4 text-amber-500" />
                 </div>
                  <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Device</span>
-                  <p className="font-medium text-gray-900 dark:text-white">{orderData.customer.device}</p>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Device</span>
+                  <p className="font-medium">{orderData.customer.device}</p>
                  </div>
                </div>
              </div>

@@ -1,5 +1,6 @@
  import { useState } from "react";
  import { Star, MessageCircle, ThumbsUp, ThumbsDown } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
  import { TableFilters } from "@/components/shared/TableFilters";
  import { TablePagination } from "@/components/shared/TablePagination";
  import { EmptyState } from "@/components/shared/EmptyState";
@@ -31,31 +32,32 @@
  
    return (
      <div className="space-y-6">
-       <div>
-        <h1 className="page-title">Feedbacks</h1>
-        <p className="page-subtitle">Customer reviews and ratings</p>
-       </div>
+      {/* Header */}
+      <PageHeader
+        title="Feedbacks"
+        subtitle="Customer reviews and ratings"
+      />
  
        {/* Stats */}
        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+        <div className="rounded-xl border border-border bg-card p-4 card-shadow">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total Reviews</p>
           <p className="text-2xl font-bold text-foreground mt-1">{feedbacksData.length}</p>
-         </div>
-        <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+        </div>
+        <div className="rounded-xl border border-border bg-card p-4 card-shadow">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Average Rating</p>
            <div className="flex items-center gap-2 mt-1">
             <p className="text-2xl font-bold text-foreground">{avgRating.toFixed(1)}</p>
-             <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+            <Star className="h-5 w-5 fill-warning text-warning" />
            </div>
          </div>
-        <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+        <div className="rounded-xl border border-border bg-card p-4 card-shadow">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Positive</p>
-          <p className="text-2xl font-bold text-green-600 mt-1">
+          <p className="text-2xl font-bold text-success mt-1">
              {feedbacksData.filter(f => f.sentiment === "positive").length}
            </p>
          </div>
-        <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+        <div className="rounded-xl border border-border bg-card p-4 card-shadow">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Negative</p>
           <p className="text-2xl font-bold text-destructive mt-1">
              {feedbacksData.filter(f => f.sentiment === "negative").length}
@@ -70,7 +72,7 @@
        />
  
        {/* Feedbacks List */}
-      <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
+      <div className="rounded-xl border border-border bg-card card-shadow overflow-hidden">
         <div className="divide-y divide-border">
            {filteredFeedbacks.length === 0 ? (
              <EmptyState 
@@ -80,18 +82,18 @@
              />
            ) : (
              filteredFeedbacks.map((feedback) => (
-              <div key={feedback.id} className="p-4">
+              <div key={feedback.id} className="p-4 hover:bg-muted/30 transition-colors">
                  <div className="flex items-start justify-between gap-4">
                    <div className="flex-1">
                      <div className="flex items-center gap-2 mb-1">
                       <span className="font-medium text-foreground">{feedback.customer}</span>
-                      <span className="text-sm text-primary">#{feedback.order}</span>
+                      <span className="text-sm text-primary font-medium">#{feedback.order}</span>
                      </div>
                      <div className="flex items-center gap-1 mb-2">
                        {[1, 2, 3, 4, 5].map((star) => (
                          <Star
                            key={star}
-                          className={`h-4 w-4 ${star <= feedback.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30"}`}
+                          className={`h-4 w-4 ${star <= feedback.rating ? "fill-warning text-warning" : "text-muted-foreground/30"}`}
                          />
                        ))}
                      </div>
@@ -100,7 +102,7 @@
                    <div className="flex flex-col items-end gap-2">
                     <span className="text-xs text-muted-foreground">{feedback.date}</span>
                      {feedback.sentiment === "positive" ? (
-                      <span className="flex items-center gap-1 text-xs font-medium text-green-600 bg-green-500/10 px-2 py-1 rounded-full">
+                      <span className="flex items-center gap-1 text-xs font-medium text-success bg-success/10 px-2 py-1 rounded-full">
                          <ThumbsUp className="h-3 w-3" /> Positive
                        </span>
                      ) : (

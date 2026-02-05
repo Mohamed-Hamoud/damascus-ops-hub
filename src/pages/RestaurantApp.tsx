@@ -1,8 +1,10 @@
  import { useState } from "react";
  import { Plus, Eye, Edit, Trash2 } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
  import { FormModal, DeleteModal } from "@/components/shared/FormModal";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
  
  /**
   * Restaurant App Page
@@ -22,52 +24,58 @@
    return (
      <div className="space-y-6">
        {/* Header */}
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="page-title">Restaurant App</h1>
-         <button
+      <PageHeader
+        title="Restaurant App"
+        subtitle="Manage restaurant POS applications"
+        actions={
+          <button
            onClick={() => setAddModalOpen(true)}
-          className="btn-primary flex items-center gap-2"
-         >
-           <Plus className="h-4 w-4" />
-           Add Restaurant App
-         </button>
-       </div>
+            className="btn-primary flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" />
+            Add Restaurant App
+          </button>
+        }
+      />
  
        {/* App List Card */}
-      <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-border bg-muted/30">
-          <h3 className="section-title">Restaurant App List</h3>
-         </div>
+      <div className="rounded-xl border border-border bg-card card-shadow overflow-hidden">
          <div className="overflow-x-auto">
            <table className="w-full">
              <thead>
               <tr className="bg-muted/30 border-b border-border">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">App No.</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Created</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Branch</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Last Action</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Enabled</th>
-                 <th className="px-4 py-3"></th>
+                <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">App No.</th>
+                <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Created</th>
+                <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Branch</th>
+                <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Last Action</th>
+                <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
+                <th className="px-4 py-3.5"></th>
                </tr>
              </thead>
             <tbody className="divide-y divide-border">
                {appsData.map((app) => (
-                <tr key={app.id}>
+                <tr key={app.id} className="hover:bg-muted/30 transition-colors">
                   <td className="px-4 py-3 font-medium text-foreground">{app.id}</td>
                   <td className="px-4 py-3 text-muted-foreground">{app.created}</td>
                   <td className="px-4 py-3 text-foreground">{app.branch}</td>
                   <td className="px-4 py-3 text-muted-foreground">{app.lastAction || "—"}</td>
                    <td className="px-4 py-3">
-                    <span className={`text-xs font-semibold ${app.enabled ? "text-green-600" : "text-muted-foreground"}`}>
-                       {app.enabled ? "ENABLED" : "DISABLED"}
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold ${
+                      app.enabled 
+                        ? "bg-success/10 text-success border border-success/20" 
+                        : "bg-muted text-muted-foreground border border-border"
+                    }`}>
+                      {app.enabled ? "Enabled" : "Disabled"}
                      </span>
                    </td>
                    <td className="px-4 py-3">
                      <div className="flex items-center gap-1">
-                      <button className="btn-secondary btn-sm">
+                      <button className="btn-secondary btn-sm flex items-center gap-1">
+                        <Eye className="h-3 w-3" />
                          View
                        </button>
-                      <button className="btn-primary btn-sm">
+                      <button className="btn-primary btn-sm flex items-center gap-1">
+                        <Edit className="h-3 w-3" />
                          Edit
                        </button>
                        <button 
@@ -75,8 +83,9 @@
                            setSelectedApp(app);
                            setDeleteModalOpen(true);
                          }}
-                        className="btn-destructive btn-sm"
+                        className="btn-destructive btn-sm flex items-center gap-1"
                        >
+                        <Trash2 className="h-3 w-3" />
                          Delete
                        </button>
                      </div>
@@ -107,9 +116,9 @@
                <option value="3">Damascus Restaurant Shah Alam</option>
              </select>
            </div>
-           <div className="flex items-center gap-2">
-             <input type="checkbox" id="enabled" className="rounded border-gray-300" defaultChecked />
-             <Label htmlFor="enabled">Enabled</Label>
+          <div className="flex items-center gap-2 py-2">
+            <Checkbox id="enabled" defaultChecked />
+            <Label htmlFor="enabled" className="cursor-pointer">Enabled</Label>
            </div>
          </div>
        </FormModal>

@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Download, FileText } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
  
  /**
   * Reports Page
@@ -19,46 +22,45 @@ import { Download, FileText } from "lucide-react";
  
    return (
      <div className="space-y-6">
-       <div>
-        <h1 className="page-title">Reports</h1>
-        <p className="page-subtitle">Generate and download business reports</p>
-       </div>
+      {/* Header */}
+      <PageHeader
+        title="Reports"
+        subtitle="Generate and download business reports"
+      />
  
        {/* Order Report */}
-      <div className="rounded-xl border border-border bg-card shadow-sm">
-        <div className="border-b border-border px-4 py-3 bg-muted/30">
+      <div className="rounded-xl border border-border bg-card card-shadow">
+        <div className="border-b border-border px-6 py-4 bg-muted/30">
           <h2 className="section-title flex items-center gap-2">
             <FileText className="h-5 w-5 text-primary" />
              Order Report
            </h2>
          </div>
-        <div className="p-4">
+        <div className="p-6">
            <div className="flex flex-wrap items-end gap-4">
              <div className="flex-1 min-w-[200px]">
-              <label className="block text-sm font-medium text-foreground mb-2">
-                 Order Date From
-               </label>
-               <input
+              <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">
+                From Date
+              </Label>
+              <Input
                  type="date"
                  value={orderDateFrom}
                  onChange={(e) => setOrderDateFrom(e.target.value)}
-                className="w-full px-3 py-2 bg-background border border-input rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                />
              </div>
              <div className="flex-1 min-w-[200px]">
-              <label className="block text-sm font-medium text-foreground mb-2">
-                 To
-               </label>
-               <input
+              <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">
+                To Date
+              </Label>
+              <Input
                  type="date"
                  value={orderDateTo}
                  onChange={(e) => setOrderDateTo(e.target.value)}
-                className="w-full px-3 py-2 bg-background border border-input rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                />
              </div>
              <button
                onClick={() => handleDownload("order")}
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-2"
+              className="btn-primary flex items-center gap-2"
              >
                <Download className="h-4 w-4" />
                Download
@@ -68,40 +70,38 @@ import { Download, FileText } from "lucide-react";
        </div>
  
        {/* Summary Report */}
-      <div className="rounded-xl border border-border bg-card shadow-sm">
-        <div className="border-b border-border px-4 py-3 bg-muted/30">
+      <div className="rounded-xl border border-border bg-card card-shadow">
+        <div className="border-b border-border px-6 py-4 bg-muted/30">
           <h2 className="section-title flex items-center gap-2">
             <FileText className="h-5 w-5 text-primary" />
              Summary Report
            </h2>
          </div>
-        <div className="p-4">
+        <div className="p-6">
            <div className="flex flex-wrap items-end gap-4">
              <div className="flex-1 min-w-[200px]">
-              <label className="block text-sm font-medium text-foreground mb-2">
-                 Summary Date From
-               </label>
-               <input
+              <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">
+                From Date
+              </Label>
+              <Input
                  type="date"
                  value={summaryDateFrom}
                  onChange={(e) => setSummaryDateFrom(e.target.value)}
-                className="w-full px-3 py-2 bg-background border border-input rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                />
              </div>
              <div className="flex-1 min-w-[200px]">
-              <label className="block text-sm font-medium text-foreground mb-2">
-                 To
-               </label>
-               <input
+              <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">
+                To Date
+              </Label>
+              <Input
                  type="date"
                  value={summaryDateTo}
                  onChange={(e) => setSummaryDateTo(e.target.value)}
-                className="w-full px-3 py-2 bg-background border border-input rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                />
              </div>
              <button
                onClick={() => handleDownload("summary")}
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-2"
+              className="btn-primary flex items-center gap-2"
              >
                <Download className="h-4 w-4" />
                Download

@@ -1,6 +1,7 @@
  import { useState } from "react";
  import { useNavigate } from "react-router-dom";
  import { Plus, Edit } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
  import { FormModal } from "@/components/shared/FormModal";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
@@ -34,44 +35,52 @@
    return (
      <div className="space-y-6">
        {/* Header */}
-      <h1 className="page-title">Global Settings</h1>
+      <PageHeader
+        title="Points Management"
+        subtitle="Configure point conversion rates and manage customer points"
+      />
  
        {/* Point Settings Card */}
-      <div className="rounded-xl border border-border bg-card p-4">
-        <h3 className="section-title mb-4">Point Settings</h3>
+      <div className="rounded-xl border border-border bg-card card-shadow">
+        <div className="px-6 py-4 border-b border-border bg-muted/30">
+          <h3 className="section-title">Point Settings</h3>
+        </div>
+        <div className="p-6">
          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
            <div>
-            <p className="text-lg text-foreground">
-              Point Conversion Rate: 1 Point = <span className="text-primary font-semibold">{conversionRate} RM</span>
-             </p>
-            <p className="text-sm text-primary mt-1">
+              <p className="text-lg font-medium text-foreground">
+                Point Conversion Rate: 1 Point = <span className="text-primary font-bold">{conversionRate} RM</span>
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
                This rate applies to the conversion of the final order price into points that will be earned after the order status is completed
              </p>
            </div>
            <div className="flex items-center gap-2">
              <button
                onClick={() => setEditRateModalOpen(true)}
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
+                className="btn-secondary flex items-center gap-2"
              >
+                <Edit className="h-4 w-4" />
                Edit Point Rate
              </button>
              <button
                onClick={() => setBulkModalOpen(true)}
-              className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                className="btn-primary"
              >
                Bulk Generate Points
              </button>
            </div>
          </div>
+        </div>
        </div>
  
        {/* Points List */}
        <div className="space-y-4">
          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-xl font-bold tracking-tight text-foreground">Points List</h2>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">Points History</h2>
            <button
              onClick={() => setAddPointsModalOpen(true)}
-            className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center gap-2"
+            className="btn-primary flex items-center gap-2"
            >
              <Plus className="h-4 w-4" />
              Add Points
@@ -79,31 +88,28 @@
          </div>
  
          {/* Points History Card */}
-        <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
-          <div className="p-4 border-b border-border bg-muted/30">
-            <h3 className="section-title">Points History</h3>
-           </div>
+        <div className="rounded-xl border border-border bg-card card-shadow overflow-hidden">
            <div className="overflow-x-auto">
              <table className="w-full">
                <thead>
                 <tr className="bg-muted/30 border-b border-border">
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">User ID</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">User</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Points</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Transaction Type</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Rate</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Created</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Updated</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">User ID</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">User</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Points</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Transaction Type</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Rate</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Created</th>
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Updated</th>
                  </tr>
                </thead>
               <tbody className="divide-y divide-border">
                  {pointsHistory.map((entry, index) => (
-                  <tr key={index}>
+                  <tr key={index} className="hover:bg-muted/30 transition-colors">
                     <td className="px-4 py-3 font-medium text-foreground">{entry.userId}</td>
                     <td className="px-4 py-3 text-foreground">{entry.user}</td>
-                    <td className="px-4 py-3 font-medium text-foreground">{entry.points}</td>
+                    <td className="px-4 py-3 font-bold text-primary">{entry.points}</td>
                      <td className="px-4 py-3">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
                          {entry.transactionType}
                        </span>
                      </td>
@@ -129,13 +135,12 @@
        >
          <div className="space-y-4">
            <div className="space-y-2">
-              <Label>Point Conversion Rate (RM per point) <span className="text-destructive">*</span></Label>
+            <Label>Point Conversion Rate (RM per point) <span className="text-destructive">*</span></Label>
              <Input
                type="number"
                step="0.01"
                value={conversionRate}
                onChange={(e) => setConversionRate(parseFloat(e.target.value) || 0)}
-                className="bg-background"
              />
            </div>
          </div>
@@ -153,22 +158,20 @@
        >
          <div className="space-y-4">
            <div className="space-y-2">
-              <Label>User IDs (comma-separated) <span className="text-destructive">*</span></Label>
+            <Label>User IDs (comma-separated) <span className="text-destructive">*</span></Label>
              <Textarea
                placeholder="e.g. 10,12,45"
                value={addPointsForm.userIds}
                onChange={(e) => setAddPointsForm({ ...addPointsForm, userIds: e.target.value })}
-                className="bg-background"
                rows={3}
              />
            </div>
            <div className="space-y-2">
-              <Label>Points <span className="text-destructive">*</span></Label>
+            <Label>Points <span className="text-destructive">*</span></Label>
              <Input
                type="number"
                value={addPointsForm.points}
                onChange={(e) => setAddPointsForm({ ...addPointsForm, points: e.target.value })}
-                className="bg-background"
              />
            </div>
            <div className="space-y-2">
@@ -176,7 +179,6 @@
              <Input
                value={addPointsForm.transactionType}
                onChange={(e) => setAddPointsForm({ ...addPointsForm, transactionType: e.target.value })}
-                className="bg-background"
              />
            </div>
          </div>
@@ -192,14 +194,14 @@
          size="md"
        >
          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
              Generate points for all completed orders that haven't been processed yet.
            </p>
            <div className="space-y-2">
              <Label>Date Range</Label>
              <div className="grid gap-4 sm:grid-cols-2">
-                <Input type="date" className="bg-background" />
-                <Input type="date" className="bg-background" />
+              <Input type="date" />
+              <Input type="date" />
              </div>
            </div>
          </div>

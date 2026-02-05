@@ -77,13 +77,13 @@
              </div>
              <div>
                <p className="text-sm text-muted-foreground">Visible</p>
-               <span className={`text-sm font-semibold ${banner.visible ? "text-green-600" : "text-muted-foreground"}`}>
+              <span className={`text-sm font-semibold ${banner.visible ? "text-primary" : "text-muted-foreground"}`}>
                  {banner.visible ? "YES" : "NO"}
                </span>
              </div>
              <div>
                <p className="text-sm text-muted-foreground">Type</p>
-               <span className="text-sm font-semibold text-blue-600">{banner.type}</span>
+              <span className="text-sm font-semibold text-primary">{banner.type}</span>
              </div>
            </div>
  

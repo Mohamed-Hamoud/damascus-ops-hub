@@ -349,60 +349,60 @@
                  <Edit className="h-4 w-4" />
                  Edit Branch
                </button>
-               <button className="px-4 py-2 text-sm font-medium rounded-lg bg-gray-800 text-white hover:bg-gray-700 flex items-center gap-2">
+                <button className="btn-secondary flex items-center gap-2">
                  <Plus className="h-4 w-4" />
                  Add Product
                </button>
              </div>
-             <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+              <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
                <table className="w-full">
                  <thead>
-                   <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
-                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider w-16">Photo</th>
-                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Product</th>
-                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Division</th>
-                     <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Category</th>
-                     <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Price</th>
-                     <th className="px-4 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Translation</th>
-                     <th className="px-4 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Bestseller</th>
-                     <th className="px-4 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Out of Stock</th>
+                    <tr className="bg-muted/30 border-b border-border">
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider w-16">Photo</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Product</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Division</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Category</th>
+                      <th className="px-4 py-3 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Price</th>
+                      <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">Translation</th>
+                      <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">Bestseller</th>
+                      <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">Out of Stock</th>
                      <th className="px-4 py-3"></th>
                    </tr>
                  </thead>
-                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  <tbody className="divide-y divide-border">
                    {menuProductsData.map((product) => (
                      <tr key={product.id}>
                        <td className="px-4 py-3">
-                         <div className="h-12 w-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xl">
+                          <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center text-xl">
                            {product.photo}
                          </div>
                        </td>
                        <td className="px-4 py-3">
                          <div>
-                           <span className="font-medium text-gray-900 dark:text-white">{product.name}</span>
-                           <p className="text-xs text-gray-500 dark:text-gray-400">{product.description}</p>
+                            <span className="font-medium text-foreground">{product.name}</span>
+                            <p className="text-xs text-muted-foreground">{product.description}</p>
                          </div>
                        </td>
-                       <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{product.division}</td>
-                       <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{product.category}</td>
-                       <td className="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">RM {product.price}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{product.division}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{product.category}</td>
+                        <td className="px-4 py-3 text-right font-semibold text-foreground">RM {product.price}</td>
                        <td className="px-4 py-3 text-center">
-                         <span className={`text-xs font-semibold ${product.translation ? "text-green-600" : "text-gray-400"}`}>
+                          <span className={`text-xs font-semibold ${product.translation ? "text-green-600" : "text-muted-foreground"}`}>
                            {product.translation ? "Yes" : "No"}
                          </span>
                        </td>
                        <td className="px-4 py-3 text-center">
-                         <span className={`text-xs font-semibold ${product.bestseller ? "text-green-600" : "text-gray-400"}`}>
+                          <span className={`text-xs font-semibold ${product.bestseller ? "text-green-600" : "text-muted-foreground"}`}>
                            {product.bestseller ? "Yes" : "No"}
                          </span>
                        </td>
                        <td className="px-4 py-3 text-center">
-                         <span className={`text-xs font-semibold ${product.inStock ? "text-green-600" : "text-red-500"}`}>
+                          <span className={`text-xs font-semibold ${product.inStock ? "text-green-600" : "text-destructive"}`}>
                            {product.inStock ? "In Stock" : "Out"}
                          </span>
                        </td>
                        <td className="px-4 py-3">
-                         <button className="text-gray-400 hover:text-gray-600">
+                          <button className="text-muted-foreground hover:text-foreground">
                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                            </svg>

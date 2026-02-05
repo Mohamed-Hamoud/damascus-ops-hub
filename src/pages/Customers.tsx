@@ -12,7 +12,50 @@
  
  /**
   * Customers Page
-  * DaisyUI: table, btn, badge, card
+ * Customer management with tabs for active, suspended, and deleted users
+ * 
+ * HAML Equivalent:
+ * ```haml
+ * .space-y-6
+ *   / Header
+ *   .flex.flex-col.gap-4.sm:flex-row.sm:items-center.sm:justify-between
+ *     %div
+ *       %h1.page-title Customers
+ *       %p.page-subtitle View and manage customer accounts
+ *     .flex.items-center.gap-2
+ *       %input.input-base{ type: "text", placeholder: "Search by Phone" }
+ *       %input.input-base{ type: "text", placeholder: "Search by Email" }
+ *   
+ *   / Tabs
+ *   = render "shared/tab_navigation", tabs: @tabs, active_tab: @active_tab
+ *   
+ *   / Customer Stats Cards
+ *   .grid.gap-6.md:grid-cols-3
+ *     - @customer_stats.each do |stat|
+ *       = render "customers/stat_card", stat: stat
+ *   
+ *   / Customers Table
+ *   .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+ *     %table.w-full
+ *       %thead
+ *         %tr.bg-muted\/30.border-b.border-border
+ *           %th.table-header ID
+ *           %th.table-header CREATED
+ *           %th.table-header NAME
+ *           %th.table-header EMAIL
+ *           %th.table-header DISCOUNTS
+ *           %th.table-header ACTIVE VOUCHER
+ *           %th.table-header ORDERS
+ *           %th.table-header TOTAL SPENT
+ *           %th.table-header
+ *       %tbody.divide-y.divide-border
+ *         - @customers.each do |customer|
+ *           %tr.table-row-hover
+ *             %td.table-cell= customer.id
+ *             / ... other cells
+ * ```
+ * 
+ * DaisyUI: table, btn, badge, card, tabs
   */
  
  const customersData = [

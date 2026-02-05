@@ -14,10 +14,31 @@ import { ArrowLeft, Plus, Eye, Trash2, Pencil, GripVertical } from "lucide-react
  import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
  import { EmptyState, emptyStateIcons } from "@/components/shared/EmptyState";
  import { PageHeader } from "@/components/shared/PageHeader";
+import { TabNavigation } from "@/components/shared/TabNavigation";
  
  /**
   * Banners Page
   * List view + Edit/Create forms matching reference screenshots
+ * 
+ * HAML Equivalent:
+ * ```haml
+ * .space-y-6
+ *   = render "shared/page_header", title: "Banners", subtitle: "Manage promotional banners and custom banners"
+ *   = render "shared/tab_navigation", tabs: @tabs, active_tab: @active_tab
+ *   
+ *   .rounded-lg.border.bg-card.card-shadow.overflow-hidden
+ *     .overflow-x-auto
+ *       %table.w-full
+ *         %thead
+ *           %tr.bg-muted\/30.border-b
+ *             / ... table headers
+ *         %tbody.divide-y.divide-border{ data: { controller: "sortable", sortable_url_value: update_positions_banners_path } }
+ *           - @banners.each do |banner|
+ *             %tr.table-row-hover{ data: { id: banner.id } }
+ *               / ... table cells with drag handle
+ * ```
+ * 
+ * DaisyUI: tabs, table, card, btn
   */
  
  const bannersData = [
@@ -40,9 +61,14 @@ import { ArrowLeft, Plus, Eye, Trash2, Pencil, GripVertical } from "lucide-react
    const isEditView = id && location.pathname.includes("edit");
    const isFormView = isNewView || isEditView;
  
-   const [activeTab, setActiveTab] = useState("banners");
+  const [activeTab, setActiveTab] = useState<string>("banners");
    const banner = id ? bannersData.find((b) => b.id === parseInt(id)) : null;
  
+  const tabs = [
+    { id: "banners", label: "Banners" },
+    { id: "custom", label: "Custom Banner" },
+  ];
+
    // Form View (Create/Edit)
    if (isFormView) {
      return (
@@ -188,30 +214,11 @@ import { ArrowLeft, Plus, Eye, Trash2, Pencil, GripVertical } from "lucide-react
         />
  
        {/* Tabs */}
-        <div className="border-b">
-         <div className="flex gap-6">
-           <button
-             onClick={() => setActiveTab("banners")}
-             className={`pb-3 text-sm font-medium border-b-2 ${
-               activeTab === "banners"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-             }`}
-           >
-             Banners
-           </button>
-           <button
-             onClick={() => setActiveTab("custom")}
-             className={`pb-3 text-sm font-medium border-b-2 ${
-               activeTab === "custom"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-             }`}
-           >
-             Custom Banner
-           </button>
-         </div>
-       </div>
+      <TabNavigation
+        tabs={tabs}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
  
         <div className="rounded-lg border bg-card card-shadow overflow-hidden">
          <div className="overflow-x-auto">

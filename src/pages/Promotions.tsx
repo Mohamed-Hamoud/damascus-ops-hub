@@ -1,5 +1,5 @@
  import { useState } from "react";
- import { Plus } from "lucide-react";
+import { Plus, GripVertical } from "lucide-react";
  import { useNavigate } from "react-router-dom";
  import { Button } from "@/components/ui/button";
  import { Input } from "@/components/ui/input";
@@ -266,6 +266,12 @@
                    <TableCell>{voucher.endDate}</TableCell>
                    <TableCell className="text-right">
                      <div className="flex items-center justify-end gap-2">
+                    <button
+                      className="p-2 rounded-lg text-muted-foreground hover:bg-muted cursor-grab active:cursor-grabbing transition-colors"
+                      title="Drag to reorder"
+                    >
+                      <GripVertical className="h-4 w-4" />
+                    </button>
                         <Button size="sm" variant="secondary" onClick={() => navigate(`/promotions/vouchers/${voucher.id}`)}>
                          View
                        </Button>

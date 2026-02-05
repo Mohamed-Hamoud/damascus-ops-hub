@@ -21,9 +21,6 @@
          <span className="sr-only">Toggle menu</span>
        </Button>
        <div className="flex-1" />
-       <div className="flex items-center gap-4">
-         <span className="text-sm text-muted-foreground">Damascus Delivery</span>
-       </div>
      </header>
    );
  }

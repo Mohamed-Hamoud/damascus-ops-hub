@@ -62,76 +62,76 @@
        <div className="space-y-6">
          <button
            onClick={() => navigate("/products")}
-           className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
          >
            <ArrowLeft className="h-4 w-4" />
            Products
          </button>
  
-         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h1 className="page-title">
            {isNewView ? "New Product" : "Edit Product"}
          </h1>
  
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="rounded-xl border border-border bg-card">
+            <div className="p-4 border-b border-border bg-muted/30">
+              <h2 className="section-title">
                {isNewView ? "New Product" : "Edit Product"}
              </h2>
            </div>
  
-           <div className="p-6 space-y-8">
+            <div className="p-4 space-y-6">
              {/* Basic Information */}
              <div className="space-y-4">
-               <h3 className="text-base font-semibold text-gray-900 dark:text-white">Basic Information</h3>
+                <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">Basic Information</h3>
                
                <div className="flex gap-6">
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Photo</Label>
-                   <div className="h-24 w-24 rounded-lg border-2 border-dashed border-gray-200 dark:border-gray-700 flex items-center justify-center text-3xl bg-gray-50 dark:bg-gray-800">
-                     {product?.photo || <Plus className="h-6 w-6 text-gray-400" />}
+                    <Label>Photo</Label>
+                    <div className="h-24 w-24 rounded-lg border-2 border-dashed border-border flex items-center justify-center text-3xl bg-muted/50">
+                      {product?.photo || <Plus className="h-6 w-6 text-muted-foreground" />}
                    </div>
                  </div>
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Display Option</Label>
+                    <Label>Display Option</Label>
                    <div className="flex items-center gap-2 mt-2">
                      <Checkbox id="bestseller" defaultChecked={product?.bestseller} />
-                     <Label htmlFor="bestseller" className="text-sm text-gray-700 dark:text-gray-300">Show as Bestseller</Label>
+                      <Label htmlFor="bestseller" className="text-sm">Show as Bestseller</Label>
                    </div>
                  </div>
                </div>
  
                <div className="grid gap-4 sm:grid-cols-2">
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Title (English) <span className="text-red-500">*</span></Label>
+                    <Label>Title (English) <span className="text-destructive">*</span></Label>
                    <Input
                      placeholder="Enter product name in English"
                      defaultValue={product?.name || ""}
-                     className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700"
+                      className="bg-background"
                    />
                  </div>
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Title (Malaysia) <span className="text-red-500">*</span></Label>
+                    <Label>Title (Malaysia) <span className="text-destructive">*</span></Label>
                    <Input
                      placeholder="Enter product name in Malay"
-                     className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700"
+                      className="bg-background"
                    />
                  </div>
                </div>
  
                <div className="grid gap-4 sm:grid-cols-2">
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Description (English) <span className="text-red-500">*</span></Label>
+                    <Label>Description (English) <span className="text-destructive">*</span></Label>
                    <Textarea
                      placeholder="Enter product description in English"
                      defaultValue={product?.description || ""}
-                     className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 min-h-[100px]"
+                      className="bg-background min-h-[100px]"
                    />
                  </div>
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Description (Malaysia) <span className="text-red-500">*</span></Label>
+                    <Label>Description (Malaysia) <span className="text-destructive">*</span></Label>
                    <Textarea
                      placeholder="Enter product description in Malay"
-                     className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 min-h-[100px]"
+                      className="bg-background min-h-[100px]"
                    />
                  </div>
                </div>
@@ -139,13 +139,13 @@
  
              {/* Category & Pricing */}
              <div className="space-y-4">
-               <h3 className="text-base font-semibold text-gray-900 dark:text-white">Category & Pricing</h3>
+                <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">Category & Pricing</h3>
                
                <div className="grid gap-4 sm:grid-cols-2">
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Division <span className="text-red-500">*</span></Label>
+                    <Label>Division <span className="text-destructive">*</span></Label>
                    <Select defaultValue={product?.division?.toLowerCase() || ""}>
-                     <SelectTrigger className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
+                      <SelectTrigger className="bg-background">
                        <SelectValue placeholder="Select Division" />
                      </SelectTrigger>
                      <SelectContent>
@@ -158,9 +158,9 @@
                    </Select>
                  </div>
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Category <span className="text-red-500">*</span></Label>
+                    <Label>Category <span className="text-destructive">*</span></Label>
                    <Select defaultValue={product?.category?.toLowerCase() || ""}>
-                     <SelectTrigger className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
+                      <SelectTrigger className="bg-background">
                        <SelectValue placeholder="Select Category" />
                      </SelectTrigger>
                      <SelectContent>
@@ -176,45 +176,45 @@
  
                <div className="grid gap-4 sm:grid-cols-3">
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Current Price (RM) <span className="text-red-500">*</span></Label>
+                    <Label>Current Price (RM) <span className="text-destructive">*</span></Label>
                    <Input
                      type="number"
                      step="0.01"
                      defaultValue={product?.price || "0.0"}
-                     className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700"
+                      className="bg-background"
                    />
                  </div>
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Old Price (RM)</Label>
+                    <Label>Old Price (RM)</Label>
                    <Input
                      type="number"
                      step="0.01"
                      placeholder="0.00 (optional)"
                      defaultValue={product?.oldPrice || ""}
-                     className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700"
+                      className="bg-background"
                    />
                  </div>
                  <div className="space-y-2">
-                   <Label className="text-gray-700 dark:text-gray-300">Position</Label>
+                    <Label>Position</Label>
                    <Input
                      placeholder="Auto"
-                     className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700"
+                      className="bg-background"
                    />
                  </div>
                </div>
              </div>
            </div>
  
-           <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-end gap-3 p-4 border-t border-border bg-muted/30">
              <button
                onClick={() => navigate("/products")}
-               className="px-4 py-2 text-sm font-medium rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="btn-outline"
              >
                Cancel
              </button>
              <button
                onClick={() => navigate("/products")}
-               className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824]"
+                className="btn-primary"
              >
                {isNewView ? "Create Product" : "Update Product"}
              </button>
@@ -229,14 +229,14 @@
      <div className="space-y-6">
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
          <div>
-           <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Products</h1>
-           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your food menu and inventory</p>
+            <h1 className="page-title">Products</h1>
+            <p className="page-subtitle">Manage your food menu and inventory</p>
          </div>
          <div className="flex flex-wrap items-center gap-2">
            <select
              value={categoryFilter}
              onChange={(e) => setCategoryFilter(e.target.value)}
-             className="h-10 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+              className="h-10 px-3 rounded-lg border border-input bg-background text-foreground text-sm"
            >
              <option value="all">All</option>
              {categoriesData.map((cat) => (
@@ -245,15 +245,15 @@
                </option>
              ))}
            </select>
-           <button className="px-4 py-2 text-sm font-medium border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+            <button className="btn-outline">
              + Division
            </button>
-           <button className="px-4 py-2 text-sm font-medium border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+            <button className="btn-outline">
              + Category
            </button>
            <button
              onClick={() => navigate("/products/new")}
-             className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] flex items-center gap-2"
+              className="btn-primary flex items-center gap-2"
            >
              <Plus className="h-4 w-4" />
              Product
@@ -262,7 +262,7 @@
        </div>
  
        {/* Tabs */}
-       <div className="border-b border-gray-200 dark:border-gray-700">
+        <div className="border-b border-border">
          <div className="flex gap-6">
            {["products", "divisions", "categories", "bestsellers"].map((tab) => (
              <button
@@ -270,8 +270,8 @@
                onClick={() => setActiveTab(tab)}
                className={`pb-3 text-sm font-medium capitalize border-b-2 ${
                  activeTab === tab
-                   ? "border-[#aa1e2c] text-[#aa1e2c]"
-                   : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    ? "border-primary text-primary"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
                }`}
              >
                {tab}
@@ -281,45 +281,45 @@
        </div>
  
        {activeTab === "products" && (
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
+          <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
            <div className="overflow-x-auto">
              <table className="w-full">
                <thead>
-                 <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
-                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider w-16">Photo</th>
-                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Product</th>
-                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Division</th>
-                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Category</th>
-                   <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Old Price</th>
-                   <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Price</th>
-                   <th className="px-4 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Bestseller</th>
+                  <tr className="bg-muted/30 border-b border-border">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider w-16">Photo</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Product</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Division</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Category</th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Old Price</th>
+                    <th className="px-4 py-3 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Price</th>
+                    <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">Bestseller</th>
                    <th className="px-4 py-3"></th>
                  </tr>
                </thead>
-               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                <tbody className="divide-y divide-border">
                  {productsData.map((product) => (
                    <tr key={product.id}>
                      <td className="px-4 py-3">
-                       <div className="h-12 w-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xl">
+                        <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center text-xl">
                          {product.photo}
                        </div>
                      </td>
                      <td className="px-4 py-3">
                        <div>
-                         <span className="font-medium text-[#aa1e2c]">{product.name}</span>
-                         <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">{product.description}</p>
+                          <span className="font-medium text-primary">{product.name}</span>
+                          <p className="text-xs text-muted-foreground line-clamp-1">{product.description}</p>
                        </div>
                      </td>
-                     <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{product.division}</td>
-                     <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{product.category}</td>
-                     <td className="px-4 py-3 text-right text-gray-400 line-through">
+                      <td className="px-4 py-3 text-muted-foreground">{product.division}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{product.category}</td>
+                      <td className="px-4 py-3 text-right text-muted-foreground line-through">
                        {product.oldPrice ? `RM ${product.oldPrice}` : "—"}
                      </td>
-                     <td className="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">
+                      <td className="px-4 py-3 text-right font-semibold text-foreground">
                        RM {product.price}
                      </td>
                      <td className="px-4 py-3 text-center">
-                       <span className={`text-xs font-semibold ${product.bestseller ? "text-green-600 dark:text-green-400" : "text-gray-400"}`}>
+                        <span className={`text-xs font-semibold ${product.bestseller ? "text-green-600" : "text-muted-foreground"}`}>
                          {product.bestseller ? "YES" : "NO"}
                        </span>
                      </td>
@@ -327,17 +327,17 @@
                        <div className="flex items-center gap-1">
                          <button
                            onClick={() => navigate(`/products/${product.id}`)}
-                           className="px-3 py-1.5 text-xs font-medium rounded-md bg-[#aa1e2c] text-white hover:bg-[#8a1824]"
+                            className="btn-primary btn-sm"
                          >
                            Edit
                          </button>
                          <button
                            onClick={() => navigate(`/products/${product.id}`)}
-                           className="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                            className="btn-outline btn-sm"
                          >
                            View
                          </button>
-                         <button className="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-red-500 hover:text-white hover:border-red-500">
+                          <button className="btn-outline btn-sm hover:bg-destructive hover:text-destructive-foreground hover:border-destructive">
                            Delete
                          </button>
                        </div>

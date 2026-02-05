@@ -404,6 +404,12 @@ import { ArrowLeft, Plus, GripVertical } from "lucide-react";
                    <p className="text-sm text-muted-foreground">{product.category}</p>
                  </div>
                  <span className="text-lg font-semibold text-foreground">RM {product.price}</span>
+                <button
+                  className="p-2 rounded-lg text-muted-foreground hover:bg-muted cursor-grab active:cursor-grabbing transition-colors"
+                  title="Drag to reorder"
+                >
+                  <GripVertical className="h-5 w-5" />
+                </button>
                </div>
              ))}
              {productsData.filter((p) => p.bestseller).length === 0 && (

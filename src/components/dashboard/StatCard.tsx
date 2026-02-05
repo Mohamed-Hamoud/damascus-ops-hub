@@ -3,18 +3,32 @@
  
  /**
   * StatCard Component
-  * DaisyUI equivalent: card card-compact bg-base-100 shadow-sm
-  * 
-  * HAML structure:
-  * .card.bg-base-100.shadow-sm
-  *   .card-body
-  *     %p.text-xs.uppercase.tracking-wider.text-gray-500= title
-  *     %p.text-2xl.font-bold= value
-  *     - if trend
-  *       %p.text-xs.font-semibold{ class: trend[:positive] ? 'text-green-600' : 'text-red-600' }
-  *         = trend[:value]
-  *     .stat-icon
-  *       = icon
+ * Displays a KPI metric with optional icon and trend indicator.
+ *
+ * DaisyUI: card card-compact bg-base-100 shadow-sm
+ *
+ * HAML Equivalent:
+ * ```haml
+ * .rounded-lg.border.p-4.card-shadow{ class: variant_styles[variant] }
+ *   .flex.items-start.justify-between
+ *     .space-y-1
+ *       %p.text-xs.font-medium.uppercase.tracking-wider.text-muted-foreground= title
+ *       %p.text-2xl.font-bold.tracking-tight.text-foreground= value
+ *       - if trend.present?
+ *         %p.text-xs.font-semibold{ class: trend[:positive] ? 'text-success' : 'text-destructive' }
+ *           %span{ class: trend[:positive] ? '' : 'rotate-180' } ↑
+ *           = "#{trend[:positive] ? '+' : '-'}#{trend[:value].abs}%"
+ *     - if icon.present?
+ *       .icon-container.icon-container-sm{ class: icon_styles[variant] }
+ *         = icon
+ * ```
+ *
+ * Variant Classes:
+ * - default: bg-card
+ * - success: bg-success/5 border-success/20
+ * - warning: bg-warning/5 border-warning/20
+ * - destructive: bg-destructive/5 border-destructive/20
+ * - info: bg-info/5 border-info/20
   */
  
  interface StatCardProps {

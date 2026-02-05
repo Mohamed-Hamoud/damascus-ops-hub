@@ -11,7 +11,27 @@
  
  /**
   * FormModal Component
-  * DaisyUI: modal, modal-box, modal-action
+ * Dialog wrapper for forms with consistent header, body, and footer.
+ *
+ * DaisyUI Equivalent: modal, modal-box, modal-action
+ *
+ * HAML Equivalent:
+ * ```haml
+ * %dialog.modal#form-modal
+ *   .modal-box{ class: size_classes[size] }
+ *     %form{ method: 'dialog' }
+ *       %button.btn.btn-sm.btn-circle.btn-ghost.absolute.right-2.top-2 ✕
+ *     %h3.font-bold.text-lg= title
+ *     - if description.present?
+ *       %p.py-2.text-muted-foreground= description
+ *     .py-4.max-h-[60vh].overflow-y-auto
+ *       = yield
+ *     .modal-action.border-t.bg-muted\/30.px-6.py-4
+ *       %button.btn-secondary{ onclick: "close_modal()" }= cancel_label
+ *       %button.btn-primary{ type: 'submit' }= submit_label
+ * ```
+ *
+ * Size Classes: sm → max-w-md, md → max-w-lg, lg → max-w-2xl, xl → max-w-4xl
   */
  
  interface FormModalProps {

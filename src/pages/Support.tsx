@@ -4,7 +4,54 @@
  
  /**
   * Support Dashboard Page
-  * Clean grid layout with proper spacing
+ * Admin support dashboard with quick navigation, stats, and ticket overview
+ * 
+ * HAML Equivalent:
+ * ```haml
+ * .space-y-8
+ *   / Header
+ *   %div
+ *     %h1.page-title Support Dashboard
+ *     %p.page-subtitle Monitor and manage customer support operations
+ *   
+ *   / Quick Navigation Grid
+ *   .grid.gap-4.grid-cols-2.sm:grid-cols-4
+ *     - @quick_nav_items.each do |item|
+ *       .rounded-xl.border.border-border.bg-card.p-4.flex.flex-col.items-center.gap-2.cursor-pointer.hover:shadow-md
+ *         .w-12.h-12.rounded-xl.flex.items-center.justify-center{ class: item[:color] }
+ *           = lucide_icon item[:icon], class: "h-5 w-5"
+ *         %span.text-sm.font-medium.text-foreground= item[:label]
+ *   
+ *   / Stats Grid
+ *   .grid.gap-6.lg:grid-cols-3
+ *     / Ticket Stats Card
+ *     .rounded-xl.border.border-border.bg-card.p-6
+ *       %h3.section-title.mb-4 Ticket Stats
+ *       .grid.grid-cols-2.gap-4
+ *         - @stats.each do |stat|
+ *           .text-center.p-3.rounded-lg.bg-muted\/50
+ *             %p.text-2xl.font-bold.text-foreground= stat[:value]
+ *             %p.text-xs.text-muted-foreground= stat[:label]
+ *     
+ *     / SLA Performance Card
+ *     .rounded-xl.border.border-border.bg-card.p-6
+ *       %h3.section-title.mb-4 SLA Performance
+ *       / ... SLA stats
+ *     
+ *     / Ticket Volume Card
+ *     .rounded-xl.border.border-border.bg-card.p-6
+ *       %h3.section-title.mb-4 Ticket Volume
+ *       / ... volume stats
+ *   
+ *   / Recent Tickets Table
+ *   .rounded-xl.border.border-border.bg-card
+ *     .card-header
+ *       %h3.section-title Recent Tickets
+ *       = link_to "View All", support_tickets_path, class: "link-primary"
+ *     / ... tickets table or empty state
+ * ```
+ * 
+ * DaisyUI: card, stats, table, btn
   */
  
  const quickNavItems = [

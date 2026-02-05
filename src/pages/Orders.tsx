@@ -14,7 +14,48 @@
  
  /**
   * Orders Page
-  * DaisyUI components: input, select, table, btn, badge
+ * List view with filtering, pagination, and status badges
+ * 
+ * HAML Equivalent:
+ * ```haml
+ * .space-y-6
+ *   / Header
+ *   .flex.flex-col.gap-4.sm:flex-row.sm:items-center.sm:justify-between
+ *     %div
+ *       %h1.page-title Orders
+ *       %p.page-subtitle Manage and track all delivery orders
+ *     .flex.items-center.gap-2
+ *       = render "shared/export_dropdown"
+ *   
+ *   / Filters
+ *   = render "shared/table_filters", search: true, status_options: @status_options, date_range: true
+ *   
+ *   / Table
+ *   .rounded-xl.border.border-border.bg-card.card-shadow.overflow-hidden
+ *     %table.w-full
+ *       %thead
+ *         %tr.bg-muted\/30.border-b.border-border
+ *           %th.table-header ORDER ID
+ *           %th.table-header DATE
+ *           %th.table-header CUSTOMER
+ *           %th.table-header BRANCH
+ *           %th.table-header AMOUNT
+ *           %th.table-header DELIVERY
+ *           %th.table-header STATUS
+ *           %th.table-header
+ *       %tbody.divide-y.divide-border
+ *         - @orders.each do |order|
+ *           %tr.table-row-hover
+ *             %td.table-cell= link_to order.id, order_path(order), class: "link-primary"
+ *             / ... other cells
+ *             %td.table-cell
+ *               = status_badge(order.status)
+ *   
+ *   / Pagination
+ *   = render "shared/table_pagination", current_page: @page, total_pages: @total_pages
+ * ```
+ * 
+ * DaisyUI: input, select, table, btn, badge
   */
  
  const ordersData = [

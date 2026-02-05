@@ -87,8 +87,8 @@
              <h3 className="section-title mb-4">SLA Performance</h3>
              <div className="space-y-3">
                {slaPerformance.map((item, index) => (
-                 <div key={index} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-                   <span className="text-sm text-muted-foreground">{item.label}</span>
+                   <div key={index} className="data-list-item">
+                     <span className="data-list-label">{item.label}</span>
                    <span className={`text-sm font-semibold ${item.highlight ? "text-destructive" : "text-foreground"}`}>
                      {item.value}
                    </span>
@@ -117,9 +117,9 @@
              <h3 className="section-title mb-4">Ticket Volume</h3>
              <div className="space-y-3">
                {ticketVolume.map((item, index) => (
-                 <div key={index} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-                   <span className="text-sm text-muted-foreground">{item.label}</span>
-                   <span className="text-sm font-semibold text-foreground">{item.value}</span>
+                   <div key={index} className="data-list-item">
+                     <span className="data-list-label">{item.label}</span>
+                     <span className="data-list-value">{item.value}</span>
                  </div>
                ))}
              </div>

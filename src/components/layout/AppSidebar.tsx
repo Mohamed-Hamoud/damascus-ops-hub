@@ -14,8 +14,10 @@
    FileText,
    Coins,
    ChevronDown,
-  ChevronLeft,
-  ChevronRight,
+   MessageCircle,
+   Shield,
+   Settings,
+   LogOut,
   UtensilsCrossed,
  } from "lucide-react";
  import { NavLink } from "@/components/NavLink";
@@ -65,6 +67,9 @@
  
  const systemItems = [
    { title: "Points", url: "/points", icon: Coins },
+   { title: "Feedbacks", url: "/feedbacks", icon: MessageCircle },
+   { title: "Security", url: "/security", icon: Shield },
+   { title: "Settings", url: "/settings", icon: Settings },
  ];
  
  interface NavSectionProps {
@@ -201,6 +206,24 @@ export function AppSidebar() {
          <NavSection label="Business" items={businessItems} />
          <NavSection label="System" items={systemItems} />
        </SidebarContent>
+ 
+       <SidebarFooter className="border-t border-sidebar-border p-2">
+         <SidebarMenu>
+           <SidebarMenuItem>
+             <SidebarMenuButton asChild tooltip="Logout">
+               <button
+                 className={cn(
+                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full",
+                   isCollapsed && "justify-center p-2.5"
+                 )}
+               >
+                 <LogOut className={cn("shrink-0", isCollapsed ? "h-5 w-5" : "h-4 w-4")} />
+                 {!isCollapsed && <span>Logout</span>}
+               </button>
+             </SidebarMenuButton>
+           </SidebarMenuItem>
+         </SidebarMenu>
+       </SidebarFooter>
      </Sidebar>
    );
  }

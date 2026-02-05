@@ -55,7 +55,7 @@
            <button
              key={index}
              onClick={() => navigate(item.link)}
-             className="rounded-xl border border-border bg-card p-4 flex flex-col items-center gap-2 hover:border-primary/30"
+               className="quick-nav-card"
            >
              <div className={`h-10 w-10 rounded-lg ${item.color} flex items-center justify-center`}>
                <item.icon className="h-5 w-5" />

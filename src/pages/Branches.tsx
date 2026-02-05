@@ -268,8 +268,8 @@
                onClick={() => setDetailTab("menu")}
                className={`pb-3 text-sm font-medium border-b-2 ${
                  detailTab === "menu"
-                   ? "border-[#aa1e2c] text-[#aa1e2c]"
-                   : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    ? "border-primary text-primary"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
                }`}
              >
                Menu

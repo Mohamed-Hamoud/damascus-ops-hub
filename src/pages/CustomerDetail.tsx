@@ -1,10 +1,17 @@
  import { useParams, useNavigate } from "react-router-dom";
  import { useState } from "react";
-import { ShoppingCart, DollarSign, BarChart3, Star, CheckCircle, Calendar, MapPin } from "lucide-react";
+ import { ShoppingCart, DollarSign, BarChart3, Star, CheckCircle, Calendar, MapPin, Eye } from "lucide-react";
  import { FormModal } from "@/components/shared/FormModal";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
-import { PageHeader } from "@/components/shared/PageHeader";
+ import { PageHeader } from "@/components/shared/PageHeader";
+ import { CustomerStatCard } from "@/components/customers/CustomerStatCard";
+ import {
+   Tooltip,
+   TooltipContent,
+   TooltipProvider,
+   TooltipTrigger,
+ } from "@/components/ui/tooltip";
  
  /**
   * Customer Detail Page
@@ -97,60 +104,48 @@ import { PageHeader } from "@/components/shared/PageHeader";
  
        {/* Stats Cards */}
        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center">
-            <ShoppingCart className="h-5 w-5 text-info" />
-           </div>
-           <div>
-            <p className="text-xl font-bold text-foreground">{customerData.stats.totalOrders}</p>
-            <p className="text-xs text-muted-foreground">Total Orders</p>
-           </div>
-         </div>
-        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center">
-            <DollarSign className="h-5 w-5 text-success" />
-           </div>
-           <div>
-            <p className="text-xl font-bold text-foreground">RM {customerData.stats.totalSpent.toFixed(1)}</p>
-            <p className="text-xs text-muted-foreground">Total Spent</p>
-           </div>
-         </div>
-        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-            <BarChart3 className="h-5 w-5 text-primary" />
-           </div>
-           <div>
-            <p className="text-xl font-bold text-foreground">RM {customerData.stats.avgOrderValue.toFixed(1)}</p>
-            <p className="text-xs text-muted-foreground">Avg Order Value</p>
-           </div>
-         </div>
-        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center">
-            <Star className="h-5 w-5 text-warning" />
-           </div>
-           <div>
-            <p className="text-xl font-bold text-foreground">{customerData.stats.points}</p>
-            <p className="text-xs text-muted-foreground">Points</p>
-           </div>
-         </div>
-        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center">
-            <CheckCircle className="h-5 w-5 text-success" />
-           </div>
-           <div>
-            <p className="text-xl font-bold text-foreground">{customerData.stats.completed}</p>
-            <p className="text-xs text-muted-foreground">Completed</p>
-           </div>
-         </div>
-        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Calendar className="h-5 w-5 text-primary" />
-           </div>
-           <div>
-            <p className="text-xl font-bold text-foreground">{customerData.stats.memberSince.split(" ")[0]}</p>
-            <p className="text-xs text-muted-foreground">Member Since</p>
-           </div>
-         </div>
+         <CustomerStatCard
+           icon={ShoppingCart}
+           iconColor="text-info"
+           iconBg="bg-info/10"
+           value={customerData.stats.totalOrders}
+           label="Total Orders"
+         />
+         <CustomerStatCard
+           icon={DollarSign}
+           iconColor="text-success"
+           iconBg="bg-success/10"
+           value={`RM ${customerData.stats.totalSpent.toFixed(1)}`}
+           label="Total Spent"
+         />
+         <CustomerStatCard
+           icon={BarChart3}
+           iconColor="text-primary"
+           iconBg="bg-primary/10"
+           value={`RM ${customerData.stats.avgOrderValue.toFixed(1)}`}
+           label="Avg Order Value"
+         />
+         <CustomerStatCard
+           icon={Star}
+           iconColor="text-warning"
+           iconBg="bg-warning/10"
+           value={customerData.stats.points}
+           label="Points"
+         />
+         <CustomerStatCard
+           icon={CheckCircle}
+           iconColor="text-success"
+           iconBg="bg-success/10"
+           value={customerData.stats.completed}
+           label="Completed"
+         />
+         <CustomerStatCard
+           icon={Calendar}
+           iconColor="text-primary"
+           iconBg="bg-primary/10"
+           value={customerData.stats.memberSince.split(" ")[0]}
+           label="Member Since"
+         />
        </div>
  
        {/* Info Cards Grid */}
@@ -289,9 +284,19 @@ import { PageHeader } from "@/components/shared/PageHeader";
                        </span>
                      </td>
                      <td className="px-4 py-3">
-                      <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80">
-                         View
-                       </button>
+                       <TooltipProvider>
+                         <Tooltip>
+                           <TooltipTrigger asChild>
+                             <button 
+                               onClick={() => navigate(`/orders/${order.id}`)}
+                               className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                             >
+                               <Eye className="h-4 w-4" />
+                             </button>
+                           </TooltipTrigger>
+                           <TooltipContent>View Order</TooltipContent>
+                         </Tooltip>
+                       </TooltipProvider>
                      </td>
                    </tr>
                  ))}

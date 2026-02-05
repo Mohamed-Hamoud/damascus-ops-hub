@@ -1,7 +1,14 @@
  import { useState } from "react";
  import { useNavigate } from "react-router-dom";
- import { Search, Eye } from "lucide-react";
+ import { Eye } from "lucide-react";
  import { Input } from "@/components/ui/input";
+ import { NoCustomersFound } from "@/components/shared/EmptyState";
+ import {
+   Tooltip,
+   TooltipContent,
+   TooltipProvider,
+   TooltipTrigger,
+ } from "@/components/ui/tooltip";
  
  /**
   * Customers Page
@@ -34,7 +41,10 @@
      <div className="space-y-6">
        {/* Header */}
        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="page-title">Customers</h1>
+          <div>
+            <h1 className="page-title">Customers</h1>
+            <p className="page-subtitle">View and manage customer accounts</p>
+          </div>
          <div className="flex items-center gap-2">
            <Input
              placeholder="Search by Phone"
@@ -93,12 +103,19 @@
                     <td className="px-4 py-3 text-right font-semibold text-foreground">RM {customer.totalSpent.toFixed(2)}</td>
                     <td className="px-4 py-3 text-right text-muted-foreground">RM {customer.lastOrder.toFixed(2)}</td>
                    <td className="px-4 py-3">
-                     <button 
-                       onClick={() => navigate(`/customers/${customer.id}`)}
-                        className="px-3 py-1.5 text-xs font-medium rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                     >
-                       View
-                     </button>
+                     <TooltipProvider>
+                       <Tooltip>
+                         <TooltipTrigger asChild>
+                           <button 
+                             onClick={() => navigate(`/customers/${customer.id}`)}
+                             className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                           >
+                             <Eye className="h-4 w-4" />
+                           </button>
+                         </TooltipTrigger>
+                         <TooltipContent>View Customer</TooltipContent>
+                       </Tooltip>
+                     </TooltipProvider>
                    </td>
                  </tr>
                ))}
@@ -124,8 +141,10 @@
                <tbody>
                  {suspendedUsers.length === 0 && (
                    <tr>
-                      <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">
-                       No suspended users
+                      <td colSpan={4} className="p-0">
+                       <div className="py-8 text-center text-muted-foreground">
+                         No suspended users
+                       </div>
                      </td>
                    </tr>
                  )}
@@ -152,8 +171,10 @@
                <tbody>
                  {deletedUsers.length === 0 && (
                    <tr>
-                      <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">
-                       No deleted users
+                      <td colSpan={4} className="p-0">
+                       <div className="py-8 text-center text-muted-foreground">
+                         No deleted users
+                       </div>
                      </td>
                    </tr>
                  )}

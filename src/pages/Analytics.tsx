@@ -1,17 +1,8 @@
  import { useState } from "react";
- import { Calendar, TrendingUp, TrendingDown, DollarSign, ShoppingBag, Users, Percent } from "lucide-react";
+ import { Calendar, BarChart3, DollarSign, ShoppingBag, Users, Percent } from "lucide-react";
  import { Button } from "@/components/ui/button";
  import { StatCard } from "@/components/dashboard/StatCard";
  import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
- import {
-   BarChart,
-   Bar,
-   XAxis,
-   YAxis,
-   CartesianGrid,
-   Tooltip,
-   ResponsiveContainer,
-   Legend,
  import {
    BarChart,
    Bar,

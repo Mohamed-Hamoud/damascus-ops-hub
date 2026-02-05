@@ -1,6 +1,6 @@
  import { useState } from "react";
  import { useNavigate, useParams, useLocation } from "react-router-dom";
- import { ArrowLeft, Plus, Eye, Trash2 } from "lucide-react";
+ import { ArrowLeft, Plus, Eye, Trash2, Pencil } from "lucide-react";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
  import { Checkbox } from "@/components/ui/checkbox";
@@ -11,6 +11,9 @@
    SelectTrigger,
    SelectValue,
  } from "@/components/ui/select";
+ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+ import { EmptyState, emptyStateIcons } from "@/components/shared/EmptyState";
+ import { PageHeader } from "@/components/shared/PageHeader";
  
  /**
   * Banners Page
@@ -170,8 +173,10 @@
  
    return (
      <div className="space-y-6">
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="page-title">Banners</h1>
+        <PageHeader
+          title="Banners"
+          subtitle="Manage promotional banners and custom banners"
+          actions={
          <button
            onClick={() => navigate("/banners/new")}
             className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
@@ -179,7 +184,8 @@
            <Plus className="h-4 w-4" />
            Add Banner
          </button>
-       </div>
+          }
+        />
  
        {/* Tabs */}
         <div className="border-b">
@@ -249,30 +255,52 @@
                       <span className="text-xs font-semibold text-info">{banner.type}</span>
                    </td>
                    <td className="px-4 py-3">
-                     <div className="flex items-center gap-1">
-                       <button
-                         onClick={() => navigate(`/banners/${banner.id}`)}
-                          className="px-3 py-1.5 text-xs font-medium rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                       >
-                         View
-                       </button>
-                       <button
-                         onClick={() => navigate(`/banners/${banner.id}/edit`)}
-                          className="px-3 py-1.5 text-xs font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90"
-                       >
-                         Edit
-                       </button>
-                        <button className="px-3 py-1.5 text-xs font-medium rounded-md bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                         Delete
-                       </button>
-                     </div>
+                      <TooltipProvider>
+                        <div className="flex items-center gap-1">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={() => navigate(`/banners/${banner.id}`)}
+                                className="p-2 rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>View banner</TooltipContent>
+                          </Tooltip>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={() => navigate(`/banners/${banner.id}/edit`)}
+                                className="p-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90"
+                              >
+                                <Pencil className="h-4 w-4" />
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>Edit banner</TooltipContent>
+                          </Tooltip>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button className="p-2 rounded-md bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>Delete banner</TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </TooltipProvider>
                    </td>
                  </tr>
                ))}
                {currentData.length === 0 && (
                  <tr>
-                    <td colSpan={9} className="px-4 py-8 text-center text-muted-foreground">
-                     No banners found
+                    <td colSpan={9}>
+                      <EmptyState
+                        icon={emptyStateIcons.banners}
+                        title="No banners found"
+                        description="Create your first banner to get started"
+                        variant="compact"
+                      />
                    </td>
                  </tr>
                )}

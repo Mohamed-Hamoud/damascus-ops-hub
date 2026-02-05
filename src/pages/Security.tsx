@@ -1,5 +1,6 @@
  import { useState } from "react";
-import { Shield } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { Switch } from "@/components/ui/switch";
  
  /**
   * Security Page
@@ -31,55 +32,55 @@ import { Shield } from "lucide-react";
  
    return (
      <div className="space-y-6">
-       <div>
-        <h1 className="page-title">Security</h1>
-        <p className="page-subtitle">Control branch access and availability</p>
-       </div>
+      {/* Header */}
+      <PageHeader
+        title="Security"
+        subtitle="Control branch access and availability"
+      />
  
        {/* Per-Branch Controls */}
-      <div className="rounded-xl border border-border bg-card shadow-sm">
-        <div className="border-b border-border px-4 py-3 bg-muted/30">
-          <h2 className="section-title">Switch On / Off Each Branch</h2>
-         </div>
+      <div className="rounded-xl border border-border bg-card card-shadow">
+        <div className="border-b border-border px-6 py-4 bg-muted/30">
+          <h2 className="section-title">Branch Access Controls</h2>
+        </div>
         <div className="divide-y divide-border">
            {branches.map((branch) => (
-            <div key={branch.id} className="flex items-center justify-between px-4 py-3">
-              <span className="font-medium text-foreground">{branch.name}</span>
-               <button
-                 onClick={() => toggleBranch(branch.id)}
-                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ${
-                  branch.enabled ? "bg-primary" : "bg-muted-foreground/30"
-                 }`}
-               >
-                 <span
-                   className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform duration-200 ${
-                     branch.enabled ? "translate-x-6" : "translate-x-1"
-                   }`}
-                 />
-               </button>
+            <div key={branch.id} className="flex items-center justify-between px-6 py-4 hover:bg-muted/30 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className={`h-2 w-2 rounded-full ${branch.enabled ? "bg-success" : "bg-muted-foreground/30"}`} />
+                <span className="font-medium text-foreground">{branch.name}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className={`text-xs font-medium ${branch.enabled ? "text-success" : "text-muted-foreground"}`}>
+                  {branch.enabled ? "Online" : "Offline"}
+                </span>
+                <Switch
+                  checked={branch.enabled}
+                  onCheckedChange={() => toggleBranch(branch.id)}
+                />
+              </div>
              </div>
            ))}
          </div>
        </div>
  
        {/* Global Control */}
-      <div className="rounded-xl border border-border bg-card shadow-sm">
-        <div className="border-b border-border px-4 py-3 bg-muted/30">
-          <h2 className="section-title">Switch On / Off Everything</h2>
-         </div>
-        <div className="flex items-center justify-between px-4 py-3">
-          <span className="font-medium text-foreground">Everything</span>
-           <button
-             onClick={toggleAll}
-            className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-               allEnabled
-                ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                  : "bg-primary text-primary-foreground hover:bg-primary/90"
-             }`}
-           >
-             {allEnabled ? "Switch Off All" : "Switch On All"}
-           </button>
-         </div>
+      <div className="rounded-xl border border-border bg-card card-shadow">
+        <div className="border-b border-border px-6 py-4 bg-muted/30">
+          <h2 className="section-title">Global Controls</h2>
+        </div>
+        <div className="flex items-center justify-between px-6 py-4">
+          <div>
+            <span className="font-medium text-foreground">All Branches</span>
+            <p className="text-sm text-muted-foreground mt-0.5">Toggle all branches on or off at once</p>
+          </div>
+          <button
+            onClick={toggleAll}
+            className={allEnabled ? "btn-destructive" : "btn-primary"}
+          >
+            {allEnabled ? "Switch Off All" : "Switch On All"}
+          </button>
+        </div>
        </div>
      </div>
    );

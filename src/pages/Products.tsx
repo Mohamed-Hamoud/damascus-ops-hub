@@ -328,7 +328,7 @@
                        </span>
                      </td>
                      <td className="px-4 py-3">
-                       <div className="flex items-center gap-1">
+                         <div className="action-group">
                          <button
                            onClick={() => navigate(`/products/${product.id}`)}
                             className="btn-primary btn-sm"

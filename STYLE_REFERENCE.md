@@ -354,3 +354,143 @@
    <button class="btn-primary">Action</button>
  </div>
  ```
+ 
+ ---
+ 
+ ## 16. NEW Utilities (v2)
+ 
+ ### Card Base
+ ```html
+ <div class="card-base">
+   <!-- Equivalent to: rounded-xl border border-border bg-card card-shadow -->
+ </div>
+ ```
+ 
+ ### Table Cell Variants
+ | Class | Properties |
+ |-------|------------|
+ | `.table-cell-right` | `px-4 py-3 text-right text-foreground` |
+ | `.table-cell-center` | `px-4 py-3 text-center text-foreground` |
+ 
+ ### Tab Navigation
+ ```html
+ <div class="border-b border-border">
+   <div class="flex gap-6">
+     <button class="tab-item">Tab 1</button>
+     <button class="tab-item tab-active">Tab 2</button>
+   </div>
+ </div>
+ ```
+ 
+ | Class | Properties |
+ |-------|------------|
+ | `.tab-item` | `pb-3 text-sm font-medium border-b-2 border-transparent text-muted-foreground` |
+ | `.tab-active` | `border-primary text-primary` |
+ 
+ ### Action Button Group
+ ```html
+ <div class="action-group">
+   <button class="btn-primary btn-sm">Edit</button>
+   <button class="btn-outline btn-sm">View</button>
+ </div>
+ ```
+ 
+ ### Stat Display
+ ```html
+ <div class="text-center">
+   <p class="stat-value">42</p>
+   <p class="stat-label">Total Orders</p>
+ </div>
+ ```
+ 
+ | Class | Properties |
+ |-------|------------|
+ | `.stat-value` | `text-2xl font-bold text-foreground` |
+ | `.stat-value-lg` | `text-3xl font-bold text-foreground` |
+ | `.stat-label` | `text-xs text-muted-foreground` |
+ 
+ ### Icon Button
+ ```html
+ <button class="icon-btn">
+   <svg class="h-4 w-4">...</svg>
+ </button>
+ ```
+ 
+ | Class | Size |
+ |-------|------|
+ | `.icon-btn` | 32×32px, hover:primary |
+ | `.icon-btn-sm` | 24×24px |
+ 
+ ### Quick Navigation Card
+ ```html
+ <button class="quick-nav-card">
+   <div class="icon-container bg-primary/10 text-primary">
+     <svg>...</svg>
+   </div>
+   <span class="text-xs font-medium">Label</span>
+ </button>
+ ```
+ 
+ ### Data List
+ ```html
+ <div class="space-y-3">
+   <div class="data-list-item">
+     <span class="data-list-label">Label</span>
+     <span class="data-list-value">Value</span>
+   </div>
+ </div>
+ ```
+ 
+ | Class | Properties |
+ |-------|------------|
+ | `.data-list-item` | `flex items-center justify-between py-2 border-b last:border-0` |
+ | `.data-list-label` | `text-sm text-muted-foreground` |
+ | `.data-list-value` | `text-sm font-semibold text-foreground` |
+ 
+ ---
+ 
+ ## 17. TypeScript Types
+ 
+ All shared types are in `src/types/index.ts`:
+ 
+ - **Order Types**: `Order`, `OrderItem`, `OrderStatus`
+ - **Customer Types**: `Customer`
+ - **Product Types**: `Product`, `ProductCategory`, `ProductDivision`, `ProductModifier`, `ProductAddOn`
+ - **Promotion Types**: `Voucher`, `DeliveryRule`
+ - **Support Types**: `SupportTicket`, `SupportTeam`, `SLAPolicy`, `TicketStatus`, `TicketPriority`
+ - **Common Types**: `PaginationMeta`, `FilterOption`, `TableColumn`, `StatCardData`, `NavItem`, `TabItem`
+ 
+ ### Example Usage
+ ```tsx
+ import type { Order, OrderStatus } from "@/types";
+ 
+ const orders: Order[] = [...];
+ const status: OrderStatus = "completed";
+ ```
+ 
+ ---
+ 
+ ## 18. Component Reference
+ 
+ ### Shared Components (src/components/shared/)
+ 
+ | Component | Purpose | Key Props |
+ |-----------|---------|-----------|
+ | `PageHeader` | Page title + actions | `title`, `subtitle`, `backLink`, `actions` |
+ | `DataTable` | Generic table | `columns`, `data`, `keyField`, `onRowClick` |
+ | `TabNavigation` | Tab navigation | `tabs`, `activeTab`, `onTabChange` |
+ | `TableFilters` | Search + filters | `searchValue`, `statusOptions`, `dateFrom/To` |
+ | `TablePagination` | Pagination controls | `currentPage`, `totalPages`, `onPageChange` |
+ | `EmptyState` | No data display | `title`, `description`, `variant` |
+ | `FormModal` | Modal with form | `open`, `title`, `onSubmit` |
+ | `FormField` | Form field wrapper | `label`, `error`, `required` |
+ | `Breadcrumb` | Navigation breadcrumbs | `items` |
+ 
+ ### Dashboard Components (src/components/dashboard/)
+ 
+ | Component | Purpose |
+ |-----------|---------|
+ | `StatCard` | KPI card with trend |
+ | `SectionCard` | Content section with header |
+ | `StatusBadge` | Order/ticket status |
+ | `ProgressBar` | Percentage bar |

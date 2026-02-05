@@ -108,7 +108,7 @@
                          <TooltipTrigger asChild>
                            <button 
                              onClick={() => navigate(`/customers/${customer.id}`)}
-                             className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                               className="icon-btn"
                            >
                              <Eye className="h-4 w-4" />
                            </button>

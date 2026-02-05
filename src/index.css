@@ -146,11 +146,11 @@
 @layer components {
   /* Card shadows - clean, subtle depth */
   .card-shadow {
-    box-shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.04), 0 1px 2px -1px hsl(0 0% 0% / 0.04);
+    box-shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.06), 0 1px 2px -1px hsl(0 0% 0% / 0.06);
   }
 
   .card-shadow-md {
-    box-shadow: 0 4px 6px -1px hsl(0 0% 0% / 0.05), 0 2px 4px -2px hsl(0 0% 0% / 0.05);
+    box-shadow: 0 4px 6px -1px hsl(0 0% 0% / 0.08), 0 2px 4px -2px hsl(0 0% 0% / 0.06);
   }
 
   /* Status badge styles */
@@ -172,5 +172,46 @@
 
   .badge-muted {
     @apply bg-muted text-muted-foreground border-border;
+  }
+
+  /* Page title styles */
+  .page-title {
+    @apply text-2xl font-bold tracking-tight text-foreground;
+  }
+
+  .page-subtitle {
+    @apply text-sm text-muted-foreground mt-1;
+  }
+
+  /* Section header styles */
+  .section-title {
+    @apply text-base font-semibold text-foreground;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-200 hover:card-shadow-md hover:-translate-y-0.5;
+  }
+
+  /* Interactive card */
+  .card-interactive {
+    @apply transition-all duration-200 hover:border-primary/30 hover:card-shadow-md cursor-pointer;
+  }
+
+  /* Icon container styles */
+  .icon-container {
+    @apply flex items-center justify-center rounded-xl;
+  }
+
+  .icon-container-sm {
+    @apply h-10 w-10;
+  }
+
+  .icon-container-md {
+    @apply h-12 w-12;
+  }
+
+  .icon-container-lg {
+    @apply h-14 w-14;
   }
 }

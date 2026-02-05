@@ -1,4 +1,4 @@
- import { useLocation } from "react-router-dom";
+ import { useLocation, useNavigate } from "react-router-dom";
  import {
    LayoutDashboard,
    BarChart3,
@@ -43,6 +43,11 @@
    CollapsibleTrigger,
  } from "@/components/ui/collapsible";
  import { cn } from "@/lib/utils";
+ import {
+   Tooltip,
+   TooltipContent,
+   TooltipTrigger,
+ } from "@/components/ui/tooltip";
  
  const mainNavItems = [
    { title: "Dashboard", url: "/", icon: LayoutDashboard },
@@ -89,23 +94,28 @@
  
    if (isCollapsed) {
      return (
-       <SidebarGroup>
+       <SidebarGroup className="px-2">
          <SidebarGroupContent>
-           <SidebarMenu>
+           <SidebarMenu className="gap-1">
              {items.map((item) => (
                <SidebarMenuItem key={item.title}>
-                 <SidebarMenuButton asChild tooltip={item.title}>
-                   <NavLink
-                     to={item.url}
-                     end
-                     className={cn(
-                         "flex items-center justify-center rounded-lg p-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                     )}
+                 <Tooltip>
+                   <TooltipTrigger asChild>
+                     <NavLink
+                       to={item.url}
+                       end
+                       className={cn(
+                         "flex items-center justify-center rounded-lg p-2 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                       )}
                        activeClassName="bg-sidebar-primary text-sidebar-primary-foreground"
-                   >
-                       <item.icon className="h-5 w-5" />
-                   </NavLink>
-                 </SidebarMenuButton>
+                     >
+                       <item.icon className="h-4 w-4" />
+                     </NavLink>
+                   </TooltipTrigger>
+                   <TooltipContent side="right" className="bg-foreground text-background">
+                     {item.title}
+                   </TooltipContent>
+                 </Tooltip>
                </SidebarMenuItem>
              ))}
            </SidebarMenu>
@@ -155,19 +165,23 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
   const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
  
    return (
      <Sidebar
        className={cn(
          "border-r-0 group/sidebar",
-         isCollapsed ? "w-14" : "w-60"
+         isCollapsed ? "w-[52px]" : "w-60"
        )}
        collapsible="icon"
      >
       <SidebarHeader className="border-b border-sidebar-border p-4 bg-sidebar-accent/30">
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sidebar-primary shadow-lg">
-            <UtensilsCrossed className="h-5 w-5 text-sidebar-primary-foreground" />
+        <div className={cn("flex items-center overflow-hidden", isCollapsed ? "justify-center" : "gap-3")}>
+          <div className={cn(
+            "flex shrink-0 items-center justify-center rounded-xl bg-sidebar-primary",
+            isCollapsed ? "h-8 w-8" : "h-10 w-10"
+          )}>
+            <UtensilsCrossed className={isCollapsed ? "h-4 w-4 text-sidebar-primary-foreground" : "h-5 w-5 text-sidebar-primary-foreground"} />
            </div>
            {!isCollapsed && (
             <div className="flex flex-col overflow-hidden">
@@ -178,27 +192,42 @@ export function AppSidebar() {
          </div>
        </SidebarHeader>
  
-      <SidebarContent className="px-2 py-4 scrollbar-thin">
+      <SidebarContent className={cn("py-4 scrollbar-thin", isCollapsed ? "px-1" : "px-2")}>
          {/* Main nav without collapsible */}
-         <SidebarGroup>
+         <SidebarGroup className={isCollapsed ? "px-0" : ""}>
            <SidebarGroupContent>
-             <SidebarMenu>
+             <SidebarMenu className={isCollapsed ? "gap-1" : ""}>
                {mainNavItems.map((item) => (
                  <SidebarMenuItem key={item.title}>
-                   <SidebarMenuButton asChild tooltip={item.title}>
-                     <NavLink
-                       to={item.url}
-                       end={item.url === "/"}
-                       className={cn(
-                         "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                        isCollapsed && "justify-center p-2.5"
-                       )}
-                       activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-semibold"
-                     >
-                       <item.icon className={isCollapsed ? "h-5 w-5" : "h-4 w-4"} />
-                       {!isCollapsed && <span>{item.title}</span>}
-                     </NavLink>
-                   </SidebarMenuButton>
+                   {isCollapsed ? (
+                     <Tooltip>
+                       <TooltipTrigger asChild>
+                         <NavLink
+                           to={item.url}
+                           end={item.url === "/"}
+                           className="flex items-center justify-center rounded-lg p-2 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                           activeClassName="bg-sidebar-primary text-sidebar-primary-foreground"
+                         >
+                           <item.icon className="h-4 w-4" />
+                         </NavLink>
+                       </TooltipTrigger>
+                       <TooltipContent side="right" className="bg-foreground text-background">
+                         {item.title}
+                       </TooltipContent>
+                     </Tooltip>
+                   ) : (
+                     <SidebarMenuButton asChild>
+                       <NavLink
+                         to={item.url}
+                         end={item.url === "/"}
+                         className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                         activeClassName="bg-sidebar-primary text-sidebar-primary-foreground font-semibold"
+                       >
+                         <item.icon className="h-4 w-4" />
+                         <span>{item.title}</span>
+                       </NavLink>
+                     </SidebarMenuButton>
+                   )}
                  </SidebarMenuItem>
                ))}
              </SidebarMenu>
@@ -211,39 +240,52 @@ export function AppSidebar() {
          <NavSection label="System" items={systemItems} />
        </SidebarContent>
  
-       <SidebarFooter className="border-t border-sidebar-border p-2">
-         <SidebarMenu>
+       <SidebarFooter className={cn("border-t border-sidebar-border", isCollapsed ? "p-1" : "p-2")}>
+         <SidebarMenu className={isCollapsed ? "gap-1" : ""}>
            {/* Dark Mode Toggle */}
            <SidebarMenuItem>
-             <SidebarMenuButton asChild tooltip="Dark Mode">
+             {isCollapsed ? (
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <button
+                     onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                     className="flex items-center justify-center rounded-lg p-2 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full"
+                   >
+                     {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                   </button>
+                 </TooltipTrigger>
+                 <TooltipContent side="right" className="bg-foreground text-background">
+                   {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                 </TooltipContent>
+               </Tooltip>
+             ) : (
                <button
                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                 className={cn(
-                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full",
-                   isCollapsed && "justify-center p-2.5"
-                 )}
+                 className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full"
                >
-                 {theme === "dark" ? (
-                   <Sun className={isCollapsed ? "h-5 w-5" : "h-4 w-4"} />
-                 ) : (
-                   <Moon className={isCollapsed ? "h-5 w-5" : "h-4 w-4"} />
-                 )}
-                 {!isCollapsed && <span>Dark Mode</span>}
+                 {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                 <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
                </button>
-             </SidebarMenuButton>
+             )}
            </SidebarMenuItem>
            <SidebarMenuItem>
-             <SidebarMenuButton asChild tooltip="Logout">
-               <button
-                 className={cn(
-                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full",
-                   isCollapsed && "justify-center p-2.5"
-                 )}
-               >
-                 <LogOut className={isCollapsed ? "h-5 w-5" : "h-4 w-4"} />
-                 {!isCollapsed && <span>Logout</span>}
+             {isCollapsed ? (
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <button className="flex items-center justify-center rounded-lg p-2 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full">
+                     <LogOut className="h-4 w-4" />
+                   </button>
+                 </TooltipTrigger>
+                 <TooltipContent side="right" className="bg-foreground text-background">
+                   Logout
+                 </TooltipContent>
+               </Tooltip>
+             ) : (
+               <button className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full">
+                 <LogOut className="h-4 w-4" />
+                 <span>Logout</span>
                </button>
-             </SidebarMenuButton>
+             )}
            </SidebarMenuItem>
          </SidebarMenu>
        </SidebarFooter>

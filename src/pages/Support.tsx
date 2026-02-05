@@ -1,20 +1,20 @@
- import { useState } from "react";
- import { Ticket, Users, Grid3X3, ShieldCheck, MessageSquare, HelpCircle, BarChart3, Settings, Star, Eye } from "lucide-react";
+ import { Ticket, Users, Grid3X3, ShieldCheck, MessageSquare, HelpCircle, BarChart3, Settings, Star } from "lucide-react";
+ import { useNavigate } from "react-router-dom";
  
  /**
   * Support Dashboard Page
-  * DaisyUI: stats, card, table, badge
+  * Clean grid layout with proper spacing
   */
  
  const quickNavItems = [
-   { icon: Ticket, label: "Tickets", color: "bg-orange-100 dark:bg-orange-900/30 text-orange-600" },
-   { icon: Users, label: "Teams", color: "bg-blue-100 dark:bg-blue-900/30 text-blue-600" },
-   { icon: Grid3X3, label: "Categories", color: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600" },
-   { icon: ShieldCheck, label: "SLA Policies", color: "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400" },
-   { icon: MessageSquare, label: "Canned Responses", color: "bg-teal-100 dark:bg-teal-900/30 text-teal-600" },
-   { icon: HelpCircle, label: "Help Center", color: "bg-purple-100 dark:bg-purple-900/30 text-purple-600" },
-   { icon: BarChart3, label: "Analytics", color: "bg-pink-100 dark:bg-pink-900/30 text-pink-600" },
-   { icon: Settings, label: "Settings", color: "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400" },
+   { icon: Ticket, label: "Tickets", color: "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400", link: "/support/tickets" },
+   { icon: Users, label: "Teams", color: "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400", link: "/support/settings" },
+   { icon: Grid3X3, label: "Categories", color: "bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400", link: "/support/settings" },
+   { icon: ShieldCheck, label: "SLA Policies", color: "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400", link: "/support/settings" },
+   { icon: MessageSquare, label: "Canned Responses", color: "bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400", link: "/support/settings" },
+   { icon: HelpCircle, label: "Help Center", color: "bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400", link: "/support/settings" },
+   { icon: BarChart3, label: "Analytics", color: "bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400", link: "/support/tickets" },
+   { icon: Settings, label: "Settings", color: "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400", link: "/support/settings" },
  ];
  
  const statsData = [
@@ -38,133 +38,154 @@
  ];
  
  export default function Support() {
+   const navigate = useNavigate();
+ 
    return (
-     <div className="space-y-6">
+     <div className="space-y-8">
        {/* Header */}
-       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-         <div>
-           <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Support Dashboard</h1>
-           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Monitor and manage customer support operations</p>
-         </div>
+       <div>
+         <h1 className="page-title">Support Dashboard</h1>
+         <p className="page-subtitle">Monitor and manage customer support operations</p>
        </div>
  
        {/* Quick Navigation Grid */}
-       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
          {quickNavItems.map((item, index) => (
            <button
              key={index}
-             className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 flex flex-col items-center gap-3 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+             onClick={() => navigate(item.link)}
+             className="rounded-xl border border-border bg-card p-4 flex flex-col items-center gap-2 hover:border-primary/30"
            >
-             <div className={`h-12 w-12 rounded-xl ${item.color} flex items-center justify-center`}>
-               <item.icon className="h-6 w-6" />
+             <div className={`h-10 w-10 rounded-lg ${item.color} flex items-center justify-center`}>
+               <item.icon className="h-5 w-5" />
              </div>
-             <span className="text-sm font-medium text-gray-900 dark:text-white">{item.label}</span>
+             <span className="text-xs font-medium text-foreground">{item.label}</span>
            </button>
          ))}
        </div>
  
-       {/* Stats Grid */}
-       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-         {statsData.map((stat, index) => (
-           <div key={index} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
-             <div className="flex items-center justify-between">
-               <div>
-                 <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{stat.label}</p>
-                 <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stat.value}</p>
+       {/* Main Content Grid */}
+       <div className="grid gap-6 lg:grid-cols-3">
+         {/* Left Column - Stats & SLA */}
+         <div className="space-y-6">
+           {/* Stats */}
+           <div className="rounded-xl border border-border bg-card p-5">
+             <h3 className="section-title mb-4">Ticket Overview</h3>
+             <div className="grid grid-cols-2 gap-4">
+               {statsData.map((stat, index) => (
+                 <div key={index} className="text-center p-3 rounded-lg bg-muted/50">
+                   <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                   <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+                 </div>
+               ))}
+             </div>
+           </div>
+ 
+           {/* SLA Performance */}
+           <div className="rounded-xl border border-border bg-card p-5">
+             <h3 className="section-title mb-4">SLA Performance</h3>
+             <div className="space-y-3">
+               {slaPerformance.map((item, index) => (
+                 <div key={index} className="flex items-center justify-between py-2 border-b border-border last:border-0">
+                   <span className="text-sm text-muted-foreground">{item.label}</span>
+                   <span className={`text-sm font-semibold ${item.highlight ? "text-destructive" : "text-foreground"}`}>
+                     {item.value}
+                   </span>
+                 </div>
+               ))}
+             </div>
+           </div>
+         </div>
+ 
+         {/* Middle Column - Satisfaction & Volume */}
+         <div className="space-y-6">
+           {/* Customer Satisfaction */}
+           <div className="rounded-xl border border-border bg-card p-5 text-center">
+             <h3 className="section-title mb-4">Customer Satisfaction</h3>
+             <p className="text-5xl font-bold text-foreground mb-3">0</p>
+             <div className="flex items-center justify-center gap-1 mb-2">
+               {[1, 2, 3, 4, 5].map((star) => (
+                 <Star key={star} className="h-5 w-5 text-muted" />
+               ))}
+             </div>
+             <p className="text-xs text-muted-foreground">Last 30 days</p>
+           </div>
+ 
+           {/* Ticket Volume */}
+           <div className="rounded-xl border border-border bg-card p-5">
+             <h3 className="section-title mb-4">Ticket Volume</h3>
+             <div className="space-y-3">
+               {ticketVolume.map((item, index) => (
+                 <div key={index} className="flex items-center justify-between py-2 border-b border-border last:border-0">
+                   <span className="text-sm text-muted-foreground">{item.label}</span>
+                   <span className="text-sm font-semibold text-foreground">{item.value}</span>
+                 </div>
+               ))}
+             </div>
+           </div>
+         </div>
+ 
+         {/* Right Column - SLA Breached & Unassigned */}
+         <div className="space-y-6">
+           <div className="rounded-xl border border-border bg-card p-5">
+             <div className="flex items-center justify-between mb-4">
+               <h3 className="section-title">SLA Breached</h3>
+               <button 
+                 onClick={() => navigate("/support/tickets")}
+                 className="text-xs font-medium text-primary hover:underline"
+               >
+                 View All
+               </button>
+             </div>
+             <div className="flex items-center justify-center py-8 text-muted-foreground text-sm">
+               No SLA breaches
+             </div>
+           </div>
+ 
+           <div className="rounded-xl border border-border bg-card p-5">
+             <div className="flex items-center justify-between mb-4">
+               <h3 className="section-title">Unassigned Tickets</h3>
+               <button 
+                 onClick={() => navigate("/support/tickets")}
+                 className="text-xs font-medium text-primary hover:underline"
+               >
+                 View All
+               </button>
+             </div>
+             <div className="flex items-center justify-center py-8 text-muted-foreground text-sm">
+               All tickets assigned
                </div>
-               <div className={`h-10 w-10 rounded-full ${stat.color}`}></div>
              </div>
            </div>
-         ))}
-       </div>
- 
-       {/* SLA Performance */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">SLA Performance</h3>
-         <div className="space-y-3">
-           {slaPerformance.map((item, index) => (
-             <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
-               <span className="text-sm text-gray-600 dark:text-gray-400">{item.label}</span>
-               <span className={`text-sm font-semibold ${item.highlight ? "text-red-500" : "text-gray-900 dark:text-white"}`}>
-                 {item.value}
-               </span>
-             </div>
-           ))}
-         </div>
-       </div>
- 
-       {/* Customer Satisfaction */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 text-center">
-         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Customer Satisfaction</h3>
-         <p className="text-6xl font-bold text-gray-900 dark:text-white mb-2">0</p>
-         <div className="flex items-center justify-center gap-1 mb-2">
-           {[1, 2, 3, 4, 5].map((star) => (
-             <Star key={star} className="h-5 w-5 text-gray-300 dark:text-gray-600" />
-           ))}
-         </div>
-         <p className="text-sm text-gray-500 dark:text-gray-400">Last 30 days</p>
-       </div>
- 
-       {/* Ticket Volume */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Ticket Volume</h3>
-         <div className="space-y-3">
-           {ticketVolume.map((item, index) => (
-             <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
-               <span className="text-sm text-gray-600 dark:text-gray-400">{item.label}</span>
-               <span className="text-sm font-semibold text-gray-900 dark:text-white">{item.value}</span>
-             </div>
-           ))}
-         </div>
-       </div>
- 
-       {/* SLA Breached & Unassigned Tickets */}
-       <div className="grid gap-6 lg:grid-cols-2">
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <div className="flex items-center justify-between mb-4">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">SLA Breached Tickets</h3>
-             <button className="px-3 py-1 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-               View All
-             </button>
-           </div>
-           <p className="text-center text-gray-500 dark:text-gray-400 py-8">No SLA breaches</p>
-         </div>
- 
-         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
-           <div className="flex items-center justify-between mb-4">
-             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Unassigned Tickets</h3>
-             <button className="px-3 py-1 text-xs font-medium rounded-md border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-               View All
-             </button>
-           </div>
-           <p className="text-center text-gray-500 dark:text-gray-400 py-8">All tickets assigned</p>
-         </div>
        </div>
  
        {/* Recent Tickets */}
-       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden">
-         <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Tickets</h3>
-           <button className="px-4 py-2 text-sm font-medium rounded-lg bg-[#aa1e2c] text-white hover:bg-[#8a1824] transition-all duration-200">
+       <div className="rounded-xl border border-border bg-card overflow-hidden">
+         <div className="p-5 border-b border-border flex items-center justify-between">
+           <h3 className="section-title">Recent Tickets</h3>
+           <button 
+             onClick={() => navigate("/support/tickets")}
+             className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90"
+           >
              View All Tickets
            </button>
          </div>
          <div className="overflow-x-auto">
            <table className="w-full">
              <thead>
-               <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Ticket</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Subject</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Customer</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Status</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Priority</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Agent</th>
-                 <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Created</th>
+               <tr className="bg-muted/30 border-b border-border">
+                 <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ticket</th>
+                 <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Subject</th>
+                 <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Customer</th>
+                 <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
+                 <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Priority</th>
+                 <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Agent</th>
+                 <th className="px-5 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Created</th>
                </tr>
              </thead>
              <tbody>
                <tr>
-                 <td colSpan={7} className="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                 <td colSpan={7} className="px-5 py-12 text-center text-muted-foreground">
                    No recent tickets
                  </td>
                </tr>

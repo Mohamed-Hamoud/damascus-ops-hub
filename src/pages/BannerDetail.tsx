@@ -1,5 +1,12 @@
  import { useNavigate, useParams } from "react-router-dom";
- import { ArrowLeft, Edit, Trash2 } from "lucide-react";
+ import { Edit, Trash2 } from "lucide-react";
+ import { PageHeader } from "@/components/shared/PageHeader";
+ import {
+   Tooltip,
+   TooltipContent,
+   TooltipProvider,
+   TooltipTrigger,
+ } from "@/components/ui/tooltip";
  
  const bannersData = [
    { id: 1, name: "Hi", photoEN: "🍽️", photoMS: "🍽️", url: "Hi", created: "2026-01-27 22:07", promotedProduct: "", visible: true, type: "DEFAULT" },
@@ -14,13 +21,11 @@
    if (!banner) {
      return (
        <div className="space-y-6">
-         <button
-           onClick={() => navigate("/banners")}
-           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-         >
-           <ArrowLeft className="h-4 w-4" />
-           Banners
-         </button>
+         <PageHeader
+           title="Banner Not Found"
+           backLink="/banners"
+           backLabel="Banners"
+         />
          <div className="text-center py-12 text-muted-foreground">Banner not found</div>
        </div>
      );
@@ -28,79 +33,93 @@
  
    return (
      <div className="space-y-6">
-       <button
-         onClick={() => navigate("/banners")}
-         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-       >
-         <ArrowLeft className="h-4 w-4" />
-         Banners
-       </button>
+       <PageHeader
+         title={banner.name}
+         backLink="/banners"
+         backLabel="Banners"
+         badge={
+           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${banner.visible ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"}`}>
+             {banner.visible ? "Visible" : "Hidden"}
+           </span>
+         }
+         actions={
+           <TooltipProvider>
+             <div className="flex items-center gap-2">
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <button
+                     onClick={() => navigate(`/banners/${id}/edit`)}
+                     className="h-9 w-9 flex items-center justify-center rounded-lg bg-primary text-primary-foreground hover:bg-primary/90"
+                   >
+                     <Edit className="h-4 w-4" />
+                   </button>
+                 </TooltipTrigger>
+                 <TooltipContent>Edit Banner</TooltipContent>
+               </Tooltip>
+               <Tooltip>
+                 <TooltipTrigger asChild>
+                   <button className="h-9 w-9 flex items-center justify-center rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                     <Trash2 className="h-4 w-4" />
+                   </button>
+                 </TooltipTrigger>
+                 <TooltipContent>Delete Banner</TooltipContent>
+               </Tooltip>
+             </div>
+           </TooltipProvider>
+         }
+       />
  
-       <div className="flex items-center justify-between">
-         <h1 className="text-2xl font-bold tracking-tight">{banner.name}</h1>
-         <div className="flex items-center gap-2">
-           <button
-             onClick={() => navigate(`/banners/${id}/edit`)}
-             className="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground flex items-center gap-2"
-           >
-             <Edit className="h-4 w-4" />
-             Edit
-           </button>
-           <button className="px-4 py-2 text-sm font-medium rounded-lg bg-destructive text-destructive-foreground flex items-center gap-2">
-             <Trash2 className="h-4 w-4" />
-             Delete
-           </button>
-         </div>
-       </div>
- 
-       <div className="rounded-xl border bg-card">
-         <div className="p-6 border-b">
-           <h2 className="text-lg font-semibold">Banner Information</h2>
-         </div>
-         <div className="p-6 space-y-4">
-           <div className="grid gap-4 sm:grid-cols-2">
-             <div>
-               <p className="text-sm text-muted-foreground">Name</p>
-               <p className="font-medium">{banner.name}</p>
-             </div>
-             <div>
-               <p className="text-sm text-muted-foreground">URL</p>
-               <p className="font-medium">{banner.url || "—"}</p>
-             </div>
-             <div>
-               <p className="text-sm text-muted-foreground">Promoted Product</p>
-               <p className="font-medium">{banner.promotedProduct || "—"}</p>
-             </div>
-             <div>
-               <p className="text-sm text-muted-foreground">Created</p>
-               <p className="font-medium">{banner.created}</p>
-             </div>
-             <div>
-               <p className="text-sm text-muted-foreground">Visible</p>
-              <span className={`text-sm font-semibold ${banner.visible ? "text-primary" : "text-muted-foreground"}`}>
-                 {banner.visible ? "YES" : "NO"}
-               </span>
-             </div>
-             <div>
-               <p className="text-sm text-muted-foreground">Type</p>
-              <span className="text-sm font-semibold text-primary">{banner.type}</span>
+       {/* Banner Details Grid */}
+       <div className="grid gap-6 lg:grid-cols-3">
+         {/* Main Info Card */}
+         <div className="lg:col-span-2 rounded-xl border border-border bg-card">
+           <div className="px-6 py-4 border-b border-border bg-muted/30">
+             <h2 className="section-title">Banner Information</h2>
+           </div>
+           <div className="p-6">
+             <div className="grid gap-6 sm:grid-cols-2">
+               <div>
+                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Name</p>
+                 <p className="text-foreground font-medium">{banner.name}</p>
+               </div>
+               <div>
+                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">URL</p>
+                 <p className="text-foreground font-medium">{banner.url || <span className="text-muted-foreground italic">Not set</span>}</p>
+               </div>
+               <div>
+                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Promoted Product</p>
+                 <p className="text-foreground font-medium">{banner.promotedProduct || <span className="text-muted-foreground italic">None</span>}</p>
+               </div>
+               <div>
+                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Created</p>
+                 <p className="text-foreground font-medium">{banner.created}</p>
+               </div>
+               <div>
+                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Type</p>
+                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
+                   {banner.type}
+                 </span>
+               </div>
              </div>
            </div>
+         </div>
  
-           <div className="pt-4 border-t">
-             <h3 className="text-base font-semibold mb-4">Banner Images</h3>
-             <div className="grid gap-4 sm:grid-cols-2">
-               <div className="space-y-2">
-                 <p className="text-sm text-muted-foreground">Image (English)</p>
-                 <div className="h-32 rounded-lg bg-muted flex items-center justify-center text-4xl">
-                   {banner.photoEN}
-                 </div>
+         {/* Images Card */}
+         <div className="rounded-xl border border-border bg-card">
+           <div className="px-6 py-4 border-b border-border bg-muted/30">
+             <h2 className="section-title">Banner Images</h2>
+           </div>
+           <div className="p-6 space-y-4">
+             <div>
+               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">English</p>
+               <div className="h-24 rounded-lg bg-muted flex items-center justify-center text-4xl border border-border">
+                 {banner.photoEN}
                </div>
-               <div className="space-y-2">
-                 <p className="text-sm text-muted-foreground">Image (Malaysia)</p>
-                 <div className="h-32 rounded-lg bg-muted flex items-center justify-center text-4xl">
-                   {banner.photoMS}
-                 </div>
+             </div>
+              <div>
+               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Malaysia</p>
+               <div className="h-24 rounded-lg bg-muted flex items-center justify-center text-4xl border border-border">
+                 {banner.photoMS}
                </div>
              </div>
            </div>

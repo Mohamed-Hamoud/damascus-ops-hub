@@ -17,6 +17,9 @@
  import Customers from "./pages/Customers";
  import CustomerDetail from "./pages/CustomerDetail";
  import Banners from "./pages/Banners";
+import BannerDetail from "./pages/BannerDetail";
+import BannerForm from "./pages/BannerForm";
+import BranchDetail from "./pages/BranchDetail";
  import Support from "./pages/Support";
  import ProductDetail from "./pages/ProductDetail";
  import SupportTickets from "./pages/SupportTickets";
@@ -49,6 +52,9 @@ const App = () => (
               <Route path="/analytics" element={<Analytics />} />
               {/* Placeholder routes for other sections */}
              <Route path="/banners" element={<Banners />} />
+            <Route path="/banners/new" element={<BannerForm />} />
+            <Route path="/banners/:id" element={<BannerDetail />} />
+            <Route path="/banners/:id/edit" element={<BannerForm />} />
               <Route path="/promotions" element={<Promotions />} />
               <Route path="/promotions/vouchers/new" element={<VoucherForm />} />
               <Route path="/promotions/vouchers/:id" element={<VoucherDetail />} />
@@ -60,6 +66,7 @@ const App = () => (
               <Route path="/support/tickets" element={<SupportTickets />} />
               <Route path="/support/settings" element={<SupportSettings />} />
               <Route path="/branches" element={<Branches />} />
+            <Route path="/branches/:id" element={<BranchDetail />} />
               <Route path="/restaurant-app" element={<RestaurantApp />} />
              <Route path="/reports" element={<Reports />} />
                <Route path="/points" element={<Points />} />

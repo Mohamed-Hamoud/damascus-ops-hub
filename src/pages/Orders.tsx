@@ -84,14 +84,6 @@
        <div>
           <h1 className="page-title">Orders</h1>
           <p className="page-subtitle">Manage and track all customer orders</p>
-          <div className="mt-2 flex items-center gap-4 text-sm">
-            <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-muted-foreground">{ordersData.filter(o => o.status === "new" || o.status === "accepted").length} active</span>
-            </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="text-muted-foreground">{ordersData.length} total orders</span>
-          </div>
        </div>
  
        {/* Filters */}
